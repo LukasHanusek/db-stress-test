@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>Help pages</title>
+</head>
+<body>
+<a href=index.html> << Index</a>
+
+<h1>Tasks</h1>
+
+<h3>Task parameters:</h3>
+
+<ul>
+<li><b>Task name: </b>Custom user-definined name for identification of the task, can contain spaces and special characters. Name must be unique.</li>
+<li><b>Interval (between cycles):</b> If task is repeated more then once, it will be executed after this time in milliseconds.</li>
+<li><b>Pool size: </b>If the pool is bigger than 1, more parallel connection to the database will be created. SQL sets will be still executed in the defined order, but if the task did no finished before the next repeat is executed, the next repeat will run parallel on another connection.</li>
+<li><b>Repeat count: </b>Task can be repeated multiple times or in case of value -1 the task will run until manual stop.</li>
+<li><b>SQL sets: </b>Every task can have multiple SQL sets to execute. Sets are executed in the given order.</li>
+<li><b>Databases: </b>Task run on multiple databases simultaneously executing the exact same SQL sets on all databases in the same time.</li>
+</ul>
+
+
+
+
+<br>
+<br>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>Help pages</title>
+</head>
+<body>
+<a href=index.html> << Index</a>
+
+<h1>Custom functions</h1>
+
+<h3>How to use custom functions</h3>
+To use functions we need to use variables in the SQL sets as described in <a href=usingvariables.html> Using variables</a>.
+<br>
+<i>Example SQL: SELECT * FROM TAB WHERE ID=? AND AMOUNT > ?</i>
+<br>
+<br>
+Custom functions are declared in the variables area right below SQL.<br>
+<br>
+<br>
+<h3>Functions syntax</h3>
+<ul>
+<li>All functions start with # symbol and are encapsulated in between { and } parentheses. <i>Example: randomInt(1,10)</i></li>
+<li>Functions are not alowed in combination with varchar variables or any others.</li>
+<li>It is not possible to use function as argument to another function.</li>
+</ul>
+<br>
+<i>Example using functions:</i>
+<br>
+<textarea cols=40 lines=4>
+#{randomInt(1,10)},10;
+#{randomInt(10,20)},20;
+</textarea>
+<br>
+<i>If we use this definition of variables for the above-mentioned SQL, the query will be executed 2 times in total. 
+First query will use random integer in range 1-10 as ID and AMOUNT > 10. Second query will use random integer in range 10-20 as ID and AMOUNT > 20.</i>
+
+
+
+
+<br>
+<br>
+</body>
+
+</html>

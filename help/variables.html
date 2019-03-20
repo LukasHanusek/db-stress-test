@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>Help pages</title>
+</head>
+<body>
+<a href=index.html> << Index</a>
+
+<h1>Variables</h1>
+
+<h3>How to use Variables in SQL</h3>
+To use variables in the SQL sets, we use '?' symbol.
+<br>
+<i>Example: SELECT * FROM TAB WHERE ID=? AND AMOUNT > ?</i>
+<br>
+<br>
+Variables are declared right below the SQL text area.<br>
+<br>
+<br>
+<h3>Variables syntax</h3>
+<ul>
+<li>If we use more than 1 variable, variables are split by using "Argument delimiter", by default represnted by ',' character.</li>
+<li>Variables sets are delimited by "Line delimiter", by default represented by ';' character.</li>
+<li>SQL query is executed more times if more variables sets are declared and delimited by "Line delimiter"</li>
+</ul>
+<br>
+<i>Example variables:</i>
+<br>
+<textarea cols=20 lines=2>
+1,10;
+2,20;
+</textarea>
+<br>
+<i>If we use this definition of variables for the above-mentioned SQL, the query will be executed 2 times in total. 
+First query will use ID=1 and AMOUNT > 10. Second query will run with ID=2 and AMOUNT > 20 arguments.</i>
+
+
+
+
+<br>
+<br>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>Help pages</title>
+</head>
+<body>
+<a href=index.html> << Index</a>
+
+<h1>Connection storage</h1>
+
+All user defined database connections are stored in XML format in /data/connections.xml file.
+<br>
+<br>
+File format:<br>
+<textarea cols="100" rows="30">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<connections>
+    <connection id="1548773964597">
+        <address>mydbserver.com</address>
+        <customName>DBST</customName>
+        <databaseName>DBST</databaseName>
+        <databaseType>MySQL</databaseType>
+        <password>c2QyNmY1c2QxZjZzZDU=</password>
+        <port>3306</port>
+        <user>DBST</user>
+    </connection>	
+</connections>
+
+</textarea>
+<br>
+<br>
+Connection values explained:
+<br>
+<ul>
+<li>customName must be unique</li>
+<li>databaseType is the name of the database plugin handling this connection</li>
+<li>password is encoded with Base64 encoding.</li>
+<li>port value 0 will result in using the default port, it will not be present in connection URL</li>
+</ul>
+<br>
+<br>
+</body>
+
+</html>
