@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
@@ -29,7 +30,11 @@ public class ParametrizedQuery implements ExecutableQuery {
     
     private String sql;
     
-    private int timeout = 0;
+    private int timeout = -1;
+    
+    private boolean isCall;
+            
+    private ExecutorService timeoutService;
     
     private CopyOnWriteArraySet<CopyOnWriteArraySet<Var>> varSets; //contains lines of argumens, must be accessed via iterator to keep the order in which variables were added
     
@@ -38,6 +43,7 @@ public class ParametrizedQuery implements ExecutableQuery {
         this.set = set;
         this.sql = set.getSql();
         this.timeout = set.getTimeout();
+        this.isCall = set.isCall();
         prepareVariables();
     }
     
@@ -52,71 +58,47 @@ public class ParametrizedQuery implements ExecutableQuery {
                 varSets.add(varSet);
             }
         }
+        if (this.timeout > 0) timeoutService = Executors.newSingleThreadExecutor();
     }
 
     @Override
     public void execute(DbPool pool, TaskLogger logger) throws VarNotInitializedException, DataTypeNotRecognizedException, FunctionEvaluationException {
-        PreparedStatement st = null;
-        Connection con = null;
-        try {
-            con = pool.getConnection();
-            if (this.timeout > 0) con.setNetworkTimeout(Executors.newFixedThreadPool(1), this.timeout);
-            
-            //if this sql set is a CALL we need to create a CallableStatement
-            if (set.isCall()) {
-                st = con.prepareCall(this.sql);
-            } else {
-                st = con.prepareStatement(this.sql);
-            }
-            
+        try (Connection con = pool.getConnection(); PreparedStatement st = (this.isCall ? con.prepareCall(this.sql) : con.prepareStatement(this.sql))) {
+            if (this.timeout > 0) con.setNetworkTimeout(timeoutService, this.timeout);
+         
             //if sql comes without variables just execute it
             if (varSets == null || varSets.isEmpty()) {
-                executeStatement(st, logger);
-                return;
-            }
-            
-            //for all varibles (each line of variables defined)
-            for (CopyOnWriteArraySet<Var> varSet : varSets) {
-                int i = 1;
-                for (Var v : varSet) {
-                    st.setObject(i, v.getValue()); //setObject method automatically detects data type
-                    i++;
+                execute(st, logger);
+            } else {
+                //for all varibles (each line of variables defined)
+                for (CopyOnWriteArraySet<Var> varSet : varSets) {
+                    int i = 1;
+                    for (Var v : varSet) {
+                        st.setObject(i, v.getValue()); //setObject method automatically detects data type
+                        i++;
+                    }
+                    execute(st, logger);
                 }
-                executeStatement(st, logger);
             }
         } catch (Exception e) {
             logger.logQuery();
             logger.addTotalQueryTime(set.getName(), 0); //we need to add time here as well so the number of line is the same for all queries
             logger.logError(set.getName(), e);
-        } finally {
-            try {
-                if (st != null) {
-                    st.close();
-                }
-            } catch (Exception e) {
-            } //statement might be closed already by bad query
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception e) {
-            } //statement might be closed already by bad query
         }
     }
-    
-    private void executeStatement(PreparedStatement st, TaskLogger logger) throws SQLException {
+
+    private void execute(PreparedStatement st, TaskLogger logger) throws SQLException {
         long start = System.currentTimeMillis();
-        /* 
-        Official Java docs:
-        Executes the SQL statement in this PreparedStatement object, which may be any kind of SQL statement. 
-        Some prepared statements return multiple results; the execute method handles these complex statements 
-        as well as the simpler form of statements handled by the methods executeQuery and executeUpdate.
-        */
         st.execute();
         long time = System.currentTimeMillis() - start;
         logger.addTotalQueryTime(set.getName(), time);
         logger.log("Query " + this.sql + " took " + time + "ms");
         logger.logQuery();
     }
+
+    public void close() {
+        if (timeoutService != null) timeoutService.shutdownNow();
+    }
+    
     
 }

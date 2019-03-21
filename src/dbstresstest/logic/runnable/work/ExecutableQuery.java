@@ -16,4 +16,6 @@ public interface ExecutableQuery {
     
     public void execute(DbPool pool, TaskLogger tl) throws Exception;
     
+    public void close();
+    
 }

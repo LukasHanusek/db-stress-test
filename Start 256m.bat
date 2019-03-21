@@ -1,0 +1,1 @@
+java -jar -Xms48m -Xmx256m DBStressTest.jar

@@ -17,9 +17,9 @@ import dbstresstest.util.exceptions.FunctionEvaluationException;
 import dbstresstest.util.exceptions.InvalidFunctionException;
 import dbstresstest.util.exceptions.VarNotInitializedException;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
@@ -32,7 +32,9 @@ public class UnparametrizedQuery implements ExecutableQuery {
     
     private String sql;
     
-    private int timeout = 0;
+    private int timeout = -1;
+    
+    private ExecutorService timeoutService;
     
     private CopyOnWriteArraySet<CopyOnWriteArraySet<Var>> varSets; //contains lines of argumens, must be accessed via iterator to keep the order in which variables were added
     
@@ -55,21 +57,22 @@ public class UnparametrizedQuery implements ExecutableQuery {
                 varSets.add(varSet);
             }
         }
+        if (this.timeout > 0) timeoutService = Executors.newSingleThreadExecutor();
     }
 
     @Override
     public void execute(DbPool pool, TaskLogger logger) throws VarNotInitializedException, DataTypeNotRecognizedException, FunctionEvaluationException {
-        Statement st = null;
-        Connection con = null;
-        try {
-            con = pool.getConnection();
-            if (this.timeout > 0) con.setNetworkTimeout(Executors.newFixedThreadPool(1), this.timeout);
+        try (Connection con = pool.getConnection(); Statement st = con.createStatement();) {
+            if (this.timeout > 0) con.setNetworkTimeout(timeoutService, this.timeout);
 
-                st = con.createStatement();
-                
                 //if sql comes without variables just execute it
                 if (varSets == null || varSets.isEmpty()) {
-                    executeStatement(st, this.sql, logger);
+                    long start = System.currentTimeMillis();
+                    st.execute(sql);
+                    long time = System.currentTimeMillis() - start;
+                    logger.addTotalQueryTime(set.getName(), time);
+                    logger.log("Query " + sql + " took " + time + "ms");
+                    logger.logQuery();
                     return;
                 }
                 
@@ -84,41 +87,22 @@ public class UnparametrizedQuery implements ExecutableQuery {
                         if (v.getType() == VarType.OBJECT) sql = StringUtil.replaceFirst('?', "'" + sql, v.getValue().toString() + "'");
                         if (v.getType() == VarType.FUNCTION) sql = StringUtil.replaceFirst('?', sql, v.getFunctionValueAsString());
                     }
-                    executeStatement(st, sql, logger);
+                    long start = System.currentTimeMillis();
+                    st.execute(sql);
+                    long time = System.currentTimeMillis() - start;
+                    logger.addTotalQueryTime(set.getName(), time);
+                    logger.log("Query " + sql + " took " + time + "ms");
+                    logger.logQuery();
                 }
         } catch (Exception e) {
             logger.logQuery();
             logger.addTotalQueryTime(set.getName(), 0); //we need to add time here as well so the number of line is the same for all queries
             logger.logError(set.getName(), e);
-        } finally {
-            try {
-                if (st != null) {
-                    st.close();
-                }
-            } catch (Exception e) {
-            } //statement might be closed already by bad query
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception e) {
-            } //statement might be closed already by bad query
         }
     }
     
-    private void executeStatement(Statement st, String sql, TaskLogger logger) throws SQLException {
-        long start = System.currentTimeMillis();
-        /* 
-        Official Java docs:
-        Executes the SQL statement in this PreparedStatement object, which may be any kind of SQL statement. 
-        Some prepared statements return multiple results; the execute method handles these complex statements 
-        as well as the simpler form of statements handled by the methods executeQuery and executeUpdate.
-        */
-        st.execute(sql);
-        long time = System.currentTimeMillis() - start;
-        logger.addTotalQueryTime(set.getName(), time);
-        logger.log("Query " + sql + " took " + time + "ms");
-        logger.logQuery();
+    public void close() {
+        if (timeoutService != null) timeoutService.shutdownNow();
     }
     
 }

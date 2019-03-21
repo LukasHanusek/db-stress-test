@@ -90,9 +90,6 @@ public class RunnableTask extends TimerTask {
         }
         this.pool = RunnableTaskCreator.createPool(this.con, this.task.getPoolSize());
         
-        
-        //if (logger.getEnd() != 0) logger.reset(); //we need to reset the logger in case this is second start of this task
-        
         //prevent multiple runs in the same time
         if (executorService != null) {
             executorService.shutdownNow();
