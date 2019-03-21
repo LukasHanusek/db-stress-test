@@ -65,6 +65,7 @@ import org.fxmisc.richtext.LineNumberFactory;
 public class MainWindowController implements Initializable {
 
     private Stage stage;
+    private GUI gui; //only for easyUML
     
     @FXML
     private TabPane tabPane;
@@ -133,6 +134,9 @@ public class MainWindowController implements Initializable {
     public Task editedTask;
     
     
+    
+    
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -177,7 +181,8 @@ public class MainWindowController implements Initializable {
     public void setupListeners(Stage stage) {
         this.stage = stage;
         setupContextMenuForDBList();
-        new WindowResizeListener().setup(stage, dbPane, setPane, taskPane);
+        WindowResizeListener resizer = new WindowResizeListener();
+        resizer.setup(stage, dbPane, setPane, taskPane);
         setupActionListeners();
         setupDatabasePluginsDropdown();
         //setup drag & drop menu for sets-tasks
@@ -339,7 +344,6 @@ public class MainWindowController implements Initializable {
             }
         }
         editedTask = selected;
-        saveTask.setText("Save");
     }
     
     @FXML
