@@ -226,12 +226,12 @@ public class RunningTaskController implements Initializable {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                                StringBuilder sb = new StringBuilder();
-        for (String line : selected.getLogger().getConsole()) {
-            sb.append("\n");
-            sb.append(line);
-        }
-        taskConsole.setText(sb.toString());
+                        StringBuilder sb = new StringBuilder();
+                        for (String line : selected.getLogger().getConsole()) {
+                            sb.append("\n");
+                            sb.append(line);
+                        }
+                        taskConsole.setText(sb.toString());
                         taskConsole.setScrollTop(Double.MAX_VALUE);
                     }
                 });

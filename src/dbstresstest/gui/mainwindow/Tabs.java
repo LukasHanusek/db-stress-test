@@ -15,4 +15,9 @@ public class Tabs {
     public static final int SETS = 1;
     public static final int TASKS = 2;
     
+    
+    public static final String CONNECTIONS_TEXT = "Connections";
+    public static final String SETS_TEXT = "SQL";
+    public static final String TASKS_TEXT = "Tasks";
+    
 }

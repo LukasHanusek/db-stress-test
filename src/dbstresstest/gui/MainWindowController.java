@@ -498,6 +498,7 @@ public class MainWindowController implements Initializable {
         }
         if (task.modified) {
             this.tabPane.getTabs().get(Tabs.TASKS).setStyle("-fx-font-weight:bold;");
+            this.tabPane.getTabs().get(Tabs.TASKS).setText(Tabs.TASKS_TEXT + "*");
         }
         saveTask.setStyle("-fx-font-weight: normal;");
         updateTaskList(TaskManager.getInstance().getTasks());
@@ -611,6 +612,7 @@ public class MainWindowController implements Initializable {
         saveSet.setStyle("-fx-font-weight: normal;");
         if (set.modified) {
             this.tabPane.getTabs().get(Tabs.SETS).setStyle("-fx-font-weight:bold;");
+            this.tabPane.getTabs().get(Tabs.SETS).setText(Tabs.SETS_TEXT + "*");
         }
         updateSetList(SetManager.getInstance().getSets());
     }
@@ -679,6 +681,7 @@ public class MainWindowController implements Initializable {
         saveConnection.setStyle("-fx-font-weight: normal;");
         if (con.modified) {
             this.tabPane.getTabs().get(Tabs.CONNECTIONS).setStyle("-fx-font-weight:bold;");
+            this.tabPane.getTabs().get(Tabs.CONNECTIONS).setText(Tabs.CONNECTIONS_TEXT + "*");
         }
         updateConnectionList(ConManager.getInstance().getConnections());
     }
@@ -944,6 +947,9 @@ public class MainWindowController implements Initializable {
         for (Tab tab : this.tabPane.getTabs()) {
             tab.setStyle("-fx-font-weight:normal;");
         }
+        this.tabPane.getTabs().get(Tabs.CONNECTIONS).setText(Tabs.CONNECTIONS_TEXT);
+        this.tabPane.getTabs().get(Tabs.SETS).setText(Tabs.SETS_TEXT);
+        this.tabPane.getTabs().get(Tabs.TASKS).setText(Tabs.TASKS_TEXT);
     }
 
     @FXML
