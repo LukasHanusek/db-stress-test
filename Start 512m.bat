@@ -1,0 +1,1 @@
+java -jar -Xms56m -Xmx512m DBStressTest.jar

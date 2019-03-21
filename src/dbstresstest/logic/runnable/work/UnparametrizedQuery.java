@@ -30,11 +30,17 @@ public class UnparametrizedQuery implements ExecutableQuery {
     
     private SQLSet set;
     
+    private String sql;
+    
+    private int timeout = 0;
+    
     private CopyOnWriteArraySet<CopyOnWriteArraySet<Var>> varSets; //contains lines of argumens, must be accessed via iterator to keep the order in which variables were added
     
     
     public UnparametrizedQuery(SQLSet set) throws InvalidFunctionException {
         this.set = set;
+        this.sql = set.getSql();
+        this.timeout = set.getTimeout();
         prepareVariables();
     }
     
@@ -50,10 +56,6 @@ public class UnparametrizedQuery implements ExecutableQuery {
             }
         }
     }
-    
-    private void tryGetConnection(DbPool pool) {
-        
-    }
 
     @Override
     public void execute(DbPool pool, TaskLogger logger) throws VarNotInitializedException, DataTypeNotRecognizedException, FunctionEvaluationException {
@@ -61,19 +63,19 @@ public class UnparametrizedQuery implements ExecutableQuery {
         Connection con = null;
         try {
             con = pool.getConnection();
-            if (set.getTimeout() > 0) con.setNetworkTimeout(Executors.newFixedThreadPool(1), set.getTimeout());
+            if (this.timeout > 0) con.setNetworkTimeout(Executors.newFixedThreadPool(1), this.timeout);
 
                 st = con.createStatement();
                 
                 //if sql comes without variables just execute it
                 if (varSets == null || varSets.isEmpty()) {
-                    executeStatement(st, set.getSql(), logger);
+                    executeStatement(st, this.sql, logger);
                     return;
                 }
                 
                 //for all varibles (each line of variables defined)
                 for (CopyOnWriteArraySet<Var> varSet : varSets) {
-                    String sql = set.getSql();
+                    String sql = this.sql;
                     for (Var v : varSet) {
                         if (v.getType() == VarType.DOUBLE) sql = StringUtil.replaceFirst('?', sql, v.getValue().toString());
                         if (v.getType() == VarType.INT) sql = StringUtil.replaceFirst('?', sql, v.getValue().toString());

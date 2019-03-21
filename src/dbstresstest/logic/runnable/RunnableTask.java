@@ -38,6 +38,10 @@ public class RunnableTask extends TimerTask {
     private boolean isCancelled = false;
     private Thread t;
     
+    private long interval;
+    
+    private int repeatCount;
+    
     private ConcurrentLinkedQueue<ExecutableQuery> queries = new ConcurrentLinkedQueue<ExecutableQuery>();
     
     private String name; //custom task name to identify it in the monitor (normally assigned database name this task is running on)
@@ -49,6 +53,8 @@ public class RunnableTask extends TimerTask {
         this.task = task;
         this.con = con;
         this.name = name;
+        this.interval = task.getInterval();
+        this.repeatCount = task.getRepeatCount();
         listeners = new CopyOnWriteArrayList();
         logger = new TaskLogger(this);
         calculateTotalQueries();
@@ -103,20 +109,20 @@ public class RunnableTask extends TimerTask {
 
                 try {
                     //infinite repeat
-                    if (RunnableTask.this.task.getRepeatCount() == -1) {
+                    if (RunnableTask.this.repeatCount == -1) {
                         while (!isCancelled) {
                             executorService.submit(RunnableTask.this);
-                            Thread.sleep(task.getInterval());
+                            Thread.sleep(interval);
                         }
                     }
                     //specified repeat count
-                    if (RunnableTask.this.task.getRepeatCount() >= 0) {
-                        for (int i = 0; i < task.getRepeatCount(); i++) {
+                    if (RunnableTask.this.repeatCount >= 0) {
+                        for (int i = 0; i < RunnableTask.this.repeatCount; i++) {
                             if (isCancelled) {
                                 break;
                             }
                             executorService.submit(RunnableTask.this);
-                            Thread.sleep(task.getInterval());
+                            Thread.sleep(interval);
                         }
                     }
                     executorService.shutdown(); //wait for all tasks to finish and then shutdown executor

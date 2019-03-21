@@ -27,11 +27,17 @@ public class ParametrizedQuery implements ExecutableQuery {
     
     private SQLSet set;
     
+    private String sql;
+    
+    private int timeout = 0;
+    
     private CopyOnWriteArraySet<CopyOnWriteArraySet<Var>> varSets; //contains lines of argumens, must be accessed via iterator to keep the order in which variables were added
     
     
     public ParametrizedQuery(SQLSet set) throws InvalidFunctionException {
         this.set = set;
+        this.sql = set.getSql();
+        this.timeout = set.getTimeout();
         prepareVariables();
     }
     
@@ -47,10 +53,6 @@ public class ParametrizedQuery implements ExecutableQuery {
             }
         }
     }
-    
-    private void tryGetConnection(DbPool pool) {
-        
-    }
 
     @Override
     public void execute(DbPool pool, TaskLogger logger) throws VarNotInitializedException, DataTypeNotRecognizedException, FunctionEvaluationException {
@@ -58,13 +60,13 @@ public class ParametrizedQuery implements ExecutableQuery {
         Connection con = null;
         try {
             con = pool.getConnection();
-            if (set.getTimeout() > 0) con.setNetworkTimeout(Executors.newFixedThreadPool(1), set.getTimeout());
+            if (this.timeout > 0) con.setNetworkTimeout(Executors.newFixedThreadPool(1), this.timeout);
             
             //if this sql set is a CALL we need to create a CallableStatement
             if (set.isCall()) {
-                st = con.prepareCall(set.getSql());
+                st = con.prepareCall(this.sql);
             } else {
-                st = con.prepareStatement(set.getSql());
+                st = con.prepareStatement(this.sql);
             }
             
             //if sql comes without variables just execute it
@@ -113,7 +115,7 @@ public class ParametrizedQuery implements ExecutableQuery {
         st.execute();
         long time = System.currentTimeMillis() - start;
         logger.addTotalQueryTime(set.getName(), time);
-        logger.log("Query " + set.getSql() + " took " + time + "ms");
+        logger.log("Query " + this.sql + " took " + time + "ms");
         logger.logQuery();
     }
     
