@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class TaskLogger {
     
-    private static final int console_lenght = 200;
+    public static final int console_lenght = 100;
 
     CopyOnWriteArrayList<String> console;
     

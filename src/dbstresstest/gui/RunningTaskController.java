@@ -206,14 +206,6 @@ public class RunningTaskController implements Initializable {
             return;
         }
 
-        //update console text
-        StringBuilder sb = new StringBuilder();
-        for (String line : selected.getLogger().getConsole()) {
-            sb.append("\n");
-            sb.append(line);
-        }
-        taskConsole.setText(sb.toString());
-
         //reset existing listeners, we cannot have 2 listeners for 1 gui
         for (RunnableTask rt : this.tasks) {
             rt.removeAllListeners();
@@ -234,7 +226,12 @@ public class RunningTaskController implements Initializable {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        taskConsole.setText(taskConsole.getText() + "\n" + message);
+                                StringBuilder sb = new StringBuilder();
+        for (String line : selected.getLogger().getConsole()) {
+            sb.append("\n");
+            sb.append(line);
+        }
+        taskConsole.setText(sb.toString());
                         taskConsole.setScrollTop(Double.MAX_VALUE);
                     }
                 });
