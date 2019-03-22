@@ -152,6 +152,13 @@ public class RunnableTask extends TimerTask {
     
     @Override
     public boolean cancel() {
+        for (ExecutableQuery q : this.queries) {
+            try {
+                q.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         Thread cancelThread = new Thread() {
             public void run() {
                 if (isRunning()) {

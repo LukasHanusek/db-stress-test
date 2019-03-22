@@ -1,0 +1,44 @@
+\babel@toc {slovak}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {czech}{}
+\babel@toc {english}{}
+\babel@toc {czech}{}
+\contentsline {section}{Seznam pou\IeC {\v z}it\IeC {\'y}ch zkratek a symbol\IeC {\r u}}{15}{Doc-Start}% 
+\contentsline {section}{Seznam obr\'azk\r {u}}{17}{Doc-Start}% 
+\contentsline {section}{Seznam tabulek}{19}{Doc-Start}% 
+\contentsline {section}{\numberline {1}\IeC {\'U}vod}{21}{section.1}% 
+\contentsline {section}{\numberline {2}DBMS}{23}{section.2}% 
+\contentsline {subsection}{\numberline {2.1}Obecn\IeC {\'e} vlastnosti DBMS}{23}{subsection.2.1}% 
+\contentsline {subsection}{\numberline {2.2}Jazyk SQL (Structured Query Language)}{23}{subsection.2.2}% 
+\contentsline {subsection}{\numberline {2.3}Parametry vyt\IeC {\'\i }\IeC {\v z}en\IeC {\'\i } datab\IeC {\'a}zov\IeC {\'e}ho serveru}{23}{subsection.2.3}% 
+\contentsline {subsection}{\numberline {2.4}Podporovan\IeC {\'e} datab\IeC {\'a}zov\IeC {\'e} syst\IeC {\'e}my aplikac\IeC {\'\i }}{24}{subsection.2.4}% 
+\contentsline {section}{\numberline {3}Pou\IeC {\v z}it\IeC {\'a} technologie pro implementaci aplikace}{25}{section.3}% 
+\contentsline {subsection}{\numberline {3.1}Programovac\IeC {\'\i } jazyk Java}{25}{subsection.3.1}% 
+\contentsline {subsection}{\numberline {3.2}JDBC (Java Database Connectivity)}{25}{subsection.3.2}% 
+\contentsline {subsection}{\numberline {3.3}Knihovna JavaFX pro grafick\IeC {\'e} rozhran\IeC {\'\i }}{25}{subsection.3.3}% 
+\contentsline {subsection}{\numberline {3.4}SceneBuilder}{25}{subsection.3.4}% 
+\contentsline {subsection}{\numberline {3.5}V\IeC {\'y}vojov\IeC {\'e} prost\IeC {\v r}ed\IeC {\'\i } Netbeans IDE 8.2}{26}{subsection.3.5}% 
+\contentsline {section}{\numberline {4}Struktura aplikace}{27}{section.4}% 
+\contentsline {subsection}{\numberline {4.1}Datov\IeC {\'a} vrstva - Diagram t\IeC {\v r}\IeC {\'\i }d}{27}{subsection.4.1}% 
+\contentsline {subsection}{\numberline {4.2}Datov\IeC {\'a} vrstva - XML}{31}{subsection.4.2}% 
+\contentsline {subsection}{\numberline {4.3}Datov\IeC {\'a} vrstva - JAXB}{32}{subsection.4.3}% 
+\contentsline {subsection}{\numberline {4.4}Datov\IeC {\'a} vrstva - Log a CSV soubory}{32}{subsection.4.4}% 
+\contentsline {subsection}{\numberline {4.5}Prezenta\IeC {\v c}n\IeC {\'\i } vrstva - Digram t\IeC {\v r}\IeC {\'\i }d}{33}{subsection.4.5}% 
+\contentsline {subsection}{\numberline {4.6}Prezenta\IeC {\v c}n\IeC {\'\i } vrstva - Okno editoru}{34}{subsection.4.6}% 
+\contentsline {subsection}{\numberline {4.7}Prezenta\IeC {\v c}n\IeC {\'\i } vrstva - Okno monitoru \IeC {\'u}loh}{34}{subsection.4.7}% 
+\contentsline {subsection}{\numberline {4.8}Logick\IeC {\'a} vrstva}{34}{subsection.4.8}% 
+\contentsline {section}{\numberline {5}Validace SQL dotaz\IeC {\r u} - SQL Lexer / Parser}{35}{section.5}% 
+\contentsline {subsection}{\numberline {5.1}Projekt ANTLR (ANother Tool for Language Recognition}{35}{subsection.5.1}% 
+\contentsline {subsection}{\numberline {5.2}Testy ANTRL}{37}{subsection.5.2}% 
+\contentsline {subsection}{\numberline {5.3}Projekt Jsqlparser}{38}{subsection.5.3}% 
+\contentsline {subsection}{\numberline {5.4}Testy Jsqlparser}{38}{subsection.5.4}% 
+\contentsline {subsection}{\numberline {5.5}Srovn\IeC {\'a}n\IeC {\'\i } parser knihoven}{39}{subsection.5.5}% 
+\contentsline {section}{\numberline {6}Z\IeC {\'a}v\IeC {\v e}r}{41}{section.6}% 
+\contentsline {section}{Literatura}{43}{section.6}% 
+\contentsline {section}{P\IeC {\v r}\IeC {\'\i }lohy}{43}{section.6}% 
+\contentsline {section}{\numberline {A}U\IeC {\v z}ivatelsk\IeC {\'e} rozhran\IeC {\'\i } aplikace}{45}{appendix.A}% 
+\contentsline {section}{\numberline {B}Zdrojov\IeC {\'y} k\IeC {\'o}d pro testov\IeC {\'a}n\IeC {\'\i } ANTRL - MySQL}{47}{appendix.B}% 
+\contentsline {section}{\numberline {C}Zdrojov\IeC {\'y} k\IeC {\'o}d pro testov\IeC {\'a}n\IeC {\'\i } ANTRL - T-SQL}{49}{appendix.C}% 
+\contentsline {section}{\numberline {D}Zdrojov\IeC {\'y} k\IeC {\'o}d pro testov\IeC {\'a}n\IeC {\'\i } ANTRL - PL-SQL}{51}{appendix.D}% 
+\contentsline {section}{\numberline {E}Zdrojov\IeC {\'y} k\IeC {\'o}d pro testov\IeC {\'a}n\IeC {\'\i } JsqlParser}{53}{appendix.E}% 
