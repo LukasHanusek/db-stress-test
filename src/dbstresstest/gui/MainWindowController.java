@@ -34,6 +34,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -520,7 +522,17 @@ public class MainWindowController implements Initializable {
             GUI.getInstance().openWarningWindow("Please fill set name!", "Name is requiered!");
             return;
         }
-        if (set.getName() == null || !set.getName().equals(this.setName.getText())) set.modified = true;
+        
+        if (set.getName() == null || !set.getName().equals(this.setName.getText())) {
+            try {
+                SetManager.getInstance().getSetByName(this.setName.getText());
+                this.clearSet.requestFocus();
+                GUI.getInstance().openWarningWindow("Name is not unique!", "Name is not unique!");
+                return;
+            } catch (SetNotFoundException ex) {
+                set.modified = true;
+            }
+        }
         set.setName(this.setName.getText());
         try {
             set.setDatabaseType(((DatabasePlugin) this.databaseTypeSets.getSelectionModel().getSelectedItem()).getName());
@@ -529,7 +541,9 @@ public class MainWindowController implements Initializable {
             GUI.getInstance().openWarningWindow("No database type selected, if no options are given, it means that you have no database plugins loaded.", "Database type is requiered!");
             return;
         }
-        if (set.isParametrized() != this.parametrized.isSelected()) set.modified = true;
+        if (set.isParametrized() != this.parametrized.isSelected()) {
+            set.modified = true;
+        }
         set.setParametrized(this.parametrized.isSelected());
         
         if (!this.query.isSelected() && !this.call.isSelected() && !this.update.isSelected()) {
@@ -542,13 +556,18 @@ public class MainWindowController implements Initializable {
         set.setQuery(this.query.isSelected());
         
         if (set.isCall() != this.call.isSelected()) set.modified = true;
+
+
         set.setCall(this.call.isSelected());
         
         if (set.isUpdate() != this.update.isSelected()) set.modified = true;
+
         set.setUpdate(this.update.isSelected());
         
         try {
-            if (set.getTimeout() != Integer.valueOf(this.timeout.getText())) set.modified = true;
+            if (set.getTimeout() != Integer.valueOf(this.timeout.getText())) {
+                set.modified = true;
+            }
             set.setTimeout(Integer.valueOf(this.timeout.getText()));
         } catch (Exception e) {
             this.clearSet.requestFocus();
@@ -567,7 +586,9 @@ public class MainWindowController implements Initializable {
             GUI.getInstance().openWarningWindow("Delimiter must be a single character!", "Invalid delimiter!");
             return;
         }
-        if (set.getParamDelimiter() != this.paramDelimiter.getText().charAt(0)) set.modified = true;
+        if (set.getParamDelimiter() != this.paramDelimiter.getText().charAt(0)) {
+            set.modified = true;
+        }
         set.setParamDelimiter(this.paramDelimiter.getText().charAt(0));
         
         if (this.lineDelimiter.getText().length() > 1) {
@@ -575,7 +596,9 @@ public class MainWindowController implements Initializable {
             GUI.getInstance().openWarningWindow("Delimiter must be a single character!", "Invalid delimiter!");
             return;
         }
-        if (set.getLineDelimiter() != this.lineDelimiter.getText().charAt(0)) set.modified = true;
+        if (set.getLineDelimiter() != this.lineDelimiter.getText().charAt(0)) {
+            set.modified = true;
+        }
         set.setLineDelimiter(this.lineDelimiter.getText().charAt(0));
         
         if (this.sql.getText().length() == 0) {
@@ -583,11 +606,15 @@ public class MainWindowController implements Initializable {
             GUI.getInstance().openWarningWindow("SQL Area is empty!", "SQL is requiered!");
             return;
         }
-        if (set.getSql() == null || !set.getSql().equals(this.sql.getText())) set.modified = true;
+        if (set.getSql() == null || !set.getSql().equals(this.sql.getText())) {
+            set.modified = true;
+        }
         set.setSql(this.sql.getText());
         try {
-            if (set.getValues() == null || !set.getValues().equals(VariableParser.parseValues(this.variables.getText(), set.getLineDelimiter(), set.getParamDelimiter()))) set.modified = true;
+            String before = VariableParser.getVariablesTextFormat(set);
             set.setValues(VariableParser.parseValues(this.variables.getText(), set.getLineDelimiter(), set.getParamDelimiter()));
+            String after = VariableParser.getVariablesTextFormat(set);
+            if (!before.equals(after)) set.modified = true;
         } catch (VariableException e) {
             this.clearSet.requestFocus();
             GUI.getInstance().openWarningWindow(e.getMessage(), "Invalid variables format!");
