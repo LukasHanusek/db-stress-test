@@ -128,7 +128,7 @@ public class MainWindowController implements Initializable {
     @FXML
     private TextField taskName, poolSize, repeatCount, interval;
     @FXML
-    private Button saveTask, runTask;
+    private Button saveTask, runTask, cancelTaskEdit;
     @FXML
     private Label taskWarning;
     public Task editedTask;
@@ -395,12 +395,12 @@ public class MainWindowController implements Initializable {
         /**USER INPUT CHECK**/
         //task name
         if (this.taskName.getText().length() == 0) {
-            this.saveTask.requestFocus();
+            this.cancelTaskEdit.requestFocus();
             taskWarning.setText("Name is requiered!");
             return;
         }
         if (!TaskManager.getInstance().isNameUnique(this.taskName.getText(), task.getId())) {
-            this.saveTask.requestFocus();
+            this.cancelTaskEdit.requestFocus();
             GUI.getInstance().openWarningWindow("Name is not unique, changes cannot be saved!", "Invalid name!");
             return;
         }
@@ -408,7 +408,7 @@ public class MainWindowController implements Initializable {
         task.setTaskName(this.taskName.getText());
         //task interval (delay)
         if (this.interval.getText().length() == 0) {
-            this.saveTask.requestFocus();
+            this.cancelTaskEdit.requestFocus();
             GUI.getInstance().openWarningWindow("Please fill interval (delay) between cycles (0 = no delay between cycles)", "Interval is requiered!");
             return;
         }
@@ -416,12 +416,13 @@ public class MainWindowController implements Initializable {
             if (task.getInterval() != Long.valueOf(this.interval.getText())) task.modified = true;
             task.setInterval(Long.valueOf(this.interval.getText()));
         } catch (NumberFormatException e) {
-            this.saveTask.requestFocus();
+            this.cancelTaskEdit.requestFocus();
             GUI.getInstance().openWarningWindow("Interval must be long number!", "Invalid interval number!");
             return;
         }
         //task pool size (concurrent connections)
         if (this.poolSize.getText().length() == 0) {
+            this.cancelTaskEdit.requestFocus();
             GUI.getInstance().openWarningWindow("Pool size is required!", "Invalid pool size!");
             return;
         }
@@ -429,13 +430,13 @@ public class MainWindowController implements Initializable {
             if (task.getPoolSize() != Integer.valueOf(this.poolSize.getText())) task.modified = true;
             task.setPoolSize(Integer.valueOf(this.poolSize.getText()));
         } catch (NumberFormatException e) {
-           this.saveTask.requestFocus();
+           this.cancelTaskEdit.requestFocus();
            GUI.getInstance().openWarningWindow("Pool size must be integer number!", "Pool size must be a number!"); 
            return;
         }
         //repeat count
         if (this.repeatCount.getText().length() == 0) {
-            this.saveTask.requestFocus();
+            this.cancelTaskEdit.requestFocus();
             GUI.getInstance().openWarningWindow("Repeat count is required!", "Invalid repeat count!");
             return;
         }
@@ -443,7 +444,7 @@ public class MainWindowController implements Initializable {
             if (task.getRepeatCount() != Integer.valueOf(this.repeatCount.getText())) task.modified = true;
             task.setRepeatCount(Integer.valueOf(this.repeatCount.getText()));
         } catch (NumberFormatException e) {
-            this.saveTask.requestFocus();
+            this.cancelTaskEdit.requestFocus();
             GUI.getInstance().openWarningWindow("Repeat count must be integer number!", "Invalid repeat count!"); 
             return;
         }
@@ -515,7 +516,7 @@ public class MainWindowController implements Initializable {
         
         /**USER INPUT CHECK**/
         if (this.setName.getText().length() == 0) {
-            this.saveSet.requestFocus();
+            this.clearSet.requestFocus();
             GUI.getInstance().openWarningWindow("Please fill set name!", "Name is requiered!");
             return;
         }
@@ -524,7 +525,7 @@ public class MainWindowController implements Initializable {
         try {
             set.setDatabaseType(((DatabasePlugin) this.databaseTypeSets.getSelectionModel().getSelectedItem()).getName());
         } catch (NullPointerException e) {
-            this.saveSet.requestFocus();
+            this.clearSet.requestFocus();
             GUI.getInstance().openWarningWindow("No database type selected, if no options are given, it means that you have no database plugins loaded.", "Database type is requiered!");
             return;
         }
@@ -532,7 +533,7 @@ public class MainWindowController implements Initializable {
         set.setParametrized(this.parametrized.isSelected());
         
         if (!this.query.isSelected() && !this.call.isSelected() && !this.update.isSelected()) {
-            this.saveSet.requestFocus();
+            this.clearSet.requestFocus();
             GUI.getInstance().openWarningWindow("Please select Call, Query or Update type of statement!", "Statement type is requiered!");
             return;
         }
@@ -550,19 +551,19 @@ public class MainWindowController implements Initializable {
             if (set.getTimeout() != Integer.valueOf(this.timeout.getText())) set.modified = true;
             set.setTimeout(Integer.valueOf(this.timeout.getText()));
         } catch (Exception e) {
-            this.saveSet.requestFocus();
+            this.clearSet.requestFocus();
             GUI.getInstance().openWarningWindow("Timeout must be a number!", "Timeout is requiered!");
             return;
         }
         
         if (this.paramDelimiter.getText().equals(this.lineDelimiter.getText())) {
-            this.saveSet.requestFocus();
+            this.clearSet.requestFocus();
             GUI.getInstance().openWarningWindow("Line and param delimiter cannot be the same!", "Invalid delimiter!");
             return;
         }
         
         if (this.paramDelimiter.getText().length() > 1) {
-            this.saveSet.requestFocus();
+            this.clearSet.requestFocus();
             GUI.getInstance().openWarningWindow("Delimiter must be a single character!", "Invalid delimiter!");
             return;
         }
@@ -570,7 +571,7 @@ public class MainWindowController implements Initializable {
         set.setParamDelimiter(this.paramDelimiter.getText().charAt(0));
         
         if (this.lineDelimiter.getText().length() > 1) {
-            this.saveSet.requestFocus();
+            this.clearSet.requestFocus();
             GUI.getInstance().openWarningWindow("Delimiter must be a single character!", "Invalid delimiter!");
             return;
         }
@@ -578,7 +579,7 @@ public class MainWindowController implements Initializable {
         set.setLineDelimiter(this.lineDelimiter.getText().charAt(0));
         
         if (this.sql.getText().length() == 0) {
-            this.saveSet.requestFocus();
+            this.clearSet.requestFocus();
             GUI.getInstance().openWarningWindow("SQL Area is empty!", "SQL is requiered!");
             return;
         }
@@ -588,10 +589,10 @@ public class MainWindowController implements Initializable {
             if (set.getValues() == null || !set.getValues().equals(VariableParser.parseValues(this.variables.getText(), set.getLineDelimiter(), set.getParamDelimiter()))) set.modified = true;
             set.setValues(VariableParser.parseValues(this.variables.getText(), set.getLineDelimiter(), set.getParamDelimiter()));
         } catch (VariableException e) {
-            this.saveSet.requestFocus();
+            this.clearSet.requestFocus();
             GUI.getInstance().openWarningWindow(e.getMessage(), "Invalid variables format!");
         } catch (Exception e) {
-            this.saveSet.requestFocus();
+            this.clearSet.requestFocus();
             GUI.getInstance().openWarningWindow("Please make sure every line is ended properly by line delimiter char.", "Invalid variables format!");
             e.printStackTrace();
         }
@@ -630,12 +631,12 @@ public class MainWindowController implements Initializable {
             if (con.getPort() != Integer.valueOf(this.port.getText())) con.modified = true;
             con.setPort(Integer.valueOf(this.port.getText()));
         } catch (Exception e) {
-            this.saveConnection.requestFocus();
+            this.cancelConnection.requestFocus();
             GUI.getInstance().openWarningWindow("Value '" + this.port.getText() + "' is invalid for port number!", "Port must be a number!");
             return;
         }
         if (this.dbAddress.getText().contains("\\") && Integer.valueOf(this.port.getText()) > 1) {
-            this.saveConnection.requestFocus();
+            this.cancelConnection.requestFocus();
             if (!GUI.getInstance().openConfrmWindow("Are you sure ?", "It seems like you have specified instance name and instance port as well. Is it correct ?")) {
                 return;
             }
@@ -644,7 +645,7 @@ public class MainWindowController implements Initializable {
         if (con.getAddress() == null || !con.getAddress().equals(this.dbAddress.getText())) con.modified = true;
         con.setAddress(dbAddress.getText());
         if (this.customName.getText().length() == 0) {
-            this.saveConnection.requestFocus();
+            this.cancelConnection.requestFocus();
             GUI.getInstance().openWarningWindow("Please fill the custom name!", "Name is requiered!");
             return;
         }
@@ -653,6 +654,7 @@ public class MainWindowController implements Initializable {
         try {
             con.setDatabaseType(((DatabasePlugin) this.databaseType.getSelectionModel().getSelectedItem()).getName());
         } catch (NullPointerException e) {
+            this.cancelConnection.requestFocus();
             GUI.getInstance().openWarningWindow("No database type selected, if no options are given, it means that you have no database plugins loaded.", "Database type is requiered!");
             return;
         }

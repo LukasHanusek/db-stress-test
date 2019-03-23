@@ -148,7 +148,7 @@ Pro zajištění co největší přehlednosti zdrojového kódu je implementace 
   	\item \textbf{Logická vrstva} zajišťuje vykonávání uživatelem spuštěných úloh, kontrolu uživatelského vstupu a komunikaci mezi datovou a prezentační vrstvou aplikace. Logická vrstva je umístěna v balíku \textit{dbstresstest.logic}.
 \end{itemize}  	
 \newpage
-\subsection{Datová vrstva - Diagram tříd}
+\subsection{Datová vrstva - Diagram tříd} \label{datadiagram}
 \begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/DataLayerDiagram.png}\caption{UML Diagram tříd datové vrstvy aplikace}
 \end{figure}
 \newpage
@@ -276,20 +276,44 @@ Uživatelské rozhraní aplikace je definováno v FXML souborech. Tyto soubory j
 
 Controller třída obsahuje referenci na všechny prvky uživatelského rozhraní, pomocí které lze k prvkům přistupovat a měnit jejich vlastnosti za běhu aplikace. Reference se předává do třídních proměnných jejichž název se musí shodovat s \textit{fx:id} prvku definovaného v FXML souboru. Reference na aktuální instanci prvku rozhraní JavaFX předává během inicializace controller třídy, aby předávání fungovalo, controller třída musí implementovat rozhraní \textit{javafx.fxml.Initializable}.
 
+Aplikace celkem obsahuje 4 hlavní okna a k nim jsou přiřazeny 4 Controller třídy \newline \textbf{\emph{MainWindowController, RunningTaskController, HelpWindowController a ImportConController}}. Všechny Controller třídy mají vazby na Singleton třídu GUI, tato třída obsahuje pomocné funkce pro vyvolávání dodatečných dialogových oken. 
+
+Třída \textbf{\emph{MainWindowController}} dále využívá pomocné třídy pro ovládání některých složitějších komponent. Třídy \textbf{\emph{DragDropDB}} a \textbf{\emph{DragDropSQL}} zajišťují funkcionalitu přetahování prvků sql a údajů k připojení k databázi v editoru úloh. Třída \textbf{\emph{ContextMenus}} vytváří kontextové nabídky v hlavním okně. V diagramu tříd prezentační vrstvy aplikace se dále nachází statické výčtové třídy \textbf{\emph{KeyShortcuts}} (obsahuje výčet klávesových zkratek) a \textbf{\emph{Tabs}} (obsahuje výčet záložek hlavního okna aplikace, jejich pořadí a jména).
+
+\textbf{\emph{DatabaseTypeConverter}} rozšiřuje třídu \textit{javafx.util.StringConverter} a upravuje její funkcionalitu pro \textbf{\emph{DatabasePlugin}} třídy v naší aplikaci (viz. sekce \ref{plugins}).
+
+Třída \textbf{\emph{WindowResizeListener}} reaguje na události spojené s změnou velikosti okna aplikace a přizpůsobuje tomu velikost některých grafických prvků. Jedná se především o ovládací prvky \textit{javafx.scene.control.SplitPane}, které ve výchozím stavu nereagují na změny velikosti okna a nezachovávají si proporční velikosti nastavené uživatelem. Třída se inicializuje společně s \textbf{\emph{MainWindowController}} třídou, tyto třídy tak na sebe nemají přímou vazbu.
 
 
+\subsection{Prezentační vrstva - Hlavní okno aplikace}
+Po spuštění aplikace je spuštěno hlavní grafické uživatelské rozhraní, to je rozděleno do tří podsekcí pomocí \textit{javafx.scene.control.TabPane}.
 
+\newpage
+\begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/coneditor.png}\caption{Okno editoru údajů k připojení k databázovému serveru}\label{coneditor}
+\end{figure}
+Okno editoru (obrázek \ref{coneditor}) pro správu údajů k připojení k databázovému serveru umožňuje přidávat nové položky pomocí tlačítka umístěného pod seznamem položek, nebo přes hlavní kontextovou nabídku aplikace. Existující položky lze editovat po kliknutí na jejich jméno v seznamu umístěného na levé straně okna. Pravým kliknutím na jméno položky, lze položku trvale odstranit. Samotný formulář odpovídá datové struktuře třídy \textbf{\emph{DbCon}} (viz. sekce \ref{datadiagram}). Heslo databázového uživatele se zadává do vstupního pole typu \textit{javafx.scene.control.PasswordField}, díky tomu se na monitor renderují pouze zástupné znaky \textbf{'•'}, místo skutečných znaků hesla.
 
-TODO:
+Nad uloženými údaji lze provést test, tento test ověří, zda se k danému databázovému serveru lze připojit.
 
-FXML GUI, rozměry - min, max preffered popsat responzivní design
-\subsection{Prezentační vrstva - Okno editoru}
+\newpage
+\begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/sqleditor.png}\caption{Okno editoru SQL dotazů s parametry}
+\end{figure}
+
+TODO: popis
+
+\newpage
+\begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/taskeditor.png}\caption{Okno editoru spustitelných úloh}
+\end{figure}
+
+TODO: popis
+
+\newpage
 \subsection{Prezentační vrstva - Okno monitoru úloh}
 
 
 \subsection{Logická vrstva} \label{logic}
-Diagram možná tady ? = Plugin - > Pool -> Task -> RunnableTask -> ExecutableWork.... TODO:
-
+ Plugin - > Pool -> Task -> RunnableTask -> ExecutableWork.... TODO:
+\subsection{Logická vrstva - Rozšíření aplikace} \label{plugins}
 
 \section{Validace SQL dotazů - SQL Lexer / Parser}
 Jeden z cílů této práce je validovat SQL zadané uživatelem. Aby bylo možné zkontrolovat správnost zadaného SQL dotazu, potřebujeme znát kompletní gramatiku jazyka SQL a nad touto gramatikou postavit validátor (parser). Protože tohle téma je tak rozsáhlé, že by mohlo pokrýt celou samostatnou práci, použijeme na validaci SQL příkazů již existující knihovny. Před samotným výběrem knihovny, jsem prováděl testy volně dostupných knihoven pro zpracovávání SQL. Pro jazyk Java, co se volně dostupných knihoven týká, máme pouze 2 projekty, které jsou aktuální a stále se rozvíjí, projekt ANTRL a projekt jsqlparser.
@@ -534,9 +558,6 @@ TODO:
 
 
 \appendix % prilohy
-\section{Uživatelské rozhraní aplikace}
-\begin{figure}[!h]\centering\includegraphics[width=1.0\textwidth]{Figures/GUI1.jpg}\caption{Uživatelské rozhraní aplikace}
-\end{figure}
 \section{Zdrojový kód pro testování ANTRL - MySQL}
 \begin{lstlisting}[caption=ANTRL MySQL]
     static boolean mysqlresult = true;
