@@ -4,7 +4,6 @@
 \usepackage{subfig}		% makra pro "podobrazky" a "podtabulky"
 \usepackage{tikz}		% makra pro kresleni
 
-
 % Zadame pozadovane vstupy pro generovani titulnich stran.
 \ThesisAuthor{Lukáš Hanusek}
 
@@ -33,20 +32,20 @@
 %\CooperatingPersonsDeclarationImageFile{Figures/CoopPersonDeclaration.jpg}
 
 
+% řazeno podle abecedy nikoliv podle výskytů v textu
+\AddAcronym{API}{Application Programming Interface}
+\AddAcronym{CSV}{Comma-separated values}
 \AddAcronym{DB}{Databáze}
 \AddAcronym{DBMS}{Database Management system (Systém řízení báze dat)}
-\AddAcronym{SŘBD}{Systém řízení báze dat}
-\AddAcronym{JVM}{Java Virtual Machine}
-\AddAcronym{JRE}{Java Runtime Environment}
-\AddAcronym{API}{Application Programming Interface}
-\AddAcronym{XML}{eXtensible Markup Language}
-\AddAcronym{SQL}{Structured Query Language - Dotazovací jazyk pro manipulaci s daty na databázovém systému založeném na SQL}
 \AddAcronym{IDE}{Integrated Development Environment}
-\AddAcronym{UML}{Unified Modeling Language}
-\AddAcronym{JDBC}{Java Database Connectivity (\ref{jdbc})}
 \AddAcronym{JAXB}{Java Architecture for XML Binding (\ref{jabx})}
-\AddAcronym{CSV}{Comma-separated values}
-
+\AddAcronym{JDBC}{Java Database Connectivity (\ref{jdbc})}
+\AddAcronym{JRE}{Java Runtime Environment}
+\AddAcronym{JVM}{Java Virtual Machine}
+\AddAcronym{SQL}{Structured Query Language - Dotazovací jazyk pro manipulaci s daty na databázovém systému založeném na SQL}
+\AddAcronym{SŘBD}{Systém řízení báze dat}
+\AddAcronym{UML}{Unified Modeling Language}
+\AddAcronym{XML}{eXtensible Markup Language}
 
 
 
@@ -79,7 +78,7 @@ Při ukládání dat do databáze předpokládáme, že data musí být přístu
 Database Management System (Systém řízení báze dat) je software pro správu dat, který umožňuje vytváření, editování, mazání a procházení dat. Mezi nejdůležitější vlastnosti každého DBMS patří skupina vlastností označována jako \textit{ACID (Atomicity (atomičnost), Consistency (konzistence), Isolation (izolace), Durability (trvalost))}.
 
 \subsection{Jazyk SQL (Structured Query Language)}
-Jazyk SQL doménově specifický jazyk standardizován organizací ISO (International Organization for Standardization) pod označením ISO/IEC 9075:2016. Poslední verze je z prosince 2016 \cite{sqliso}. Samotný jazyk SQL se dá rozdělit do 4 kategorií:
+Jazyk SQL je doménově specifický jazyk standardizován organizací ISO (International Organization for Standardization) pod označením ISO/IEC 9075:2016. Poslední verze standardizace je z prosince 2016 \cite{sqliso}. Samotný jazyk SQL se dá rozdělit do 4 kategorií:
 \begin{itemize}
   \item \textbf{Data Query Language (DQL)} slouží pro procházení a čtení dat.
   \item \textbf{Data Definition Language (DDL)} se používá pro definování datových struktur.
@@ -93,15 +92,15 @@ V komplexnějších DBMS nalezneme ještě 5. kategorii \textbf{Declarative Lang
 \subsection{Parametry vytížení databázového serveru}
 Pod pojmem vytížení databáze se skrývá celá řada parametrů, které je potřeba monitorovat, aby bylo možné identifikovat, co nejvíce zatěžuje databázový server a zpomaluje tak jeho činnost, případně jaký postup zvolit k řešení problému. Mezi nejdůležitější parametry patří:
 \begin{itemize}
-  \item \textbf{Počet dotazů za vteřinu} - Počet dotazů za vteřinu je důležitý údaj, podle kterého můžeme porovnávat další parametry jako například vytížení procesoru, počtem přístupů na disk nebo vytížení sítě. Toto číslo však nikdy nebude přímým ukazatelem vytížení, protože každý dotaz provádí odlišně náročné operace.
-  \item \textbf{Doba zpracování dotazu} - Tento údaj je velmi důležitý, pokud monitorujeme dotazy na databázi, jejichž zpracování trvá dlouho. Můžeme tak odhalit problémy, zejména v samotném návrhu struktury databáze, nebo špatné konstrukci SQL dotazů, které jsou na databázi zasílány.
+  \item \textbf{Počet dotazů za vteřinu} - Počet dotazů za vteřinu je důležitý údaj, podle kterého můžeme porovnávat další parametry jako například vytížení procesoru, počet přístupů na disk nebo vytížení sítě. Toto číslo však nikdy nebude přímým ukazatelem vytížení, protože každý dotaz provádí odlišně náročné operace.
+  \item \textbf{Doba zpracování dotazu} - Tento údaj je velmi důležitý, pokud monitorujeme dotazy na databázi, jejichž zpracování trvá dlouho. Můžeme tak odhalit problémy, zejména v samotném návrhu struktury databáze, nebo špatnou konstrukci SQL dotazů, které jsou na databázi zasílány.
   \item \textbf{Vytížení procesoru} - Je základní údaj, který je možné porovnávat s počtem dotazů na databázi. 
-  \item \textbf{Počet přístupů na disk} - Pokud databázový server velmi často přistupuje na disk, může se jednat o problém s nedostatkem operační paměti přidělené databázovému serveru. Při nedostatku operační paměti je databázový server nucen z disku opakovaně načítat stránky před vyhodnocením dotazu, které by jinak mohly být při dostatku operační paměti uloženy ve vyrovnávací paměti. Výsledkem je vysoký počet přístupů na disk a pomalý přístup k datům.
-  \item \textbf{Počet SQL kompilací / rekompilací} - Pro každý SQL dotaz je na databázovém serveru sestavován plán jeho vykonání. Typicky se struktura SQL dotazu nemění, zasílá se opakovaně stejně strukturovaný dotaz, jen s jinými argumenty. Protože sestavit plán dotazu je pro databázový server časově náročná operace, mělo by k sestavování docházet co nejméně. 
+  \item \textbf{Počet přístupů na disk} - Každý správně navržený DBMS se snaží omezit počet přístupů na disk tím, že často používaná data načítá do části operační paměti nazývané jako vyrovnávací paměť. Při nedostatku operační paměti je databázový server nucen z disku opakovaně načítat stránky před vyhodnocením dotazu, které by jinak mohly být při dostatku operační paměti uloženy ve vyrovnávací paměti. Výsledkem je vysoký počet přístupů na disk a pomalý přístup k datům.
+  \item \textbf{Počet SQL kompilací / rekompilací} - Pro každý SQL dotaz je na databázovém serveru sestavován plán jeho vykonání. Správně navržené aplikace by na databázový server měly posílat předem připravené SQL dotazy a za běhu aplikace zasílat na databázový server opakovaně stejně strukturované SQL dotazy jen s jinými argumenty. Protože sestavit plán vykonání dotazu je pro databázový server časově náročná operace, mělo by k sestavování docházet co nejméně. 
   \item \textbf{Vytížení sítě} - Při monitorování sítě sledujeme parametry:
   \begin{itemize}
-  	\item \textbf{Délka fronty na síťovém rozhraní} - Pokud fronta na síťovém rozhraní dosahuje vysokých hodnot a kapacity linky není plně využita, může se jednat o problém s nedostatečným výkonem hardware síťového rozhraní, typicky síťová karta.
-  	\item \textbf{Rychlost odesílání / přijímaní dat} - Rychlost je typicky měřena v jednotkách Kbps (kilobits per second), nebo Mbps (megabits per second) v případě frekventovanějších linek. Tento parametr je nutné porovnávat v celkovou propustností linky, kterou má databázový server k dispozici. 
+  	\item \textbf{Délka fronty na síťovém rozhraní} - Pokud fronta na síťovém rozhraní dosahuje vysokých hodnot a kapacity linky není plně využita, může se jednat o problém s nedostatečným výkonem hardware síťového rozhraní (síťová karta).
+  	\item \textbf{Rychlost odesílání / přijímaní dat} - Tento parametr je nutné porovnávat v celkovou propustností linky, kterou má databázový server k dispozici. 
   \end{itemize}
 \end{itemize}
 
@@ -109,7 +108,7 @@ Pod pojmem vytížení databáze se skrývá celá řada parametrů, které je p
 
 
 \subsection{Podporované databázové systémy aplikací}
-
+TODO: přesunout do jine sekce protože toto se tyka praxe nikoliv teoreticke sekce...
 \begin{itemize}
   \item \textbf{Microsoft SQL Server} - TODO: popis
   \item \textbf{Oracle Database} - TODO: popis
@@ -148,7 +147,7 @@ Pro zajištění co největší přehlednosti zdrojového kódu je implementace 
   	\item \textbf{Prezentační vrstva} poskytuje uživatelské rozhraní aplikace, ve kterém je možno vytvářet, editovat a mazat data aplikace. Dále pak spouštět a monitorovat úlohy. Prezentační vrstva je umístěna v balíku \textit{dbstresstest.gui}.
   	\item \textbf{Logická vrstva} zajišťuje vykonávání uživatelem spuštěných úloh, kontrolu uživatelského vstupu a komunikaci mezi datovou a prezentační vrstvou aplikace. Logická vrstva je umístěna v balíku \textit{dbstresstest.logic}.
 \end{itemize}  	
-
+\newpage
 \subsection{Datová vrstva - Diagram tříd}
 \begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/DataLayerDiagram.png}\caption{UML Diagram tříd datové vrstvy aplikace}
 \end{figure}
@@ -183,8 +182,7 @@ Aplikace perzistentně ukládá tyto datové struktury:
   	\item \textit{timeout} - limit v milisekundách pro vykonání dotazu
   \end{itemize}
   
-  \item \textbf{Spustitelné úlohy} - Tyto data jsou reprezentovány třídou \textbf{\emph{Task}}. O načítání a ukládání do perzistentního úložiště se opět stará Singleton třída \textbf{\emph{TaskManager}} (\ref{lst:task}).
-Všechny Singleton Manager třídy mají možnost zaregistrovat posluchače událostí pomocí třídy \textbf{\emph{ManagerListener}} přes metodu \textit{addListener()}. Tyto posluchače jsou v aplikaci využity v Prezentační vrstvě pro aktualizaci seznamů vytvořených entit.
+  \item \textbf{Spustitelné úlohy} - Tyto data jsou reprezentovány třídou \textbf{\emph{Task}}. O načítání a ukládání do perzistentního úložiště se opět stará Singleton třída \textbf{\emph{TaskManager}} (\ref{lst:task}). Objekty třídy \textbf{\emph{Task}} obsahují tyto data:
     \begin{itemize}
   	\item \textit{id} - unikátní identifikátor na logické vrstvě aplikace (\ref{logic})
   	\item \textit{taskName} - unikátní jméno definované uživatelem, slouží jako identifikátor  na prezentační vrstvě (\ref{prezent})
@@ -196,9 +194,11 @@ Všechny Singleton Manager třídy mají možnost zaregistrovat posluchače udá
     \end{itemize}
 \end{itemize}
 
+Všechny Singleton Manager třídy mají možnost zaregistrovat posluchače událostí pomocí třídy \textbf{\emph{ManagerListener}} přes metodu \textit{addListener()}. Tyto posluchače jsou v aplikaci využity v Prezentační vrstvě pro aktualizaci seznamů vytvořených entit.
+
 \newpage
 \subsection{Datová vrstva - XML} \label{xml}
-Veškerá data aplikace jsou uložena ve formátu XML, vyjma Log a CSV souborů (\ref{logs}).\newline
+Perzistentní data aplikace jsou uložena ve formátu XML, vyjma Log a CSV souborů (\ref{logs}).\newline
 
 \begin{minipage}{\linewidth}
 \begin{lstlisting}[caption=Údaje k připojení k databázovému serveru ve formátu XML\label{lst:con},language=XML] 
@@ -246,8 +246,24 @@ Každá spustitelná úloha je uložená v samostatném XML souboru v adresáři
 \end{minipage}
 
 \subsection{Datová vrstva - JAXB} \label{jabx}
+Java Architecture for XML Binding (JAXB) je obsaženo v balíku \textit{javax.xml.bind}. JABX umožňuje serializovat Java objekty do formátu XML a uložit je na disk. Aby bylo možné objekt pomocí JABX serializovat, všechny datové typy, které objekt obsahuje musí implementovat rozhraní \textit{java.io.Serializable}. Chování serializace a de-serializace konkrétního objektu můžeme ovlivnit přidáním anotací do třídy, která objekt definuje. Anotace pro JAXB najdeme v balíku \textit{javax.xml.bind.annotation}. V aplikaci jsou použity tyto anotace:
+\begin{itemize}
+  	\item \textbf{@XmlRootElement} umožňuje pojmenovat kořenový element XML pomocí argumentu \textit{name}.
+  	\item \textbf{@XmlElement} označuje XML Element, pomocí nepovinného argumentu \textit{name} je možno element pojmenovat ve formátu XML. Bez použití této anotace budou všechny XML Elementy pojmenovány podle názvu třídních proměnných.
+  	\item \textbf{@XmlElementWrapper} obalí XML Element dalším XML Elementem, v aplikaci použito především pro obalení seznamu elementů.
+  	\item Proměnná označená anotací \textbf{@XmlTransient} se do XML formátu nebude serializovat.
+  	\item \textbf{@XmlAttribute} umožňuje serializovat danou třídní proměnnou jako XML atribut.
+\end{itemize}
+
 
 \subsection{Datová vrstva - Log a CSV soubory} \label{logs}
+\begin{minipage}{\linewidth}
+Během spouštění úloh v aplikaci jsou generovány log soubory, obsahují informace a všech chybách, které nastaly za běhu dané úlohy. Log soubory jsou umístěny v adresáři \textit{/logs}, ten je umístěn v pracovním adresáři aplikace. Log soubory jsou rozděleny podle jména uložených údajů k připojení k databázovému serveru a dále pak podle data spuštění úlohy, aby bylo možné dobře v log souborech vyhledávat a případně mazat nepotřebné adresáře s log soubory.
+
+
+
+Pokud úloha skončí nebo je zastavená uživatelem, aplikace nabídne možnost výsledky testu exportovat do CSV souboru. Do souboru jsou exportovány časy vykonávání jednotlivých SQL dotazů. Díky CSV formátu je možno s daty dále pracovat v jiném nástroji, například Microsoft Excel, nebo Google Sheets a vygenerovat z CSV souboru grafy a tabulky.
+\end{minipage}
 
 \newpage
 \subsection{Prezentační vrstva - Digram tříd} \label{prezent}
@@ -279,7 +295,7 @@ Diagram možná tady ? = Plugin - > Pool -> Task -> RunnableTask -> ExecutableWo
 Jeden z cílů této práce je validovat SQL zadané uživatelem. Aby bylo možné zkontrolovat správnost zadaného SQL dotazu, potřebujeme znát kompletní gramatiku jazyka SQL a nad touto gramatikou postavit validátor (parser). Protože tohle téma je tak rozsáhlé, že by mohlo pokrýt celou samostatnou práci, použijeme na validaci SQL příkazů již existující knihovny. Před samotným výběrem knihovny, jsem prováděl testy volně dostupných knihoven pro zpracovávání SQL. Pro jazyk Java, co se volně dostupných knihoven týká, máme pouze 2 projekty, které jsou aktuální a stále se rozvíjí, projekt ANTRL a projekt jsqlparser.
 
 
-\subsection{Projekt ANTLR (ANother Tool for Language Recognition}
+\subsection{Projekt ANTLR (ANother Tool for Language Recognition)}
 Projekt ANTRL je nástroj na čtení, zpracovávání, vykonávání nebo překládání strukturovaného textu nebo binárních souborů. Je velmi rozšířený pro budování jazyků, nástrojů a knihoven. ANTRL vygeneruje ze zadané gramatiky parser, který umožňuje sestavovat a procházet sestavené stromy ze zadané posloupnosti výrazů. \cite{antrl}
 
 
@@ -394,7 +410,7 @@ Právě díky tomu, že automaticky vygenerované třídy pomocí ANTRL jsou tak
 \end{table}
 
 
-Z testů je vidět, že T-SQL a MySQL parser nedokázal odhalit chybu v \ref{tab:antrl2}. testu. T-SQL poté znovu selhal v testu \ref{tab:antrl4}.
+Z testů je vidět, že T-SQL a MySQL parser nedokázal odhalit chybu ve špatné syntaxi dotazu \textit{SELECT ** FROM TEST} (viz. tabulka \ref{tab:antrl2}). T-SQL parser poté opakovaně selhal (viz.~tabulka~\ref{tab:antrl4}).
 
 
 \subsection{Projekt Jsqlparser}
