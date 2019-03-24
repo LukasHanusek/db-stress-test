@@ -114,8 +114,10 @@ public class DragDropDB extends MainWindowController {
                         }
                         to.getItems().add(database);
                         success = true;
-                        if (mw.editedTask != null) mw.editedTask.modified = true;
-                        mw.saveTaskToMemory();
+                        if (mw.editedTask != null) {
+                            mw.editedTask.modified = true;
+                            mw.saveTaskToMemory();
+                        }
                     }
                     event.setDropCompleted(success);
                     event.consume();

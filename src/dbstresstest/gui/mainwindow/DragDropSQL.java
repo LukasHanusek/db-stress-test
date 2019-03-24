@@ -107,8 +107,10 @@ public class DragDropSQL {
                         if (to.getItems().contains(DEFAULT_ITEM)) to.getItems().remove(DEFAULT_ITEM);
                         to.getItems().add(db.getString());
                         success = true;
-                        if (mw.editedTask != null) mw.editedTask.modified = true;
-                        mw.saveTaskToMemory();
+                        if (mw.editedTask != null) {
+                            mw.editedTask.modified = true;
+                            mw.saveTaskToMemory();
+                        }
                     }
                     event.setDropCompleted(success);
                     event.consume();
