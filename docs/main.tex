@@ -105,18 +105,6 @@ Pod pojmem vytížení databáze se skrývá celá řada parametrů, které je p
 \end{itemize}
 
 
-
-
-\subsection{Podporované databázové systémy aplikací}
-TODO: přesunout do jine sekce protože toto se tyka praxe nikoliv teoreticke sekce...
-\begin{itemize}
-  \item \textbf{Microsoft SQL Server} - TODO: popis
-  \item \textbf{Oracle Database} - TODO: popis
-  \item \textbf{MySQL} - TODO: popis
-\end{itemize}
-
-
-
 \section{Použitá technologie pro implementaci aplikace} \label{tech}
 
 \subsection{Programovací jazyk Java}
@@ -143,12 +131,13 @@ NetBeans IDE byl prvním nástrojem pro vývoj Java aplikací. Projekt vznikl v 
 \section{Struktura aplikace}
 Pro zajištění co největší přehlednosti zdrojového kódu je implementace aplikace je rozdělena do tří vrstev:
 \begin{itemize}
-  	\item \textbf{Datová vrstva} se stará o ukládání, načítání a editování perzistentních dat v aplikaci. Datová vrstva je umístěna v balíku (Java package) \textit{dbstresstest.data}.
-  	\item \textbf{Prezentační vrstva} poskytuje uživatelské rozhraní aplikace, ve kterém je možno vytvářet, editovat a mazat data aplikace. Dále pak spouštět a monitorovat úlohy. Prezentační vrstva je umístěna v balíku \textit{dbstresstest.gui}.
-  	\item \textbf{Logická vrstva} zajišťuje vykonávání uživatelem spuštěných úloh, kontrolu uživatelského vstupu a komunikaci mezi datovou a prezentační vrstvou aplikace. Logická vrstva je umístěna v balíku \textit{dbstresstest.logic}.
+  	\item \textbf{Datová vrstva} se stará o ukládání, načítání a editování perzistentních dat v aplikaci. Datová vrstva je umístěna v balíku (Java package) \textit{dbstresstest.data}. Více v sekci \ref{datalayer}.
+  	\item \textbf{Prezentační vrstva} poskytuje uživatelské rozhraní aplikace, ve kterém je možno vytvářet, editovat a mazat data aplikace. Dále pak spouštět a monitorovat úlohy. Prezentační vrstva je umístěna v balíku \textit{dbstresstest.gui}. Více v sekci \ref{presentlayer}.
+  	\item \textbf{Logická vrstva} zajišťuje vykonávání uživatelem spuštěných úloh, kontrolu uživatelského vstupu a komunikaci mezi datovou a prezentační vrstvou aplikace. Logická vrstva je umístěna v balíku \textit{dbstresstest.logic}. Více v sekci \ref{logiclayer}.
 \end{itemize}  	
 \newpage
-\subsection{Datová vrstva - Diagram tříd} \label{datadiagram}
+\section{Datová vrstva} \label{datalayer}
+\subsection{Diagram tříd} \label{datadiagram}
 \begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/DataLayerDiagram.png}\caption{UML Diagram tříd datové vrstvy aplikace}
 \end{figure}
 \newpage
@@ -197,7 +186,7 @@ Aplikace perzistentně ukládá tyto datové struktury:
 Všechny Singleton Manager třídy mají možnost zaregistrovat posluchače událostí pomocí třídy \textbf{\emph{ManagerListener}} přes metodu \textit{addListener()}. Tyto posluchače jsou v aplikaci využity v Prezentační vrstvě pro aktualizaci seznamů vytvořených entit.
 
 \newpage
-\subsection{Datová vrstva - XML} \label{xml}
+\subsection{XML datové soubory} \label{xml}
 Perzistentní data aplikace jsou uložena ve formátu XML, vyjma Log a CSV souborů (\ref{logs}).\newline
 
 \begin{minipage}{\linewidth}
@@ -245,7 +234,7 @@ Sady SQL dotazů jsou uloženy ve více XML souborech, umístěných v adresář
 Každá spustitelná úloha je uložená v samostatném XML souboru v adresáři \textit{data/tasks/}, adresář \textit{data} je umístěn v pracovním adresáři aplikace. Soubor obsahuje reference pomocí ID.
 \end{minipage}
 
-\subsection{Datová vrstva - JAXB} \label{jabx}
+\subsection{JAXB} \label{jabx}
 Java Architecture for XML Binding (JAXB) je obsaženo v balíku \textit{javax.xml.bind}. JABX umožňuje serializovat Java objekty do formátu XML a uložit je na disk. Aby bylo možné objekt pomocí JABX serializovat, všechny datové typy, které objekt obsahuje musí implementovat rozhraní \textit{java.io.Serializable}. Chování serializace a de-serializace konkrétního objektu můžeme ovlivnit přidáním anotací do třídy, která objekt definuje. Anotace pro JAXB najdeme v balíku \textit{javax.xml.bind.annotation}. V aplikaci jsou použity tyto anotace:
 \begin{itemize}
   	\item \textbf{@XmlRootElement} umožňuje pojmenovat kořenový element XML pomocí argumentu \textit{name}.
@@ -256,7 +245,7 @@ Java Architecture for XML Binding (JAXB) je obsaženo v balíku \textit{javax.xm
 \end{itemize}
 
 
-\subsection{Datová vrstva - Log a CSV soubory} \label{logs}
+\subsection{Log a CSV soubory} \label{logs}
 \begin{minipage}{\linewidth}
 Během spouštění úloh v aplikaci jsou generovány log soubory, obsahují informace a všech chybách, které nastaly za běhu dané úlohy. Log soubory jsou umístěny v adresáři \textit{/logs}, ten je umístěn v pracovním adresáři aplikace. Log soubory jsou rozděleny podle jména uložených údajů k připojení k databázovému serveru a dále pak podle data spuštění úlohy, aby bylo možné dobře v log souborech vyhledávat a případně mazat nepotřebné adresáře s log soubory.
 
@@ -266,7 +255,8 @@ Pokud úloha skončí nebo je zastavená uživatelem, aplikace nabídne možnost
 \end{minipage}
 
 \newpage
-\subsection{Prezentační vrstva - Digram tříd} \label{prezent}
+\section{Prezentační vrstva} \label{presentlayer}
+\subsection{Digram tříd} \label{prezent}
 Z důvodu velkého počtu metod v třídách \textbf{\emph{MainWindowController}} a \textbf{\emph{RunningTaskController}} nejsou metody těchto tříd zahrnuty v tomto diagramu.
 
 \begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/PresentLayerDiagram.png}\caption{UML Diagram tříd prezentační vrstvy aplikace}
@@ -285,7 +275,7 @@ Třída \textbf{\emph{MainWindowController}} dále využívá pomocné třídy p
 Třída \textbf{\emph{WindowResizeListener}} reaguje na události spojené s změnou velikosti okna aplikace a přizpůsobuje tomu velikost některých grafických prvků. Jedná se především o ovládací prvky \textit{javafx.scene.control.SplitPane}, které ve výchozím stavu nereagují na změny velikosti okna a nezachovávají si proporční velikosti nastavené uživatelem. Třída se inicializuje společně s \textbf{\emph{MainWindowController}} třídou, tyto třídy tak na sebe nemají přímou vazbu.
 
 
-\subsection{Prezentační vrstva - Hlavní okno aplikace}
+\subsection{Hlavní okno aplikace}
 Po spuštění aplikace je spuštěno hlavní grafické uživatelské rozhraní, to je rozděleno do tří podsekcí pomocí \textit{javafx.scene.control.TabPane}.
 
 \newpage
@@ -308,13 +298,56 @@ TODO: popis
 TODO: popis
 
 \newpage
-\subsection{Prezentační vrstva - Okno monitoru úloh}
+\subsection{Okno monitoru úloh}
 
 
-\subsection{Logická vrstva} \label{logic}
- Plugin - > Pool -> Task -> RunnableTask -> ExecutableWork.... TODO:
-\subsection{Logická vrstva - Rozšíření aplikace} \label{plugins}
+\section{Logická vrstva} \label{logiclayer}
+\subsection{Diagramy průběhu úlohy} \label{logic}
+Pro popis logické vrstvy jsem zvolil sekvenční diagram, který bude pro popis operací vhodnější, než třídní diagramy, použité pro demonstraci struktury aplikace na datové a prezentační vrstvě. Následující sekvenční diagram demonstruje proces vytvoření spustitelné úlohy v aplikaci.
 
+\begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/rtprocess.png}\caption{Sekvenční diagram vytvoření spustitelné úlohy}
+\label{seq1}
+\end{figure}
+
+\textbf{\emph{MainWindowController}} je třída na pomezí prezentační a logické vrstvy aplikace (viz. sekce \ref{prezent}). Po vyvolání události pro spuštění vybrané úlohy v prezentační vrstvě tato třída volá statickou metodu \textit{createRunnable(Task)} umístěnou ve statické třídě \textbf{\emph{RunnableTaskCreator}}, která vytvoří pole objektů \textbf{\emph{RunnableTask}}, pro každou databázi v této úloze je vytvořen právě jeden tento objekt.
+
+Objekty typu \textbf{\emph{RunnableTask}} vytváří v konstruktoru sadu objektů, které implementují rozhraní \textbf{\emph{ExecutableQuery}} (implementace rozhraní se liší podle typu dotazu), pro každý samostatný SQL dotaz v dané úloze, je vytvořen právě jeden objekt. Pokud se jedná o parametrizovaný SQL příkaz, pak se pro každou sadu parametrů, se kterou se má dotaz spouštět, vytvoří pole objektů typu \textbf{\emph{Var}}. Tyto objekty zapouzdřují veškeré chování proměnných, rozpoznávají datové typy a vyhodnocují hodnoty funkcí.
+
+Na konci diagramu je vytvořené pole objektů RunnableTask předáno v konstruktoru třídy  \textbf{\emph{RunnableTaskController}} (v diagramu zkráceno na \textit{RTController}). Daná úloha je v tuto chvíli připravena ke spuštění. Následující digram popisuje průběh úlohy.
+
+\begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/runtask.png}\caption{Sekvenční diagram průběhu úlohy}
+\label{seq2}
+
+\textit{ThreadPool a RunnableTaskThread (označeny šedým pozadím) nejsou samostatné třídy, jsou součástí třídy \textbf{\emph{RunnableTask}}, v diagramu jsou zobrazeny na samostatných osách, aby bylo možné lépe popsat, operace prováděné na jednotlivých vláknech aplikace. }
+\end{figure}
+
+
+Diagram \ref{seq2} popisuje průběh spuštění úlohy od chvíle, kdy uživatel klikne na tlačítko start, tuto akci zachytí posluchač ve třídě \textbf{\emph{RunnableTaskController}} (v diagramu zkráceno na~\textit{RTController})~a~v~cyklu spustí úlohu pro všechny definované databáze v úloze metodou \textit{start()} volanou na objekty \textbf{\emph{RunnableTask}}, jejich vytvoření popisuje předchozí diagram \ref{seq1}. D8le je v rámci objektu \textbf{\emph{RunnableTask}} vytvořen objekt typu \textit{DbPool} pomocí statické třídy \textbf{\emph{RunnableTaskCreator}}, \textit{DbPool} je rozhraní, které definuje operace pro \textit{Connection Pool} (posloupnost předem vytvořených spojení s databázovým serverem). Implementace třídy \textit{DbPool} se liší v závislosti na typu databáze. Jednotlivé DBMS spravují samostatné rozšíření hlavní aplikace (viz. sekce \ref{plugins}).
+
+
+Před samostatným spuštěním je ještě potřeba vytvořit Thread pool (posloupnost předem vytvořených vláken, v diagramu označeno jako \textit{ThreadPool}, pro implementaci je použit \newline \textit{java.util.concurrent.ExecutorService}), velikost je shodná s velikostí Connection poolu. Aby bylo možné zajistit funkcionalitu neomezeného počtu spuštění, které je ukončeno až akcí uživatele, je potřeba vytvořit další vlákno (v diagramu označeno jako \textit{RunnableTaskThread}, které bude časovat a odesílat jednotlivé SQL dotazy k vykonání do Thread Poolu pomocí metody \textit{submit(RunnableTask)} (Třída rozšiřuje rozhraní java.lang.Runnable a proto může být předána do \textit{ThreadPoolu}).
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Rozšíření aplikace} \label{plugins}
+
+TODO:
+zde popis jak fungují rozšíření aplikace
+
+
+
+
+\newpage
 \section{Validace SQL dotazů - SQL Lexer / Parser}
 Jeden z cílů této práce je validovat SQL zadané uživatelem. Aby bylo možné zkontrolovat správnost zadaného SQL dotazu, potřebujeme znát kompletní gramatiku jazyka SQL a nad touto gramatikou postavit validátor (parser). Protože tohle téma je tak rozsáhlé, že by mohlo pokrýt celou samostatnou práci, použijeme na validaci SQL příkazů již existující knihovny. Před samotným výběrem knihovny, jsem prováděl testy volně dostupných knihoven pro zpracovávání SQL. Pro jazyk Java, co se volně dostupných knihoven týká, máme pouze 2 projekty, které jsou aktuální a stále se rozvíjí, projekt ANTRL a projekt jsqlparser.
 
@@ -375,7 +408,9 @@ Právě díky tomu, že automaticky vygenerované třídy pomocí ANTRL jsou tak
 
 \begin{table}[!htbp]
 	\centering
-	\caption{Výsledky pro dotaz: 'SELECT * FROM TEST'}
+	\caption{ANTRL Test 1}
+	Výsledky pro dotaz: 'SELECT * FROM TEST'
+	\vskip 0.1cm
 	\label{tab:antrl1}
 	\begin{tabular}{lllll}
 		\toprule
@@ -390,7 +425,9 @@ Právě díky tomu, že automaticky vygenerované třídy pomocí ANTRL jsou tak
 
 \begin{table}[!htbp]
 	\centering
-	\caption{Výsledky pro dotaz: 'SELECT ** FROM TEST'}
+	\caption{ANTRL Test 2}
+	Výsledky pro dotaz: 'SELECT ** FROM TEST'
+	\vskip 0.1cm
 	\label{tab:antrl2}
 	\begin{tabular}{lllll}
 		\toprule
@@ -405,7 +442,9 @@ Právě díky tomu, že automaticky vygenerované třídy pomocí ANTRL jsou tak
 
 \begin{table}[!htbp]
 	\centering
-	\caption{Výsledky pro dotaz: 'SELECT COUNT(*) FROM TEST WHERE CID = 5 AND PRICE < 100 GROUP BY NAME ORDER BY PRICE'}
+	\caption{ANTRL Test 3}
+	Výsledky pro dotaz: 'SELECT COUNT(*) FROM TEST WHERE CID = 5 AND PRICE < 100 GROUP BY NAME ORDER BY PRICE'
+	\vskip 0.1cm
 	\label{tab:antrl3}
 	\begin{tabular}{lllll}
 		\toprule
@@ -420,7 +459,9 @@ Právě díky tomu, že automaticky vygenerované třídy pomocí ANTRL jsou tak
 
 \begin{table}[!htbp]
 	\centering
-	\caption{Výsledky pro dotaz: 'SELECT COUNT(*) FROM TEST WHERE CID = 5 AND PRICE < 100 GROUP BY NAME ORDER PRICE'}
+	\caption{ANTRL Test 4}
+	Výsledky pro dotaz: 'SELECT COUNT(*) FROM TEST WHERE CID = 5 AND PRICE < 100 GROUP BY NAME ORDER PRICE'
+	\vskip 0.1cm
 	\label{tab:antrl4}
 	\begin{tabular}{lllll}
 		\toprule
@@ -434,7 +475,8 @@ Právě díky tomu, že automaticky vygenerované třídy pomocí ANTRL jsou tak
 \end{table}
 
 
-Z testů je vidět, že T-SQL a MySQL parser nedokázal odhalit chybu ve špatné syntaxi dotazu \textit{SELECT ** FROM TEST} (viz. tabulka \ref{tab:antrl2}). T-SQL parser poté opakovaně selhal (viz.~tabulka~\ref{tab:antrl4}).
+Z testů je vidět, že T-SQL a MySQL ANTRL parser nedokázal odhalit chybu ve špatné syntaxi dotazu \textit{SELECT ** FROM TEST} (viz. tabulka \ref{tab:antrl2}). T-SQL parser poté opakovaně selhal (viz.~tabulka~\ref{tab:antrl4}).
+
 
 
 \subsection{Projekt Jsqlparser}
@@ -449,7 +491,9 @@ Pro možnost testy porovnat, jsou v testu použity stejné SQL dotazy, jako v p�
 
 \begin{table}[!htbp]
 	\centering
-	\caption{Výsledky pro dotaz: 'SELECT * FROM TEST'}
+	\caption{JSqlparser test 1}
+	Výsledky pro dotaz: 'SELECT * FROM TEST'
+	\vskip 0.1cm
 	\label{tab:jsql1}
 	\begin{tabular}{lllll}
 		\toprule
@@ -462,7 +506,9 @@ Pro možnost testy porovnat, jsou v testu použity stejné SQL dotazy, jako v p�
 
 \begin{table}[!htbp]
 	\centering
-	\caption{Výsledky pro dotaz: 'SELECT ** FROM TEST'}
+	\caption{JSqlparser test 2}
+	Výsledky pro dotaz: 'SELECT ** FROM TEST'
+	\vskip 0.1cm
 	\label{tab:jsql2}
 	\begin{tabular}{lllll}
 		\toprule
@@ -475,7 +521,9 @@ Pro možnost testy porovnat, jsou v testu použity stejné SQL dotazy, jako v p�
 
 \begin{table}[!htbp]
 	\centering
-	\caption{Výsledky pro dotaz: 'SELECT COUNT(*) FROM TEST WHERE CID = 5 AND PRICE < 100 GROUP BY NAME ORDER BY PRICE'}
+	\caption{JSqlparser test 3}
+	Výsledky pro dotaz: 'SELECT COUNT(*) FROM TEST WHERE CID = 5 AND PRICE < 100 GROUP BY NAME ORDER BY PRICE'
+	\vskip 0.1cm
 	\label{tab:jsql3}
 	\begin{tabular}{lllll}
 		\toprule
@@ -488,7 +536,9 @@ Pro možnost testy porovnat, jsou v testu použity stejné SQL dotazy, jako v p�
 
 \begin{table}[!htbp]
 	\centering
-	\caption{Výsledky pro dotaz: 'SELECT COUNT(*) FROM TEST WHERE CID = 5 AND PRICE < 100 GROUP BY NAME ORDER PRICE'}
+	\caption{JSqlparser test 4}
+	Výsledky pro dotaz: 'SELECT COUNT(*) FROM TEST WHERE CID = 5 AND PRICE < 100 GROUP BY NAME ORDER PRICE'
+	\vskip 0.1cm
 	\label{tab:jsql4}
 	\begin{tabular}{lllll}
 		\toprule
@@ -560,6 +610,11 @@ TODO:
 \appendix % prilohy
 \section{Zdrojový kód pro testování ANTRL - MySQL}
 \begin{lstlisting}[caption=ANTRL MySQL]
+
+	import antrl.mysql.MySqlParser;
+	import antrl.mysql.MySqlLexer;
+	import org.antlr.v4.runtime.*;
+
     static boolean mysqlresult = true;
 
     public static boolean mysql(String args) {
@@ -586,7 +641,12 @@ TODO:
 \end{lstlisting}
 \section{Zdrojový kód pro testování ANTRL - T-SQL}
 \begin{lstlisting}[caption=ANTRL T-SQL]
-  static boolean tsqlresult = true;
+
+	import antrl.tsql.TSqlLexer;
+	import antrl.tsql.TSqlParser;
+	import org.antlr.v4.runtime.*;
+
+  	static boolean tsqlresult = true;
 
     public static boolean tsql(String args) {
         tsqlresult = true;
@@ -612,6 +672,11 @@ TODO:
 \end{lstlisting}
 \section{Zdrojový kód pro testování ANTRL - PL-SQL}
 \begin{lstlisting}[caption=ANTRL PL-SQL]
+
+	import antrl.plsql.PlSqlLexer;
+	import antrl.plsql.PlSqlParser;
+	import org.antlr.v4.runtime.*;
+
     static boolean plsqlresult = true;
 
     public static boolean plsql(String args) {
