@@ -145,7 +145,7 @@ Aplikace perzistentně ukládá tyto datové struktury:
 
 \begin{itemize}
   \item \textbf{Údaje k připojení k databázovému serveru} - Tento typ dat je v aplikaci reprezentován třídou \textbf{\emph{DbCon}}. Načítání a ukládání objektů, vytvořených z této třídy, do perzistentního úložiště provádí třída \textbf{\emph{ConManager}} (\ref{lst:con}). Třída je realizována podle návrhového vzoru Singleton, aby bylo zaručeno, že za běhu aplikace bude existovat pouze jedna kopie dat v operační paměti aplikace. Třída \textbf{\emph{DbCon}} zapouzdřuje tyto data:
-  \begin{itemize}
+\begin{itemize}
   	\item \textit{id} - unikátní identifikátor na logické vrstvě aplikace (\ref{logic})
   	\item \textit{customName} - unikátní jméno definované uživatelem, slouží jako identifikátor na prezentační vrstvě (\ref{prezent})
   	\item \textit{databaseName} - jméno databáze
@@ -154,7 +154,7 @@ Aplikace perzistentně ukládá tyto datové struktury:
   	\item \textit{user} - databázový uživatel
   	\item \textit{password} - heslo databázového uživatele, používá kódování Base64
   	\item \textit{port} - číslo portu databáze, hodnota 0 značí výchozí hodnotu v JDBC řadiči
-  \end{itemize}
+\end{itemize}
   
   \item \textbf{SQL dotazy s parametry} - Tento typ dat reprezentuje třída \textbf{\emph{SQLSet}}, tato třída dále obsahuje seznam parametrů pro SQL dotaz, reprezentován třídou \textbf{\emph{ValueSet}}. Načítání a ukládání objektů těchto tříd realizuje třída \textbf{\emph{SetManager}} (\ref{lst:set}), která je taktéž implementována podle návrhového vzoru Singleton. Třída \textbf{\emph{SQLSet}} zapouzdřuje tyto data:
     \begin{itemize}
@@ -309,29 +309,37 @@ Pro popis logické vrstvy jsem zvolil sekvenční diagram, který bude pro popis
 \label{seq1}
 \end{figure}
 
-\textbf{\emph{MainWindowController}} je třída na pomezí prezentační a logické vrstvy aplikace (viz. sekce \ref{prezent}). Po vyvolání události pro spuštění vybrané úlohy v prezentační vrstvě tato třída volá statickou metodu \textit{createRunnable(Task)} umístěnou ve statické třídě \textbf{\emph{RunnableTaskCreator}}, která vytvoří pole objektů \textbf{\emph{RunnableTask}}, pro každou databázi v této úloze je vytvořen právě jeden tento objekt.
+\textbf{\emph{MainWindowController}} je třída spojující prezentační a logickou vrstvu aplikace (viz. sekce \ref{prezent}). Po vyvolání události pro spuštění vybrané úlohy v prezentační vrstvě tato třída volá statickou metodu \textit{createRunnable(Task)} umístěnou ve statické třídě \textbf{\emph{RunnableTaskCreator}}, která vytvoří pole objektů \textbf{\emph{RunnableTask}}, pro každou databázi v této úloze je vytvořen právě jeden tento objekt.
 
-Objekty typu \textbf{\emph{RunnableTask}} vytváří v konstruktoru sadu objektů, které implementují rozhraní \textbf{\emph{ExecutableQuery}} (implementace rozhraní se liší podle typu dotazu), pro každý samostatný SQL dotaz v dané úloze, je vytvořen právě jeden objekt. Pokud se jedná o parametrizovaný SQL příkaz, pak se pro každou sadu parametrů, se kterou se má dotaz spouštět, vytvoří pole objektů typu \textbf{\emph{Var}}. Tyto objekty zapouzdřují veškeré chování proměnných, rozpoznávají datové typy a vyhodnocují hodnoty funkcí.
+Objekty typu \textbf{\emph{RunnableTask}} vytváří v konstruktoru sadu objektů, které implementují rozhraní \textbf{\emph{ExecutableQuery}} (implementace rozhraní se liší podle typu dotazu), pro každý samostatný SQL dotaz v dané úloze, je vytvořen právě jeden objekt. Pokud se jedná o parametrizovaný SQL příkaz, pak se pro každou sadu parametrů, se kterou se má dotaz spouštět, vytvoří pole objektů typu \textbf{\emph{Var}}. Tyto objekty zapouzdřují veškeré chování proměnných, rozpoznávají datové typy a vyhodnocují hodnoty funkcí. Během vytváření objektů typu \textbf{\emph{Var}} je určen datový typ parametru, který objekt uchovává, pokud se jedná o funkci, dochází k rozpoznání funkce a argumentů, tento proces je popsán diagramem \ref{seqvar} (propojení diagramů je označeno znakem modré hvězdy).
 
-Na konci diagramu je vytvořené pole objektů RunnableTask předáno v konstruktoru třídy  \textbf{\emph{RunnableTaskController}} (v diagramu zkráceno na \textit{RTController}). Daná úloha je v tuto chvíli připravena ke spuštění. Následující digram popisuje průběh úlohy.
+
+Na konci diagramu je vytvořené pole objektů RunnableTask předáno v konstruktoru třídy  \textbf{\emph{RunnableTaskController}} (v diagramu zkráceno na \textit{RTController}). Daná úloha je v tuto chvíli připravena ke spuštění. Průběh úlohy je dále znázorněn diagramem \ref{seqruntask}.
+
+
+\begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/var.png}\caption{Sekvenční diagram vytvoření objektu typu Var}
+\label{seqvar}
+\end{figure}
+
+
+\newpage
+
+
+
 
 \begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/runtask.png}\caption{Sekvenční diagram průběhu úlohy}
-\label{seq2}
+\label{seqruntask}
 
 \textit{ThreadPool a RunnableTaskThread (označeny šedým pozadím) nejsou samostatné třídy, jsou součástí třídy \textbf{\emph{RunnableTask}}, v diagramu jsou zobrazeny na samostatných osách, aby bylo možné lépe popsat, operace prováděné na jednotlivých vláknech aplikace. }
 \end{figure}
 
 
-Diagram \ref{seq2} popisuje průběh spuštění úlohy od chvíle, kdy uživatel klikne na tlačítko start, tuto akci zachytí posluchač ve třídě \textbf{\emph{RunnableTaskController}} (v diagramu zkráceno na~\textit{RTController})~a~v~cyklu spustí úlohu pro všechny definované databáze v úloze metodou \textit{start()} volanou na objekty \textbf{\emph{RunnableTask}}, jejich vytvoření popisuje předchozí diagram \ref{seq1}. D8le je v rámci objektu \textbf{\emph{RunnableTask}} vytvořen objekt typu \textit{DbPool} pomocí statické třídy \textbf{\emph{RunnableTaskCreator}}, \textit{DbPool} je rozhraní, které definuje operace pro \textit{Connection Pool} (posloupnost předem vytvořených spojení s databázovým serverem). Implementace třídy \textit{DbPool} se liší v závislosti na typu databáze. Jednotlivé DBMS spravují samostatné rozšíření hlavní aplikace (viz. sekce \ref{plugins}).
+Diagram \ref{seqruntask} popisuje průběh spuštění úlohy od chvíle, kdy uživatel klikne na tlačítko start, tuto akci zachytí posluchač ve třídě \textbf{\emph{RunnableTaskController}} (v diagramu zkráceno na~\textit{RTController})~a~v~cyklu spustí úlohu pro všechny definované databáze v úloze metodou \textit{start()} volanou na objekty \textbf{\emph{RunnableTask}}, jejich vytvoření popisuje předchozí diagram \ref{seq1}. Dále je v rámci objektu \textbf{\emph{RunnableTask}} vytvořen objekt typu \textit{DbPool} pomocí statické třídy \textbf{\emph{RunnableTaskCreator}}, \textit{DbPool} je rozhraní, které definuje operace pro \textit{Connection Pool} (posloupnost předem vytvořených spojení s databázovým serverem). Implementace třídy \textit{DbPool} se liší v závislosti na typu databáze. Jednotlivé DBMS spravují samostatné rozšíření hlavní aplikace (viz. sekce \ref{plugins}).
 
 
-Před samostatným spuštěním je ještě potřeba vytvořit Thread pool (posloupnost předem vytvořených vláken, v diagramu označeno jako \textit{ThreadPool}, pro implementaci je použit \newline \textit{java.util.concurrent.ExecutorService}), velikost je shodná s velikostí Connection poolu. Aby bylo možné zajistit funkcionalitu neomezeného počtu spuštění, které je ukončeno až akcí uživatele, je potřeba vytvořit další vlákno (v diagramu označeno jako \textit{RunnableTaskThread}, které bude časovat a odesílat jednotlivé SQL dotazy k vykonání do Thread Poolu pomocí metody \textit{submit(RunnableTask)} (Třída rozšiřuje rozhraní java.lang.Runnable a proto může být předána do \textit{ThreadPoolu}).
+Před samostatným spuštěním je ještě potřeba vytvořit Thread pool (posloupnost předem vytvořených vláken, v diagramu označeno jako \textit{ThreadPool}, pro implementaci je použit \newline \textit{java.util.concurrent.ExecutorService}), velikost je shodná s velikostí Connection poolu. Aby bylo možné zajistit funkcionalitu neomezeného počtu spuštění, které je ukončeno až akcí uživatele, je potřeba vytvořit další vlákno (v diagramu označeno jako \textit{RunnableTaskThread} (zelené ohraničení v diagramu), které bude časovat a odesílat jednotlivé SQL dotazy k vykonání do \textit{Thread Poolu} pomocí metody \textit{submit(RunnableTask)} (třída rozšiřuje rozhraní java.lang.Runnable a proto může být předána do \textit{ThreadPoolu}).
 
-
-
-
-
-
+V jednotlivých vláknech \textit{Thread Poolu} (označeno červenou barvou v diagramu) je spouštěna metoda \textit{execute(task, pool)}. Tato požádá o volné připojení k databázovému serveru pomocí \textit{getConnection()}. Následuje vytvoření samotného SQL příkazu, který se bude zasílat na databázový server. Z důvodu rozsáhlosti diagramu je tato operace znázorněna v samostatném diagramu \ref{seq4} Jako poslední operace ve vlákně \textit{thread poolu} se vyvolají události a uloží se informace o vykonaném SQL dotazu.
 
 
 

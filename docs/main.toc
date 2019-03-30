@@ -30,17 +30,17 @@
 \contentsline {subsection}{\numberline {6.3}Okno monitoru \IeC {\'u}loh}{40}{subsection.6.3}% 
 \contentsline {section}{\numberline {7}Logick\IeC {\'a} vrstva}{40}{section.7}% 
 \contentsline {subsection}{\numberline {7.1}Diagramy pr\IeC {\r u}b\IeC {\v e}hu \IeC {\'u}lohy}{40}{subsection.7.1}% 
-\contentsline {subsection}{\numberline {7.2}Roz\IeC {\v s}\IeC {\'\i }\IeC {\v r}en\IeC {\'\i } aplikace}{42}{subsection.7.2}% 
-\contentsline {section}{\numberline {8}Validace SQL dotaz\IeC {\r u} - SQL Lexer / Parser}{43}{section.8}% 
-\contentsline {subsection}{\numberline {8.1}Projekt ANTLR (ANother Tool for Language Recognition)}{43}{subsection.8.1}% 
-\contentsline {subsection}{\numberline {8.2}Testy ANTRL}{45}{subsection.8.2}% 
-\contentsline {subsection}{\numberline {8.3}Projekt Jsqlparser}{46}{subsection.8.3}% 
-\contentsline {subsection}{\numberline {8.4}Testy Jsqlparser}{46}{subsection.8.4}% 
-\contentsline {subsection}{\numberline {8.5}Srovn\IeC {\'a}n\IeC {\'\i } parser knihoven}{47}{subsection.8.5}% 
-\contentsline {section}{\numberline {9}Z\IeC {\'a}v\IeC {\v e}r}{49}{section.9}% 
-\contentsline {section}{Literatura}{51}{section.9}% 
-\contentsline {section}{P\IeC {\v r}\IeC {\'\i }lohy}{51}{section.9}% 
-\contentsline {section}{\numberline {A}Zdrojov\IeC {\'y} k\IeC {\'o}d pro testov\IeC {\'a}n\IeC {\'\i } ANTRL - MySQL}{53}{appendix.A}% 
-\contentsline {section}{\numberline {B}Zdrojov\IeC {\'y} k\IeC {\'o}d pro testov\IeC {\'a}n\IeC {\'\i } ANTRL - T-SQL}{55}{appendix.B}% 
-\contentsline {section}{\numberline {C}Zdrojov\IeC {\'y} k\IeC {\'o}d pro testov\IeC {\'a}n\IeC {\'\i } ANTRL - PL-SQL}{57}{appendix.C}% 
-\contentsline {section}{\numberline {D}Zdrojov\IeC {\'y} k\IeC {\'o}d pro testov\IeC {\'a}n\IeC {\'\i } JsqlParser}{59}{appendix.D}% 
+\contentsline {subsection}{\numberline {7.2}Roz\IeC {\v s}\IeC {\'\i }\IeC {\v r}en\IeC {\'\i } aplikace}{43}{subsection.7.2}% 
+\contentsline {section}{\numberline {8}Validace SQL dotaz\IeC {\r u} - SQL Lexer / Parser}{45}{section.8}% 
+\contentsline {subsection}{\numberline {8.1}Projekt ANTLR (ANother Tool for Language Recognition)}{45}{subsection.8.1}% 
+\contentsline {subsection}{\numberline {8.2}Testy ANTRL}{47}{subsection.8.2}% 
+\contentsline {subsection}{\numberline {8.3}Projekt Jsqlparser}{48}{subsection.8.3}% 
+\contentsline {subsection}{\numberline {8.4}Testy Jsqlparser}{48}{subsection.8.4}% 
+\contentsline {subsection}{\numberline {8.5}Srovn\IeC {\'a}n\IeC {\'\i } parser knihoven}{49}{subsection.8.5}% 
+\contentsline {section}{\numberline {9}Z\IeC {\'a}v\IeC {\v e}r}{51}{section.9}% 
+\contentsline {section}{Literatura}{53}{section.9}% 
+\contentsline {section}{P\IeC {\v r}\IeC {\'\i }lohy}{53}{section.9}% 
+\contentsline {section}{\numberline {A}Zdrojov\IeC {\'y} k\IeC {\'o}d pro testov\IeC {\'a}n\IeC {\'\i } ANTRL - MySQL}{55}{appendix.A}% 
+\contentsline {section}{\numberline {B}Zdrojov\IeC {\'y} k\IeC {\'o}d pro testov\IeC {\'a}n\IeC {\'\i } ANTRL - T-SQL}{57}{appendix.B}% 
+\contentsline {section}{\numberline {C}Zdrojov\IeC {\'y} k\IeC {\'o}d pro testov\IeC {\'a}n\IeC {\'\i } ANTRL - PL-SQL}{59}{appendix.C}% 
+\contentsline {section}{\numberline {D}Zdrojov\IeC {\'y} k\IeC {\'o}d pro testov\IeC {\'a}n\IeC {\'\i } JsqlParser}{61}{appendix.D}% 
