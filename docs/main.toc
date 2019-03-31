@@ -30,7 +30,8 @@
 \contentsline {subsection}{\numberline {6.3}Okno monitoru \IeC {\'u}loh}{40}{subsection.6.3}% 
 \contentsline {section}{\numberline {7}Logick\IeC {\'a} vrstva}{40}{section.7}% 
 \contentsline {subsection}{\numberline {7.1}Diagramy pr\IeC {\r u}b\IeC {\v e}hu \IeC {\'u}lohy}{40}{subsection.7.1}% 
-\contentsline {subsection}{\numberline {7.2}Roz\IeC {\v s}\IeC {\'\i }\IeC {\v r}en\IeC {\'\i } aplikace}{43}{subsection.7.2}% 
+\contentsline {subsection}{\numberline {7.2}Funkce}{44}{subsection.7.2}% 
+\contentsline {subsection}{\numberline {7.3}Roz\IeC {\v s}\IeC {\'\i }\IeC {\v r}en\IeC {\'\i } aplikace}{44}{subsection.7.3}% 
 \contentsline {section}{\numberline {8}Validace SQL dotaz\IeC {\r u} - SQL Lexer / Parser}{45}{section.8}% 
 \contentsline {subsection}{\numberline {8.1}Projekt ANTLR (ANother Tool for Language Recognition)}{45}{subsection.8.1}% 
 \contentsline {subsection}{\numberline {8.2}Testy ANTRL}{47}{subsection.8.2}% 

@@ -339,24 +339,36 @@ Diagram \ref{seqruntask} popisuje průběh spuštění úlohy od chvíle, kdy u�
 
 Před samostatným spuštěním je ještě potřeba vytvořit Thread pool (posloupnost předem vytvořených vláken, v diagramu označeno jako \textit{ThreadPool}, pro implementaci je použit \newline \textit{java.util.concurrent.ExecutorService}), velikost je shodná s velikostí Connection poolu. Aby bylo možné zajistit funkcionalitu neomezeného počtu spuštění, které je ukončeno až akcí uživatele, je potřeba vytvořit další vlákno (v diagramu označeno jako \textit{RunnableTaskThread} (zelené ohraničení v diagramu), které bude časovat a odesílat jednotlivé SQL dotazy k vykonání do \textit{Thread Poolu} pomocí metody \textit{submit(RunnableTask)} (třída rozšiřuje rozhraní java.lang.Runnable a proto může být předána do \textit{ThreadPoolu}).
 
-V jednotlivých vláknech \textit{Thread Poolu} (označeno červenou barvou v diagramu) je spouštěna metoda \textit{execute(task, pool)}. Tato požádá o volné připojení k databázovému serveru pomocí \textit{getConnection()}. Následuje vytvoření samotného SQL příkazu, který se bude zasílat na databázový server. Z důvodu rozsáhlosti diagramu je tato operace znázorněna v samostatném diagramu \ref{seq4} Jako poslední operace ve vlákně \textit{thread poolu} se vyvolají události a uloží se informace o vykonaném SQL dotazu.
+V jednotlivých vláknech \textit{Thread Poolu} (označeno červenou barvou v diagramu) je spouštěna metoda \textit{execute(task, pool)}. Tato požádá o volné připojení k databázovému serveru pomocí \textit{getConnection()}. Následuje vytvoření samotného SQL příkazu, který se bude zasílat na databázový server. Z důvodu rozsáhlosti diagramu je tato operace znázorněna v samostatném diagramu \ref{getvalues} Jako poslední operace ve vlákně \textit{thread poolu} se vyvolají události a uloží se informace o vykonaném SQL dotazu.
 
 
+\begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/getvalues.png}\caption{Sekvenční diagram sestavení Statement objektu a jeho parametrů}
+\label{getvalues}
+\end{figure}
+
+Diagram \ref{getvalues} popisuje průběh metody \textit{execute()} z předchozího diagramu \ref{seqruntask} (označeno znakem červené hvězdy). Pro každou sadu parametrů SQL dotazu se volá postupně pro každý parametr metoda \textit{getValue()} na objekty \textbf{\emph{Var}}, jejich vytvoření bylo popsáno v předchozím diagramu \ref{seqvar}. Získaná hodnota je poté dosazena do \textit{java.sql.Statement}, po dosazení všech hodnot je \textbf{Statement} odeslán na databázový server pomocí vlastní metody \textit{execute()}.
 
 
+\subsection{Funkce} \label{functions}
 
+TODO: implementace vlastních funkcí popis
 
 
 \subsection{Rozšíření aplikace} \label{plugins}
+Aby bylo možné zajistit kompatibilitu s více DBMS bez nutnosti zasahovat do zdrojového kódu aplikace je tato funkcionalita zajištěna pomocí rozšíření hlavní aplikace. Každé rozšíření aplikace obsahuje následující komponenty:
+\begin{itemize}
+\item \textbf{JDBC řadič} - implementace JDBC pro daný DBMS, jedná se o externí knihovnu přibalenou uvnitř JAR souboru rozšíření
+\item \textbf{Connection pool} - umožňuje předpřipravit posloupnost spojení s databázovým serverem
+\item \textbf{SQL Parser} - každý DBMS může vyžadovat jiný SQL Parser, proto je umístěn v rozšíření, nikoliv v hlavní aplikaci. Více v sekci \ref{parsers}. 
+\end{itemize}
 
-TODO:
-zde popis jak fungují rozšíření aplikace
+TODO: třídní diagram rozhraní pro implementaci pluginu
 
 
 
 
 \newpage
-\section{Validace SQL dotazů - SQL Lexer / Parser}
+\section{Validace SQL dotazů - SQL Lexer / Parser} \label{parsers}
 Jeden z cílů této práce je validovat SQL zadané uživatelem. Aby bylo možné zkontrolovat správnost zadaného SQL dotazu, potřebujeme znát kompletní gramatiku jazyka SQL a nad touto gramatikou postavit validátor (parser). Protože tohle téma je tak rozsáhlé, že by mohlo pokrýt celou samostatnou práci, použijeme na validaci SQL příkazů již existující knihovny. Před samotným výběrem knihovny, jsem prováděl testy volně dostupných knihoven pro zpracovávání SQL. Pro jazyk Java, co se volně dostupných knihoven týká, máme pouze 2 projekty, které jsou aktuální a stále se rozvíjí, projekt ANTRL a projekt jsqlparser.
 
 
