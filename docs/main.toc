@@ -11,36 +11,35 @@
 \contentsline {section}{\numberline {2}DBMS}{23}{section.2}% 
 \contentsline {subsection}{\numberline {2.1}Obecn\IeC {\'e} vlastnosti DBMS}{23}{subsection.2.1}% 
 \contentsline {subsection}{\numberline {2.2}Jazyk SQL (Structured Query Language)}{23}{subsection.2.2}% 
-\contentsline {subsection}{\numberline {2.3}Parametry vyt\IeC {\'\i }\IeC {\v z}en\IeC {\'\i } datab\IeC {\'a}zov\IeC {\'e}ho serveru}{23}{subsection.2.3}% 
+\contentsline {subsection}{\numberline {2.3}Vyt\IeC {\'\i }\IeC {\v z}en\IeC {\'\i } datab\IeC {\'a}zov\IeC {\'e}ho serveru}{23}{subsection.2.3}% 
 \contentsline {section}{\numberline {3}Pou\IeC {\v z}it\IeC {\'a} technologie pro implementaci aplikace}{25}{section.3}% 
 \contentsline {subsection}{\numberline {3.1}Programovac\IeC {\'\i } jazyk Java}{25}{subsection.3.1}% 
 \contentsline {subsection}{\numberline {3.2}JDBC (Java Database Connectivity)}{25}{subsection.3.2}% 
 \contentsline {subsection}{\numberline {3.3}Knihovna JavaFX pro grafick\IeC {\'e} rozhran\IeC {\'\i }}{25}{subsection.3.3}% 
-\contentsline {subsection}{\numberline {3.4}SceneBuilder}{25}{subsection.3.4}% 
-\contentsline {subsection}{\numberline {3.5}V\IeC {\'y}vojov\IeC {\'e} prost\IeC {\v r}ed\IeC {\'\i } Netbeans IDE 8.2}{26}{subsection.3.5}% 
-\contentsline {section}{\numberline {4}Struktura aplikace}{27}{section.4}% 
-\contentsline {section}{\numberline {5}Datov\IeC {\'a} vrstva}{29}{section.5}% 
-\contentsline {subsection}{\numberline {5.1}Diagram t\IeC {\v r}\IeC {\'\i }d}{29}{subsection.5.1}% 
-\contentsline {subsection}{\numberline {5.2}XML datov\IeC {\'e} soubory}{32}{subsection.5.2}% 
-\contentsline {subsection}{\numberline {5.3}JAXB}{33}{subsection.5.3}% 
-\contentsline {subsection}{\numberline {5.4}Log a CSV soubory}{34}{subsection.5.4}% 
-\contentsline {section}{\numberline {6}Prezenta\IeC {\v c}n\IeC {\'\i } vrstva}{35}{section.6}% 
-\contentsline {subsection}{\numberline {6.1}Digram t\IeC {\v r}\IeC {\'\i }d}{35}{subsection.6.1}% 
-\contentsline {subsection}{\numberline {6.2}Hlavn\IeC {\'\i } okno aplikace}{36}{subsection.6.2}% 
-\contentsline {subsection}{\numberline {6.3}Okno monitoru \IeC {\'u}loh}{40}{subsection.6.3}% 
-\contentsline {section}{\numberline {7}Logick\IeC {\'a} vrstva}{40}{section.7}% 
-\contentsline {subsection}{\numberline {7.1}Diagramy pr\IeC {\r u}b\IeC {\v e}hu \IeC {\'u}lohy}{40}{subsection.7.1}% 
-\contentsline {subsection}{\numberline {7.2}Funkce}{44}{subsection.7.2}% 
-\contentsline {subsection}{\numberline {7.3}Roz\IeC {\v s}\IeC {\'\i }\IeC {\v r}en\IeC {\'\i } aplikace}{44}{subsection.7.3}% 
-\contentsline {section}{\numberline {8}Validace SQL dotaz\IeC {\r u} - SQL Lexer / Parser}{45}{section.8}% 
-\contentsline {subsection}{\numberline {8.1}Projekt ANTLR (ANother Tool for Language Recognition)}{45}{subsection.8.1}% 
-\contentsline {subsection}{\numberline {8.2}Testy ANTRL}{47}{subsection.8.2}% 
-\contentsline {subsection}{\numberline {8.3}Projekt Jsqlparser}{48}{subsection.8.3}% 
-\contentsline {subsection}{\numberline {8.4}Testy Jsqlparser}{48}{subsection.8.4}% 
-\contentsline {subsection}{\numberline {8.5}Srovn\IeC {\'a}n\IeC {\'\i } parser knihoven}{49}{subsection.8.5}% 
-\contentsline {section}{\numberline {9}Z\IeC {\'a}v\IeC {\v e}r}{51}{section.9}% 
-\contentsline {section}{Literatura}{53}{section.9}% 
-\contentsline {section}{P\IeC {\v r}\IeC {\'\i }lohy}{53}{section.9}% 
+\contentsline {subsection}{\numberline {3.4}JAXB}{25}{subsection.3.4}% 
+\contentsline {subsection}{\numberline {3.5}SceneBuilder}{26}{subsection.3.5}% 
+\contentsline {section}{\numberline {4}Datov\IeC {\'a} vrstva}{27}{section.4}% 
+\contentsline {subsection}{\numberline {4.1}Diagram t\IeC {\v r}\IeC {\'\i }d}{27}{subsection.4.1}% 
+\contentsline {subsection}{\numberline {4.2}Datov\IeC {\'e} struktury}{28}{subsection.4.2}% 
+\contentsline {subsection}{\numberline {4.3}XML datov\IeC {\'e} soubory}{30}{subsection.4.3}% 
+\contentsline {subsection}{\numberline {4.4}Log a CSV soubory}{32}{subsection.4.4}% 
+\contentsline {section}{\numberline {5}Prezenta\IeC {\v c}n\IeC {\'\i } vrstva}{33}{section.5}% 
+\contentsline {subsection}{\numberline {5.1}Digram t\IeC {\v r}\IeC {\'\i }d}{33}{subsection.5.1}% 
+\contentsline {subsection}{\numberline {5.2}Hlavn\IeC {\'\i } okno aplikace}{34}{subsection.5.2}% 
+\contentsline {subsection}{\numberline {5.3}Okno monitoru \IeC {\'u}loh}{38}{subsection.5.3}% 
+\contentsline {section}{\numberline {6}Logick\IeC {\'a} vrstva}{39}{section.6}% 
+\contentsline {subsection}{\numberline {6.1}Diagramy pr\IeC {\r u}b\IeC {\v e}hu \IeC {\'u}lohy}{39}{subsection.6.1}% 
+\contentsline {subsection}{\numberline {6.2}Funkce}{43}{subsection.6.2}% 
+\contentsline {subsection}{\numberline {6.3}Roz\IeC {\v s}\IeC {\'\i }\IeC {\v r}en\IeC {\'\i } aplikace}{43}{subsection.6.3}% 
+\contentsline {section}{\numberline {7}Validace SQL dotaz\IeC {\r u} - SQL Lexer / Parser}{45}{section.7}% 
+\contentsline {subsection}{\numberline {7.1}Projekt ANTLR (ANother Tool for Language Recognition)}{45}{subsection.7.1}% 
+\contentsline {subsection}{\numberline {7.2}Testy ANTRL}{47}{subsection.7.2}% 
+\contentsline {subsection}{\numberline {7.3}Projekt Jsqlparser}{48}{subsection.7.3}% 
+\contentsline {subsection}{\numberline {7.4}Testy Jsqlparser}{48}{subsection.7.4}% 
+\contentsline {subsection}{\numberline {7.5}Srovn\IeC {\'a}n\IeC {\'\i } parser knihoven}{49}{subsection.7.5}% 
+\contentsline {section}{\numberline {8}Z\IeC {\'a}v\IeC {\v e}r}{51}{section.8}% 
+\contentsline {section}{Literatura}{53}{section.8}% 
+\contentsline {section}{P\IeC {\v r}\IeC {\'\i }lohy}{53}{section.8}% 
 \contentsline {section}{\numberline {A}Zdrojov\IeC {\'y} k\IeC {\'o}d pro testov\IeC {\'a}n\IeC {\'\i } ANTRL - MySQL}{55}{appendix.A}% 
 \contentsline {section}{\numberline {B}Zdrojov\IeC {\'y} k\IeC {\'o}d pro testov\IeC {\'a}n\IeC {\'\i } ANTRL - T-SQL}{57}{appendix.B}% 
 \contentsline {section}{\numberline {C}Zdrojov\IeC {\'y} k\IeC {\'o}d pro testov\IeC {\'a}n\IeC {\'\i } ANTRL - PL-SQL}{59}{appendix.C}% 
