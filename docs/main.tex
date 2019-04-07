@@ -238,13 +238,10 @@ Sady \textbf{SQL dotazů s parametry} (bod 2. v sekci \ref{datastruct}) jsou ulo
 Každá \textbf{spustitelná úloha} (bod 3. v sekci \ref{datastruct}) je uložená v samostatném XML souboru v adresáři \textit{data/tasks/}, adresář \textit{data} je umístěn v pracovním adresáři aplikace. Soubor obsahuje reference pomocí ID.
 \end{minipage}
 
-\newpage
 \subsection{Log a CSV soubory} \label{logs}
 Během spouštění úloh v aplikaci jsou generovány log soubory, obsahují informace a všech chybách, které nastaly za běhu dané úlohy. Log soubory jsou umístěny v adresáři \textit{/logs}, ten je umístěn v pracovním adresáři aplikace. Log soubory jsou rozděleny podle jména uložených údajů k připojení k databázovému serveru a dále pak podle data spuštění úlohy, aby bylo možné dobře v log souborech vyhledávat a případně mazat nepotřebné adresáře s log soubory.
 
-
-
-Pokud úloha skončí nebo je zastavená uživatelem, aplikace nabídne možnost výsledky testu exportovat do CSV souboru. Do souboru jsou exportovány časy vykonávání jednotlivých SQL dotazů. Díky CSV formátu je možno s daty dále pracovat v jiném nástroji, například 
+Pokud úloha skončí nebo je zastavená uživatelem, aplikace nabídne možnost výsledky testu exportovat do CSV souboru. Do souboru jsou exportovány časy vykonávání jednotlivých SQL dotazů. Díky CSV formátu je možno s daty dále pracovat v jiném externím nástroji a vygenerovat z dat grafy.
 
 \section{Prezentační vrstva} \label{presentlayer}
 \textbf{Prezentační vrstva} poskytuje uživatelské rozhraní aplikace, ve kterém je možno vytvářet, editovat a mazat data aplikace. Dále pak spouštět a monitorovat úlohy. Prezentační vrstva je umístěna v balíku \textit{dbstresstest.gui}.
@@ -286,13 +283,32 @@ Okno editoru \textbf{\emph{SQL dotazů s parametry}} (obrázek \ref{sqleditor}) 
 
 \newpage
 \begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/taskeditor.png}\caption{Okno editoru spustitelných úloh}
+\label{taskeditor}
 \end{figure}
+Okno editoru pro konstrukci \textbf{\emph{spustitelných úloh}} (obrázek \ref{taskeditor}) vytváří datové struktury odpovídající datové struktuře třídy \textbf{\emph{Task}} (viz sekce \ref{datadiagram}). Ve formuláři definujeme \textbf{\emph{SQL dotazy s parametry}}, které se budou spouštět v každém cyklu (opakování) úlohy a SQL servery (\textbf{\emph{údaje k připojení k databázovému serveru}}), na kterých úloha poběží. 
 
-TODO: popis
+Z tohoto rozhraní můžeme úlohu spustit a dále monitorovat pomocí okna monitoru popsaného v následující sekci \ref{taskmonwin}.
 
 \newpage
-\subsection{Okno monitoru úloh}
-TODO:
+\subsection{Okno monitoru úloh} \label{taskmonwin}
+\begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/taskmongui.png}\caption{Okno monitoru úloh}
+\label{taskmonitor}
+\end{figure}
+Okno monitoru úlohy (obrázek \ref{taskmonitor}) je samostatné okno aplikace zobrazující  průběžné statistiky běžící \textbf{\emph{spustitelné úlohy}}. Pokud úloha současně běží na více databázových serverech, je mezi jednotlivými servery možné přepínat pomocí levého panelu. Všechny informace v okně se vždy vztahují pouze k aktuálně vybranému databázovému serveru. 
+
+V prostředním panelu se zobrazuje konzole úlohy, zde jsou vidět prováděné příkazy a také případné chyby a jejich popis. Konzole je limitovaná na posledních 200 událostí. Konzole se v průběhu automaticky posouvá směrem dolů. Důležité události, především chyby a varování jsou ukládány také do log souboru na disku (log soubory popsány v sekci \ref{logs}). V pravém panelu se zobrazují statistiky úlohy:
+\begin{itemize}
+\item \textbf{loops} - aktuální počet provedených opakování úlohy
+\item \textbf{queries} - celkový počet provedených SQL dotazů
+\item \textbf{total time} - celková doba běhu úlohy 
+\item \textbf{total query time} - celkový čas strávený dotazováním databázového serveru (nezahrnuje žádné jiné operace související s konstrukcí příkazů nebo výpočty hodnot funkcí)
+\item \textbf{pool status} - aktuální stav využitých / maximálně možných spojení a čekajících (idle) otevřených spojení
+\end{itemize}
+
+V pravém panelu pod celkovými statistikami následuje tabulka statistik pro každý \textbf{\emph{SQL dotaz s parametry}} samostatně. Je zde možné monitorovat průměrný čas provedení dotazu, počet vykonání dotazu a počet chyb, které v tomto dotazu nastaly. Také se zde zobrazuje čas posledního úspěšně provedeného dotazu a čas poslední chyby.
+
+Časy ze kterých se vypočítává průměrný čas pro každý \textbf{\emph{SQL dotaz s parametry}} je možné po skončení nebo zastavení úlohy vyexportovat do CSV souboru a pomocí externích nástrojů z nich vygenerovat grafy (CSV soubory popsány v sekci \ref{logs}).
+
 
 
 \newpage
@@ -343,10 +359,44 @@ V jednotlivých vláknech \textit{Thread Poolu} (označeno červenou barvou v di
 Diagram \ref{getvalues} popisuje průběh metody \textit{execute()} z předchozího diagramu \ref{seqruntask} (označeno znakem červené hvězdy). Pro každou sadu parametrů SQL dotazu se volá postupně pro každý parametr metoda \textit{getValue()} na objekty \textbf{\emph{Var}}, jejich vytvoření bylo popsáno v předchozím diagramu \ref{seqvar}. Získaná hodnota je poté dosazena do \textit{java.sql.Statement}, po dosazení všech hodnot je \textbf{Statement} odeslán na databázový server pomocí vlastní metody \textit{execute()}.
 
 
-\subsection{Funkce} \label{functions}
+\subsection{Uživatelem definované funkce} \label{functions}
+Pro parametrizaci dotazu je možné použít, místo staticky definovaných parametrů, uživatelem definované funkce, které parametry generují. Funkce jsou vyhodnocovány před zasláním SQL dotazu. Pokud se dotaz v rámci \textbf{\emph{spustitelné úlohy}} má opakovat, pak je funkce vyhodnocena před každým opakováním znovu. Aplikace momentálně obsahuje 2 funkce, nicméně rozhraní aplikace je připraveno pro jednoduchou implementaci dalších funkcí. Každá funkce je obalena mezi znaky \textbf{\#\{ FUNKCE \}} pro jednoznačnou detekci, že se jedná o funkci.
+\begin{itemize}
+\item
+\textit{Funkce} \textbf{randomInt(MIN,MAX)}:\newline
+Funkce generuje náhodné číslo v zadaném rozsahu, maximální rozsah generovaného čísla a přijímaných argumentů funkce je velikost Java Integer čísla.
 
-TODO: implementace vlastních funkcí popis
 
+\textit{Argumenty:}\newline
+MIN - definuje minimální velikost generovaného čísla (povinný argument)\newline
+MAX - definuje maximální velikost generovaného čísla (povinný argument)\newline
+
+\textit{Výjimky:}\newline
+InvalidFunctionException - se vyvolá v případě špatných argumentů funkce\newline
+
+\textit{Příklad použití funkce:}\newline
+\#\{randomInt(1,10)\} - vygeneruje náhodné číslo v rozsahu 1 až 10
+
+
+\item
+\textit{Funkce} \textbf{randomCharEnum(enum)}:\newline
+Funkce generuje náhodnou posloupnost znaků z předem zadané posloupnosti znaků (viz sekce \ref{charenums}). Délka generované posloupnosti odpovídá celkovému počtu znaku v předané posloupnosti v argumentu.
+
+
+\textit{Argumenty:}\newline
+enum - jméno posloupnosti znaků, která bude použita pro generování nové náhodné posloupnosti\newline
+
+\textit{Výjimky:}\newline
+InvalidFunctionException - v případě, že se nepodaří nalézt posloupnost předanou v argumentu funkce během inicializace funkce\newline
+FunctionEvaluationException - se vyvolá v případě, že předaná posloupnost v argumentu funkce je prázdná nebo pokud má špatný formát\newline
+
+\textit{Příklad použití funkce:}\newline
+\#\{randomCharEnum(A)\} - vygeneruje náhodnou posloupnost znaků z posloupnosti se jménem '\textit{A}', ta musí být definována v aplikaci (viz sekce \ref{charenums})
+
+\end{itemize}
+
+\subsection{Znakové posloupnosti} \label{charenums}
+Znakové posloupnosti se používají pro generování náhodných posloupností znaků v uživatelsky definovaných funkcích (viz sekce \ref{functions}). V hlavním menu aplikace (\textit{CharEnums -> Edit}) je možné pomocí systémového výchozího editoru pro textové soubory s příponou \textit{.txt} editovat soubor, ve kterém jsou definovány tyto posloupnosti. Po editaci souboru je nutné pomocí hlavního menu tyto posloupnosti znovu načíst do paměti aplikace (\textit{CharEnums -> Reload}).
 
 \subsection{Rozšíření aplikace} \label{plugins}
 Aby bylo možné zajistit kompatibilitu s více DBMS bez nutnosti zasahovat do zdrojového kódu aplikace je tato funkcionalita zajištěna pomocí rozšíření hlavní aplikace. Každé rozšíření aplikace obsahuje následující komponenty:
