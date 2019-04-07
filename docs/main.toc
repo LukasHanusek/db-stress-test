@@ -25,7 +25,7 @@
 \contentsline {subsection}{\numberline {4.4}Log a CSV soubory}{32}{subsection.4.4}% 
 \contentsline {section}{\numberline {5}Prezenta\IeC {\v c}n\IeC {\'\i } vrstva}{33}{section.5}% 
 \contentsline {subsection}{\numberline {5.1}Digram t\IeC {\v r}\IeC {\'\i }d}{33}{subsection.5.1}% 
-\contentsline {subsection}{\numberline {5.2}Hlavn\IeC {\'\i } okno aplikace}{34}{subsection.5.2}% 
+\contentsline {subsection}{\numberline {5.2}Hlavn\IeC {\'\i } okno aplikace}{35}{subsection.5.2}% 
 \contentsline {subsection}{\numberline {5.3}Okno monitoru \IeC {\'u}loh}{38}{subsection.5.3}% 
 \contentsline {section}{\numberline {6}Logick\IeC {\'a} vrstva}{39}{section.6}% 
 \contentsline {subsection}{\numberline {6.1}Diagramy pr\IeC {\r u}b\IeC {\v e}hu \IeC {\'u}lohy}{39}{subsection.6.1}% 

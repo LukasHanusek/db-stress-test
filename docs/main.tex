@@ -153,7 +153,7 @@ Aplikace perzistentně ukládá tyto datové struktury:
   	\item \textit{id} - unikátní identifikátor na logické a datové vrstvě aplikace (viz sekce \ref{logic})
   	\item \textit{customName} - unikátní jméno definované uživatelem, slouží jako identifikátor na prezentační vrstvě (více v sekci \ref{prezent})
   	\item \textit{databaseName} - jméno databáze
-  	\item \textit{databaseType} - rozšíření aplikace, které bude použito pro připojení k databázovému serveru
+  	\item \textit{databaseType} - rozšíření aplikace, které bude použito pro připojení k databázovému serveru (více v sekci \ref{plugins})
   	\item \textit{address} - adresa databázového serveru (v případě Microsoft SQL Server může~obsahovat~jméno instance)
   	\item \textit{user} - databázový uživatel
   	\item \textit{password} - heslo databázového uživatele, používá kódování Base64
@@ -266,22 +266,23 @@ Třída \textbf{\emph{MainWindowController}} dále využívá pomocné třídy p
 
 Třída \textbf{\emph{WindowResizeListener}} reaguje na události spojené s změnou velikosti okna aplikace a přizpůsobuje tomu velikost některých grafických prvků. Jedná se především o ovládací prvky \textit{javafx.scene.control.SplitPane}, které ve výchozím stavu nereagují na změny velikosti okna a nezachovávají si proporční velikosti nastavené uživatelem. Třída se inicializuje společně s \textbf{\emph{MainWindowController}} třídou, tyto třídy tak na sebe nemají přímou vazbu.
 
-
-\subsection{Hlavní okno aplikace}
-Po spuštění aplikace je spuštěno hlavní grafické uživatelské rozhraní, to je rozděleno do tří podsekcí pomocí \textit{javafx.scene.control.TabPane}.
-
 \newpage
+\subsection{Hlavní okno aplikace}
+Po spuštění aplikace je spuštěno hlavní grafické uživatelské rozhraní, to je rozděleno do tří podsekcí (záložek) pomocí \textit{javafx.scene.control.TabPane}.
+
+
 \begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/coneditor.png}\caption{Okno editoru údajů k připojení k databázovému serveru}\label{coneditor}
 \end{figure}
-Okno editoru (obrázek \ref{coneditor}) pro správu údajů k připojení k databázovému serveru umožňuje přidávat nové položky pomocí tlačítka umístěného pod seznamem položek, nebo přes hlavní kontextovou nabídku aplikace. Existující položky lze editovat po kliknutí na jejich jméno v seznamu umístěného na levé straně okna. Pravým kliknutím na jméno položky, lze položku trvale odstranit. Samotný formulář odpovídá datové struktuře třídy \textbf{\emph{DbCon}} (viz sekce \ref{datadiagram}). Heslo databázového uživatele se zadává do vstupního pole typu \textit{javafx.scene.control.PasswordField}, díky tomu se na monitor renderují pouze zástupné znaky \textbf{'•'}, místo skutečných znaků hesla.
+Záložka editoru (obrázek \ref{coneditor}) pro správu \textbf{\emph{údajů k připojení k databázovému serveru}} umožňuje přidávat nové položky pomocí tlačítka umístěného pod seznamem položek, nebo přes hlavní kontextovou nabídku aplikace. Existující položky lze editovat po kliknutí na jejich jméno v seznamu umístěného na levé straně okna. Pravým kliknutím na jméno položky, lze položku trvale odstranit. Samotný formulář odpovídá datové struktuře třídy \textbf{\emph{DbCon}} (viz sekce \ref{datadiagram}). Heslo databázového uživatele se zadává do vstupního pole typu \textit{javafx.scene.control.PasswordField}, díky tomu se na monitor renderují pouze zástupné znaky \textbf{'•'}, místo skutečných znaků hesla.
 
 Nad uloženými údaji lze provést test, tento test ověří, zda se k danému databázovému serveru lze připojit.
 
 \newpage
 \begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/sqleditor.png}\caption{Okno editoru SQL dotazů s parametry}
+\label{sqleditor}
 \end{figure}
+Okno editoru \textbf{\emph{SQL dotazů s parametry}} (obrázek \ref{sqleditor}) obsahuje formulář odpovídající datové struktuře třídy \textbf{\emph{SQLSet}} (viz sekce \ref{datadiagram}). Ve formuláři funguje také kontrola syntaxe SQL, aby kontrola fungovala, je potřeba nejdříve vybrat typ databáze, pro kterou je SQL určeno (na výběr jsou opět všechny aktuálně načtené rozšíření aplikace, které obsahují implementaci SQL praseru, více o rozšířeních aplikace v sekci \ref{plugins}). Pro definování parametrizovaných příkazů používáme symbol \textbf{\emph{ '?' }} jako zástupný znak parametru v SQL a jeho hodnotu vyplňujeme v textové oblasti níže. Každý parametr musí být oddělen ve výchozím nastavení znakem \textbf{\emph{ ',' }}, tento znak je možno ve formuláři změnit. Pokud chceme tento příkaz během jeho spuštění provést více krát po sobě, můžeme definovat několik sad parametrů tím, že je oddělíme ve výchozím nastavení znakem \textbf{\emph{ ';' }}, pro přehlednost zápisu můžeme oddělit i novým řádkem, to ale není povinné. Oddělovač sady parametrů lze v rámci formuláře změnit na jiný znak. Místo staticky definovaných parametrů můžeme použít zabudované funkce aplikace (viz sekce \ref{functions}).
 
-TODO: popis
 
 \newpage
 \begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/taskeditor.png}\caption{Okno editoru spustitelných úloh}
