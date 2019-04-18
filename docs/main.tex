@@ -68,16 +68,17 @@
 % A nasleduje text zaverecne prace.
 \section{Úvod}
 Databáze dnes stojí v pozadí téměř každé webové stránky, počítačového programu nebo mobilní aplikace. \par
-Cílem práce je vytvořit aplikaci pro simulaci problémů v databázovém systému, aplikace bude simulovat reálné situace, ve kterých se může databáze nacházet. Správce databáze tak může odhalit chyby nebo případné nedostatky ještě před nasazením systému do produkčního prostředí a předejít výpadkům dostupnosti databáze. V rámci bakalářského studijního plánu \textit{Informační a komunikační technologie} je vyučován předmět \textit{Administrace databázových systémů}, který je zaměřen právě na řešení těchto problémů.\par
+V rámci bakalářského studijního plánu \textit{Informační a komunikační technologie} je vyučován předmět \textit{Administrace databázových systémů}, který je zaměřen na správu, monitorování a odhalování chyb ve fyzickém návrhu struktury databáze.
+Cílem práce je vytvořit aplikaci pro simulaci problémů v databázovém systému, aplikace bude simulovat reálné situace, ve kterých se může databáze nacházet. Správce databáze tak může odhalit chyby nebo případné nedostatky ještě před nasazením systému do produkčního prostředí a předejít výpadkům dostupnosti databáze. \par
 Tato práce se zabývá databázemi založených na SQL, veškeré operace nad databází tedy probíhají pomocí SQL. Aplikace, tvořena v rámci této práce, používá k simulaci reálného provozu na databázi sekvenci uživatelem definovaných SQL dotazů, které jsou na databázi zasílané v definovaném pořadí s určitým intervalem. Aplikace průběžně měří a zobrazuje výsledky testu.\par
-Při ukládání dat do databáze předpokládáme, že data musí být přístupná nepřetržitě, a že k datům bude přistupovat více vzdálených zařízení najednou. Proto jsou databáze často provozovány na samostatném počítači, pracovní stanici nebo serveru s velmi dobrou konektivitou do sítě a záložním zdrojem energie. Nicméně výkonný hardware nám v případě špatného fyzického návrhu struktury databáze nepomůže.
+V případě produkční databáze předpokládáme, že data musí být přístupná nepřetržitě, a že k datům bude přistupovat více vzdálených zařízení najednou. Proto jsou databáze často provozovány na samostatném počítači, pracovní stanici nebo serveru s velmi dobrou konektivitou do sítě a záložním zdrojem energie. Nicméně výkonný hardware nám v případě špatného fyzického návrhu struktury databáze nepomůže, proto vzniká tato aplikace.
 
 \section{DBMS} \label{dbms}
 \subsection{Obecné vlastnosti DBMS}
 Database Management System (Systém řízení báze dat) je software pro správu dat, který umožňuje vytváření, editování, mazání a procházení dat, tato práce se zabývá systémy založené na dotazovacím jazyce SQL.
 
 \subsection{Jazyk SQL (Structured Query Language)}
-Jazyk SQL je doménově specifický jazyk standardizován organizací ISO (International Organization for Standardization) pod označením ISO/IEC 9075:2016. Samotný jazyk SQL se dá rozdělit do 4 kategorií:
+Jazyk SQL je doménově specifický jazyk standardizován organizací ISO (International Organization for Standardization) pod označením ISO/IEC 9075:2016 \cite{sqliso}. Samotný jazyk SQL se dá rozdělit do 4 kategorií:
 \begin{itemize}
   \item \textbf{Data Query Language (DQL)} slouží pro procházení a čtení dat.
   \item \textbf{Data Definition Language (DDL)} se používá pro definování datových struktur.
@@ -89,7 +90,7 @@ V komplexnějších DBMS nalezneme ještě 5. kategorii \textbf{Declarative Lang
 
 
 \subsection{Vytížení databázového serveru}
-Aplikace, tvořena v rámci této práce, bude databázový server zatěžovat opakovaným zasíláním sekvencí SQL dotazů, během doby, kdy tyto dotazy DBMS zpracovává bude aplikace zobrazovat průběžné výsledky úspěšnosti prováděných SQL dotazů a také jejich průměrnou dobu. Další parametry monitorujeme pak přímo na databázovém serveru, případně v operačním systému, na kterém běží:
+Aplikace, tvořena v rámci této práce, bude databázový server zatěžovat opakovaným zasíláním sekvencí SQL dotazů definovaných uživatelem. Vytížení databázového serveru můžeme monitorovat pomocí následujících parametrů, ty můžeme vyčíst přímo z DBMS, případně z operačního systému, na kterém DBMS běží:
 \begin{itemize}
   \item \textbf{Počet dotazů za vteřinu} - Počet dotazů za vteřinu je důležitý údaj, podle kterého můžeme porovnávat další parametry jako například vytížení procesoru, počet přístupů na disk nebo vytížení sítě. Toto číslo však nikdy nebude přímým ukazatelem vytížení, protože každý dotaz provádí odlišně náročné operace.
   \item \textbf{Doba zpracování dotazu} - Tento údaj je velmi důležitý, pokud monitorujeme dotazy na databázi, jejichž zpracování trvá dlouho. Můžeme tak odhalit problémy, zejména v samotném návrhu struktury databáze, nebo špatnou konstrukci SQL dotazů, které jsou na databázi zasílány. Nejdéle trvající operace budou z pravidla ty, které potřebují data číst, řadit nebo porovnávat sekvenčně.
@@ -107,17 +108,17 @@ Aplikace, tvořena v rámci této práce, bude databázový server zatěžovat o
 \section{Použitá technologie pro implementaci aplikace} \label{tech}
 
 \subsection{Programovací jazyk Java}
-Pro implementaci aplikace jsem zvolil programovací jazyk Java. Hlavní výhodou tohoto jazyka je přenositelnost aplikace mezi různými operačními systémy bez nutnosti úprav zdrojového kódu nebo jeho opětovného překladu. Tuto funkcionalitu zajišťuje prostředí JVM (Java Virtual Machine), které je součástí každé instalace JRE (Java Runtime Environment). Díky virtualizovanému prostředí JVM je zajištěno, že se aplikace bude chovat shodně pod různými operačními systémy.
+Pro implementaci aplikace jsem zvolil programovací jazyk Java. Hlavní výhodou tohoto jazyka je přenositelnost aplikace mezi různými operačními systémy bez nutnosti úprav zdrojového kódu nebo jeho opětovného překladu. Tuto funkcionalitu zajišťuje prostředí JVM (Java Virtual Machine), které je součástí každé instalace JRE (Java Runtime Environment). Díky virtualizovanému prostředí JVM je zajištěno, že se aplikace bude chovat velmi podobně pod různými operačními systémy \cite{java}.
 
 \subsection{JDBC (Java Database Connectivity)} \label{jdbc}
-JDBC je API pro programovací jazyk Java, které definuje způsob, jak přistupovat k databázi. JDBC se používá na straně aplikace, která chce s databází komunikovat. JDBC požadavky aplikace přeloží na protokol, který využívá daný databázový systém. Výhodou JDBC je, že jeho zdrojový kód je veřejně dostupný, proto si každý výrobce databázového systému může JDBC implementovat. Tím je zajištěno, že k různým databázovým systémům se v prostředí programovacího jazyka Java přistupuje přes jednotné API.
+JDBC je API pro programovací jazyk Java, které definuje způsob, jak přistupovat k databázi. JDBC se používá na straně aplikace, která chce s databází komunikovat. JDBC požadavky aplikace přeloží na protokol, který využívá daný databázový systém. Výhodou JDBC je, že jeho zdrojový kód je veřejně dostupný, proto si každý výrobce databázového systému může JDBC implementovat. Tím je zajištěno, že k různým databázovým systémům se v prostředí programovacího jazyka Java přistupuje přes jednotné API \cite{jdbc}.
 
 
 \subsection{Knihovna JavaFX pro grafické rozhraní}
-JavaFX je platforma pro tvorbu grafických uživatelských rozhraní aplikací v programovacím jazyce Java. JavaFX se liší od ostatních grafických platforem, dostupných v základní instalaci Java Standard Edition, především tím, že grafické komponenty, jejich rozmístění a chování se definuje v odděleném souboru s příponou .FXML, tento soubor má formát XML. Každý FXML soubor definuje jedno grafické rozhraní (okno / scénu) a každý FXML soubor má přidruženou jednu nebo více tříd, které se označují jako "Controller". Tyto třídy pak zajišťují propojení grafických komponent se zbytkem aplikace. JavaFX se tak blíží návrhovému vzoru MVC (Model-View-Controller), ten je rozšířený zejména v oblasti web technologií.
+JavaFX je platforma pro tvorbu grafických uživatelských rozhraní aplikací v programovacím jazyce Java. JavaFX se liší od ostatních grafických platforem, dostupných v základní instalaci Java Standard Edition, především tím, že grafické komponenty, jejich rozmístění a chování se definuje v odděleném souboru s příponou .FXML, tento soubor má formát XML. Každý FXML soubor definuje jedno grafické rozhraní (okno / scénu) a každý FXML soubor má přidruženou jednu nebo více tříd, které se označují jako "Controller". Tyto třídy pak zajišťují propojení grafických komponent se zbytkem aplikace. JavaFX se tak blíží návrhovému vzoru MVC (Model-View-Controller), ten je rozšířený zejména v oblasti web technologií \cite{javafx}.
 
 \subsection{JAXB} \label{jabx}
-Java Architecture for XML Binding (JAXB) je obsaženo v balíku \textit{javax.xml.bind}. JABX umožňuje serializovat Java objekty do formátu XML a uložit je na disk. Aby bylo možné objekt pomocí JABX serializovat, všechny datové typy, které objekt obsahuje musí implementovat rozhraní \textit{java.io.Serializable}. Chování serializace a de-serializace konkrétního objektu můžeme ovlivnit přidáním anotací do třídy, která objekt definuje. Anotace pro JAXB najdeme v balíku \textit{javax.xml.bind.annotation}. V aplikaci jsou použity tyto anotace:
+Java Architecture for XML Binding (JAXB) je obsaženo v balíku \textit{javax.xml.bind}. JABX umožňuje serializovat Java objekty do formátu XML a uložit je na disk. Aby bylo možné objekt pomocí JABX serializovat, všechny datové typy, které objekt obsahuje musí implementovat rozhraní \textit{java.io.Serializable}. Chování serializace a de-serializace konkrétního objektu můžeme ovlivnit přidáním anotací do třídy, která objekt definuje. Anotace pro JAXB najdeme v balíku \textit{javax.xml.bind.annotation} \cite{jaxb}. V aplikaci jsou použity tyto anotace:
 \begin{itemize}
   	\item \textbf{@XmlRootElement} umožňuje pojmenovat kořenový element XML pomocí argumentu \textit{name}.
   	\item \textbf{@XmlElement} označuje XML Element, pomocí nepovinného argumentu \textit{name} je možno element pojmenovat ve formátu XML. Bez použití této anotace budou všechny XML Elementy pojmenovány podle názvu třídních proměnných.
@@ -127,25 +128,37 @@ Java Architecture for XML Binding (JAXB) je obsaženo v balíku \textit{javax.xm
 \end{itemize}
 
 \subsection{SceneBuilder}
-JavaFX Scene Builder je nástroj pro vytváření uživatelských grafických rozhraní pro JavaFX. Jedná se o nástroj typu "WYSIWYG", což je zkratka pro "What You See Is What You Get", přeloženo "To co vidíte, to dostanete". Nástroj SceneBuilder umožňuje grafické komponenty "přetahovat", editovat jejich parametry jako odsazení od krajů, minimální, maximální a preferovanou velikost v interaktivním grafickém rozhraní. V prostředí SceneBuilder lze rovněž propojit grafické prvky s událostmi, jako například kliknutí na tlačítko, a nastavit odchycení této události v přidružené Controller třídě. Výstupem z tohoto programu je soubor formátu FXML, který je načten JavaFX aplikací.
-\cite{scenebuilder}
+JavaFX Scene Builder je nástroj pro vytváření uživatelských grafických rozhraní pro JavaFX. Jedná se o nástroj typu "WYSIWYG", což je zkratka pro "What You See Is What You Get", přeloženo "Co vidíte, to dostanete" \cite{sceneb}. Nástroj SceneBuilder umožňuje grafické komponenty "přetahovat", editovat jejich parametry jako odsazení od krajů, minimální, maximální a preferovanou velikost v interaktivním grafickém rozhraní. V prostředí SceneBuilder lze rovněž propojit grafické prvky s událostmi, jako například kliknutí na tlačítko, a nastavit odchycení této události v přidružené Controller třídě. Výstupem z tohoto programu je soubor formátu FXML, který je načten JavaFX aplikací \cite{scenebuilder}.
 
 \begin{figure}[!h]\centering\includegraphics[width=1.0\textwidth]{Figures/SceneBuilder.png}\caption{Rozhraní nástroje SceneBuilder}
 \end{figure}
 
+\section{Specifikace aplikace}
+Aplikace umožňuje definovat seznam \textbf{údajů k připojení k databázovým serverům} a otestovat jejich dostupnost. Dále umožňuje definovat \textbf{SQL dotazy a ty parametrizovat} staticky nebo dynamicky pomocí uživatelem definovaných funkcí (viz sekce \ref{functions}) a zkontrolovat správnost syntaxe těchto SQL dotazů (více v sekci \ref{parsers}).
+
+Pokud máme definovány alespoň jedny údaje k připojení k databázovému serveru a alespoň jeden SQL dotaz můžeme vytvořit \textbf{spustitelnou úlohu}, ta obsahuje seznam údajů k připojení k jednomu nebo více databázovým serverům a seznam SQL dotazů s parametry, dále definuje počet opakování, interval opakování a počet paralelních spojení (detaily popsány v bodě 3. v sekci \ref{datastruct}). 
+
+Aplikace je rozdělena do 2 hlavních oken. První je okno editoru, kde je možné editovat \textbf{datové struktury} (viz sekce \ref{datastruct}), okno je dále rozděleno do tří záložek (obrázky \ref{coneditor}, \ref{sqleditor} a \ref{taskeditor}). Okno editoru se otevírá při spuštění aplikace. Z poslední záložky (obrázek \ref{taskeditor}) je možno spustit druhé hlavní okno, které umožňuje spustit a sledovat průběh spustitelné úlohy (viz sekce \ref{taskmonitor}).
+
+Podpora jednotlivých DBMS je zajištěna pomocí modulů, aby bylo možné jednoduše do aplikace přidat podporu pro další DBMS, bez nutnosti zasahovat do jádra aplikace. Detaily implementace modulů jsou popsány v sekci \ref{plugins}.
+
+Pro zajištění co největší přehlednosti zdrojového kódu je implementace aplikace je rozdělena do tří vrstev:
+\begin{itemize}
+  	\item \textbf{Datová vrstva} se stará o ukládání, načítání a editování perzistentních dat v aplikaci. Datová vrstva je umístěna v balíku (Java package) \textit{dbstresstest.data}. Sekce \ref{datalayer} popisuje detaily této vrstvy.
+  	\item \textbf{Prezentační vrstva} poskytuje uživatelské rozhraní aplikace, ve kterém je možno vytvářet, editovat a mazat data aplikace. Dále pak spouštět a monitorovat úlohy. Prezentační vrstva je umístěna v balíku \textit{dbstresstest.gui}. Sekce \ref{presentlayer} popisuje detaily této vrstvy.
+  	\item \textbf{Logická vrstva} zajišťuje vykonávání uživatelem spuštěných úloh, kontrolu uživatelského vstupu a komunikaci mezi datovou a prezentační vrstvou aplikace. Logická vrstva je umístěna v balíku \textit{dbstresstest.logic}. Sekce \ref{logiclayer} popisuje detaily této vrstvy.
+\end{itemize} 
 
 \section{Datová vrstva} \label{datalayer}
-Pro lepší přehlednost a jednodušší úpravy zdrojového kódu je aplikace rozdělena do více vrstev. \textbf{Datová vrstva} se stará o ukládání, načítání a editování perzistentních dat v aplikaci. Datová vrstva je umístěna v balíku (Java package) \textit{dbstresstest.data}.
-
 
 \subsection{Diagram tříd} \label{datadiagram}
-\begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/datadiagram.png}\caption{UML Diagram tříd datové vrstvy aplikace}
+\begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/datadiagram.png}\caption{Diagram tříd datové vrstvy aplikace}
 \end{figure}
 
 \newpage
 
 \subsection{Datové struktury} \label{datastruct}
-Aplikace perzistentně ukládá tyto datové struktury:
+Aplikace perzistentně ukládá následující datové struktury, v rámci aplikace jsou reprezentovány příslušnými třídami znázorněnými diagramem na obrázku \ref{datadiagram}. Na disku jsou tyto struktury uloženy ve formátu XML (více v sekci \ref{xml}).
 
 \begin{enumerate}
   \item \textbf{Údaje k připojení k databázovému serveru} - Tento typ dat je v aplikaci reprezentován třídou \textbf{\emph{DbCon}}. Načítání a ukládání objektů, vytvořených z této třídy, do perzistentního úložiště provádí třída \textbf{\emph{ConManager}} (formát popsán v sekci \ref{xml}). Třída je realizována podle návrhového vzoru Singleton, aby bylo zaručeno, že za běhu aplikace bude existovat pouze jedna kopie dat v operační paměti aplikace. Třída \textbf{\emph{DbCon}} zapouzdřuje tyto data:
@@ -246,16 +259,16 @@ Pokud úloha skončí nebo je zastavená uživatelem, aplikace nabídne možnost
 \section{Prezentační vrstva} \label{presentlayer}
 \textbf{Prezentační vrstva} poskytuje uživatelské rozhraní aplikace, ve kterém je možno vytvářet, editovat a mazat data aplikace. Dále pak spouštět a monitorovat úlohy. Prezentační vrstva je umístěna v balíku \textit{dbstresstest.gui}.
 \subsection{Digram tříd} \label{prezent}
-Z důvodu velkého počtu metod v třídách \textbf{\emph{MainWindowController}} a \textbf{\emph{RunningTaskController}} nejsou metody těchto tříd zahrnuty v tomto diagramu.
+Proměnné JavaFX elementů jsou v následujícím diagramu znázorněny pouze jejich Java balíkem \textit{javafx.scene.control}, ze kterého pocházejí, z důvodu velkého počtu těchto proměnných.
 
-\begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/presentlayer.png}\caption{UML Diagram tříd prezentační vrstvy aplikace}
+\begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/presentlayer.png}\caption{Diagram tříd prezentační vrstvy aplikace}\label{presentdiagram}
 \end{figure}
 
 Uživatelské rozhraní aplikace je definováno v FXML souborech. Tyto soubory jsou umístěny v balíku \textit{dbstresstest.gui.fxml}. Každý FXML soubor tvoří jedno okno aplikace a je mu přiřazena právě jedna JavaFX Controller třída pomocí argumentu \textit{fx:controller} v FXML souboru. Controller třída propojuje uživatelské rozhraní s logickou vrstvou aplikace, reaguje na akce uživatele a zpracovává události vyvolané během práce s grafickým rozhraním aplikace, pracuje tedy na pomezí prezentační a logické vrstvy.
 
 Controller třída obsahuje referenci na všechny prvky uživatelského rozhraní, pomocí které lze k prvkům přistupovat a měnit jejich vlastnosti za běhu aplikace. Reference se předává do třídních proměnných jejichž název se musí shodovat s \textit{fx:id} prvku definovaného v FXML souboru. Reference na aktuální instanci prvku rozhraní JavaFX předává během inicializace controller třídy, aby předávání fungovalo, controller třída musí implementovat rozhraní \textit{javafx.fxml.Initializable}.
 
-Aplikace celkem obsahuje 4 hlavní okna a k nim jsou přiřazeny 4 Controller třídy \newline \textbf{\emph{MainWindowController, RunningTaskController, HelpWindowController a ImportConController}}. Všechny Controller třídy mají vazby na Singleton třídu GUI, tato třída obsahuje pomocné funkce pro vyvolávání dodatečných dialogových oken. 
+Aplikace celkem obsahuje 4 hlavní okna a k nim jsou přiřazeny 4 Controller třídy \newline \textbf{\emph{MainWindowController, RunningTaskController, HelpWindowController a ImportConController}}. Všechny Controller třídy mají vazby (zobrazeno třídním diagramem na obrázku \ref{presentdiagram}) na Singleton třídu GUI, tato třída obsahuje pomocné funkce pro vyvolávání dodatečných dialogových oken. 
 
 Třída \textbf{\emph{MainWindowController}} dále využívá pomocné třídy pro ovládání některých složitějších komponent. Třídy \textbf{\emph{DragDropDB}} a \textbf{\emph{DragDropSQL}} zajišťují funkcionalitu přetahování prvků sql a údajů k připojení k databázi v editoru úloh. Třída \textbf{\emph{ContextMenus}} vytváří kontextové nabídky v hlavním okně. V diagramu tříd prezentační vrstvy aplikace se dále nachází statické výčtové třídy \textbf{\emph{KeyShortcuts}} (obsahuje výčet klávesových zkratek) a \textbf{\emph{Tabs}} (obsahuje výčet záložek hlavního okna aplikace, jejich pořadí a jména).
 
@@ -307,7 +320,7 @@ V prostředním panelu se zobrazuje konzole úlohy, zde jsou vidět prováděné
 
 V pravém panelu pod celkovými statistikami následuje tabulka statistik pro každý \textbf{\emph{SQL dotaz s parametry}} samostatně. Je zde možné monitorovat průměrný čas provedení dotazu, počet vykonání dotazu a počet chyb, které v tomto dotazu nastaly. Také se zde zobrazuje čas posledního úspěšně provedeného dotazu a čas poslední chyby.
 
-Časy ze kterých se vypočítává průměrný čas pro každý \textbf{\emph{SQL dotaz s parametry}} je možné po skončení nebo zastavení úlohy vyexportovat do CSV souboru a pomocí externích nástrojů z nich vygenerovat grafy (CSV soubory popsány v sekci \ref{logs}).
+Časy ze kterých se vypočítává průměrný čas pro každý \textbf{SQL dotaz s parametry} je možné po skončení nebo zastavení úlohy vyexportovat do CSV souboru a pomocí externích nástrojů z nich vygenerovat grafy (CSV soubory popsány v sekci \ref{logs}).
 
 
 
@@ -315,7 +328,7 @@ V pravém panelu pod celkovými statistikami následuje tabulka statistik pro ka
 \section{Logická vrstva} \label{logiclayer}
 \textbf{Logická vrstva} zajišťuje vykonávání uživatelem spuštěných úloh, kontrolu uživatelského vstupu a komunikaci mezi datovou a prezentační vrstvou aplikace. Logická vrstva je umístěna v balíku \textit{dbstresstest.logic}.
 \subsection{Diagramy průběhu úlohy} \label{logic}
-Pro popis logické vrstvy jsem zvolil sekvenční diagram. Následující sekvenční diagram demonstruje proces vytvoření spustitelné úlohy v aplikaci.
+Následující sekvenční diagram demonstruje proces přípravy \textbf{spustitelné úlohy} na její spuštění. Vstupem je objekt typu \textbf{\emph{Task}} (viz bod 3 v sekci \ref{datastruct}). Výstupem tohoto procesu je seznam položek typu \textbf{\emph{RunnableTask}}. Objekt typu \textbf{\emph{RunnableTask}} je vytvořen pro každý databázový server definován v této spustitelné úloze.
 
 \begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/rtprocess.png}\caption{Sekvenční diagram vytvoření spustitelné úlohy}
 \label{seq1}
@@ -329,7 +342,7 @@ Objekty typu \textbf{\emph{RunnableTask}} vytváří v konstruktoru sadu objekt�
 Na konci diagramu je vytvořené pole objektů RunnableTask předáno v konstruktoru třídy  \textbf{\emph{RunnableTaskController}} (v diagramu zkráceno na \textit{RTController}). Daná úloha je v tuto chvíli připravena ke spuštění. Průběh úlohy je dále znázorněn diagramem \ref{seqruntask}.
 
 
-\begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/var.png}\caption{Sekvenční diagram vytvoření objektu typu Var}
+\begin{figure}[!htbp]\centering\includegraphics[width=0.8\textwidth]{Figures/var.png}\caption{Sekvenční diagram vytvoření objektu typu Var}
 \label{seqvar}
 \end{figure}
 
@@ -352,13 +365,13 @@ Před samostatným spuštěním je ještě potřeba vytvořit Thread pool (poslo
 V jednotlivých vláknech \textit{Thread Poolu} (označeno červenou barvou v diagramu) je spouštěna metoda \textit{execute(task, pool)}. Tato požádá o volné připojení k databázovému serveru pomocí \textit{getConnection()}. Následuje vytvoření samotného SQL příkazu, který se bude zasílat na databázový server. Z důvodu rozsáhlosti diagramu je tato operace znázorněna v samostatném diagramu \ref{getvalues} Jako poslední operace ve vlákně \textit{thread poolu} se vyvolají události a uloží se informace o vykonaném SQL dotazu.
 
 
-\begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/getvalues.png}\caption{Sekvenční diagram sestavení Statement objektu a jeho parametrů}
+\begin{figure}[!htbp]\centering\includegraphics[width=0.75\textwidth]{Figures/getvalues.png}\caption{Sekvenční diagram sestavení Statement objektu a jeho parametrů}
 \label{getvalues}
 \end{figure}
 
 Diagram \ref{getvalues} popisuje průběh metody \textit{execute()} z předchozího diagramu \ref{seqruntask} (označeno znakem červené hvězdy). Pro každou sadu parametrů SQL dotazu se volá postupně pro každý parametr metoda \textit{getValue()} na objekty \textbf{\emph{Var}}, jejich vytvoření bylo popsáno v předchozím diagramu \ref{seqvar}. Získaná hodnota je poté dosazena do \textit{java.sql.Statement}, po dosazení všech hodnot je \textbf{Statement} odeslán na databázový server pomocí vlastní metody \textit{execute()}.
 
-
+\newpage
 \subsection{Uživatelem definované funkce} \label{functions}
 Pro parametrizaci dotazu je možné použít, místo staticky definovaných parametrů, uživatelem definované funkce, které parametry generují. Funkce jsou vyhodnocovány před zasláním SQL dotazu. Pokud se dotaz v rámci \textbf{\emph{spustitelné úlohy}} má opakovat, pak je funkce vyhodnocena před každým opakováním znovu. Aplikace momentálně obsahuje 2 funkce, nicméně rozhraní aplikace je připraveno pro jednoduchou implementaci dalších funkcí. Každá funkce je obalena mezi znaky \textbf{\#\{ FUNKCE \}} pro jednoznačnou detekci, že se jedná o funkci.
 \begin{itemize}
@@ -399,15 +412,23 @@ FunctionEvaluationException - se vyvolá v případě, že předaná posloupnost
 Znakové posloupnosti se používají pro generování náhodných posloupností znaků v uživatelsky definovaných funkcích (viz sekce \ref{functions}). V hlavním menu aplikace (\textit{CharEnums -> Edit}) je možné pomocí systémového výchozího editoru pro textové soubory s příponou \textit{.txt} editovat soubor, ve kterém jsou definovány tyto posloupnosti. Po editaci souboru je nutné pomocí hlavního menu tyto posloupnosti znovu načíst do paměti aplikace (\textit{CharEnums -> Reload}).
 
 \subsection{Rozšíření aplikace} \label{plugins}
-Aby bylo možné zajistit kompatibilitu s více DBMS bez nutnosti zasahovat do zdrojového kódu aplikace je tato funkcionalita zajištěna pomocí rozšíření hlavní aplikace. Každé rozšíření aplikace obsahuje následující komponenty:
+Aby bylo možné zajistit kompatibilitu s více DBMS bez nutnosti zasahovat do zdrojového kódu aplikace je tato funkcionalita zajištěna pomocí rozšíření hlavní aplikace. Jedná se o samostatný .JAR soubor, který aplikace načítá. Všechny rozšíření jsou umístěny v adresáři \textit{/plugins}, ten se nachází v domovském adresáři aplikace. Každé rozšíření aplikace obsahuje následující komponenty:
 \begin{itemize}
 \item \textbf{JDBC řadič} - implementace JDBC pro daný DBMS, jedná se o externí knihovnu přibalenou uvnitř JAR souboru rozšíření
 \item \textbf{Connection pool} - umožňuje předpřipravit posloupnost spojení s databázovým serverem
 \item \textbf{SQL Parser} - každý DBMS může vyžadovat jiný SQL Parser, proto je umístěn v rozšíření, nikoliv v hlavní aplikaci. Více v sekci \ref{parsers}. 
 \end{itemize}
 
-TODO: třídní diagram rozhraní pro implementaci pluginu
 
+Rozšíření se načítají při spuštění hlavní aplikace, pro přidání nového rozšíření je potřeba aplikaci restartovat. Odebrání nebo přejmenování rozšíření způsobí nefunkčnost všech \textbf{\emph{spustitelných úloh}}, které dané rozšíření používaly.
+
+
+\newpage
+\begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/plugins.png}\caption{Třídní diagram rozšíření aplikace}
+\label{pluginsdiag}
+\end{figure}
+
+V balíku aplikace \textit{dbstresstest.plugins} se nachází třída \textbf{\emph{DatabasePlugin}}, která představuje rozšíření aplikace. Každé rozšíření aplikace musí rozšiřovat tuto třídu a implementovat všechny její metody. Při načítání rozšíření aplikace prochází všechny .jar soubory umístěné v adresáři \textit{/plugins} a pokud tento soubor obsahuje třídu, která rozšiřuje třídu \textbf{\emph{DatabasePlugin}}, pak dojde k načtení třídy rozšíření. Rozšíření je poté dostupné v aplikaci pod jménem získaného z metody \textit{getName()}. O načítání a později i k přistupování k rozhraním načtených rozšíření se stará třída \textbf{\emph{PluginLoader}}, ta uchovává seznam načtených pluginů, které jsou poté k dispozici v aplikaci.
 
 
 
@@ -619,38 +640,45 @@ Výsledky testování prokázaly, že JSqlparser bude pro naše účely vhodněj
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 \section{Závěr}
-TODO:
+Cílem práce bylo vytvořit aplikaci s grafickým rozhraním pro zasílání posloupností SQL dotazů na vybrané DBMS pro podporu výuky předmětu \textit{Administrace databázových systémů}. Díky technologii programovacího jazyka Java je možné aplikaci spouštět na všech operačních systémech, které jí podporují. Aplikaci není nutné instalovat, jedná se o jediný spustitelný .JAR soubor, který nepotřebuje žádné argumenty. Dále je potřeba adresář s rozšířeními (\textbf{/plugins}), ten obsahuje rozšíření pro MS SQL Server, Oracle, MySQL a H2 databázové systémy, všechny jsou vyučovány v rámci předmětu \textit{Administrace databázových systémů}. Rozšíření pro H2 bylo do práce přidáno v rámci projektu "Zprovoznění vybraného DBMS", který byl součástí výuky předmětu \textit{Administrace databázových systémů}.
+
+Aplikaci je dobře optimalizovaná, takže i při testování několika (10 až 20) databázových systémů paralelně po dobu několika hodin si aplikace drží využití operační paměti v rozmezí 300 - 500 MB. Využití paměti záleží však na parametrech \textbf{-Xms} (počáteční paměť JVM) a \textbf{-Xmx} (maximální paměť JVM).
+
+Díky modularitě aplikace je možné aplikaci použít pro jakýkoliv databázový systém založený na SQL. Přidat další rozšíření do aplikace je velmi jednoduché, jedná se o implementaci 2 tříd, jak je popsáno v sekci \ref{plugins}. V rámci aplikace je pomocí hlavního menu možné zobrazit podrobný postup, jak nové rozšíření implementovat v prostředí nástroje NetBeans 8.2.
+
+Podle zadání, aplikace využívá pro perzistentní data formát XML, který umožňuje i manuální editaci pomocí externích nástrojů. Výstup statistik z aplikace je ve formátu CSV, se kterým je opět možné dále pracovat v externích nástrojích. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 \begin{thebibliography}{99}
@@ -662,6 +690,20 @@ TODO:
 	\bibitem{scenebuilder} Cindy Castillo. JSBGS.BOOK: JavaFX Scene Builder Getting Started with JavaFX Scene Builder Release 2.0 2014 [online]. [cit. 2019-03-10]. Dostupné z: https://docs.oracle.com/javase/8/scene-builder-2/JSBGS.pdf
 	\bibitem{netbeans} A Brief History of NetBeans [online]. [cit. 2019-03-12]. Dostupné z: https://netbeans.org/about/history.html
 	\bibitem{sqliso} Information technology -- Database languages -- SQL [online]. [cit. 2019-03-22]. Dostupné z: https://www.iso.org/standard/63555.html
+	\bibitem{java} Java 8 SE dokumentace [online]. [cit. 2019-04-18]. Dostupné z: https://docs.oracle.com/javase/8/docs/
+	\bibitem{jdbc} JDBC dokumentace [online]. [cit. 2019-04-18]. Dostupné z: https://www.oracle.com/technetwork/java/overview-141217.html
+	\bibitem{javafx} JavaFX dokumentace [online]. [cit. 2019-04-18]. Dostupné z: https://docs.oracle.com/javase/8/javase-clienttechnologies.htm
+	\bibitem{jaxb} JAXB dokumentace [online]. [cit. 2019-04-18]. Dostupné z: https://docs.oracle.com/javase/8/docs/technotes/guides/xml/jaxb/index.html
+	\bibitem{sceneb} JavaFX Scene Builder dokumentace [online]. [cit. 2019-04-18]. Dostupné z: https://www.oracle.com/technetwork/java/javase/downloads/javafxscenebuilder-info-2157684.html
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

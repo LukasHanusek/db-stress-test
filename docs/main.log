@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.6960 64-bit) (preloaded format=pdflatex 2019.3.1)  7 APR 2019 18:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.6960 64-bit) (preloaded format=pdflatex 2019.3.1)  18 APR 2019 20:21
 entering extended mode
 **./main.tex
 (main.tex
@@ -941,7 +941,7 @@ File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<Figures/Assignment1.jpg, id=179, 597.6729pt x 844.8363pt>
+<Figures/Assignment1.jpg, id=183, 597.6729pt x 844.8363pt>
 File: Figures/Assignment1.jpg Graphic file (type jpg)
 <use Figures/Assignment1.jpg>
 Package pdftex.def Info: Figures/Assignment1.jpg  used on input line 65.
@@ -983,7 +983,7 @@ Package pdftex.def Info: Figures/Assignment1.jpg  used on input line 65.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<Figures/Assignment2.jpg, id=184, 597.6729pt x 844.8363pt>
+<Figures/Assignment2.jpg, id=188, 597.6729pt x 844.8363pt>
 File: Figures/Assignment2.jpg Graphic file (type jpg)
 <use Figures/Assignment2.jpg>
 Package pdftex.def Info: Figures/Assignment2.jpg  used on input line 65.
@@ -1066,31 +1066,33 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 ] [22
 
 ]
-LaTeX Font Info:    Try loading font information for OMS+lmr on input line 82.
+LaTeX Font Info:    Try loading font information for OMS+lmr on input line 83.
 
 ("E:\Program Files\MikTex\tex/latex/lm\omslmr.fd"
 File: omslmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `OMS/lmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/lmsy/m/n' tried instead on input line 82.
+(Font)              Font shape `OMS/lmsy/m/n' tried instead on input line 83.
  [23] [24] [25
 
 ]
-<Figures/SceneBuilder.png, id=366, 933.4875pt x 602.25pt>
+<Figures/SceneBuilder.png, id=384, 933.4875pt x 602.25pt>
 File: Figures/SceneBuilder.png Graphic file (type png)
 <use Figures/SceneBuilder.png>
 Package pdftex.def Info: Figures/SceneBuilder.png  used on input line 133.
 (pdftex.def)             Requested size: 455.24411pt x 293.70825pt.
- [26 <./Figures/SceneBuilder.png>]
-<Figures/datadiagram.png, id=372, 814.04124pt x 702.625pt>
+ [26 <./Figures/SceneBuilder.png>] [27
+
+] [28
+
+]
+<Figures/datadiagram.png, id=412, 814.04124pt x 705.63625pt>
 File: Figures/datadiagram.png Graphic file (type png)
 <use Figures/datadiagram.png>
-Package pdftex.def Info: Figures/datadiagram.png  used on input line 142.
-(pdftex.def)             Requested size: 455.24411pt x 392.93126pt.
- [27
-
- <./Figures/datadiagram.png>] [28] [29]
-Underfull \hbox (badness 10000) in paragraph at lines 194--195
+Package pdftex.def Info: Figures/datadiagram.png  used on input line 155.
+(pdftex.def)             Requested size: 455.24411pt x 394.61525pt.
+ [29 <./Figures/datadiagram.png>] [30] [31]
+Underfull \hbox (badness 10000) in paragraph at lines 207--208
 
  []
 
@@ -1100,185 +1102,223 @@ File: lstlang1.sty 2019/02/27 1.8b listings language file
 ("E:\Program Files\MikTex\tex/latex/listings\lstmisc.sty"
 File: lstmisc.sty 2019/02/27 1.8b (Carsten Heinz)
 )
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 197.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 210.
 
 
 ("E:\Program Files\MikTex\tex/latex/lm\t1lmtt.fd"
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Overfull \hbox (17.0pt too wide) in paragraph at lines 196--213
+Overfull \hbox (17.0pt too wide) in paragraph at lines 209--226
 []$[]$ 
  []
 
 
-Overfull \hbox (17.0pt too wide) in paragraph at lines 216--223
+Overfull \hbox (17.0pt too wide) in paragraph at lines 229--236
 []$[]$ 
  []
 
 
-Overfull \hbox (17.0pt too wide) in paragraph at lines 226--240
+Overfull \hbox (17.0pt too wide) in paragraph at lines 239--253
 []$[]$ 
  []
 
-[30] [31] [32
+[32] [33] [34
 
 ]
-<Figures/presentlayer.png, id=445, 773.89125pt x 529.98pt>
+<Figures/presentlayer.png, id=487, 773.89125pt x 529.98pt>
 File: Figures/presentlayer.png Graphic file (type png)
 <use Figures/presentlayer.png>
-Package pdftex.def Info: Figures/presentlayer.png  used on input line 251.
+Package pdftex.def Info: Figures/presentlayer.png  used on input line 264.
 (pdftex.def)             Requested size: 455.24411pt x 311.76358pt.
- [33 <./Figures/presentlayer.png>]
-Overfull \hbox (2.01477pt too wide) in paragraph at lines 258--259
+ [35 <./Figures/presentlayer.png>]
+Overfull \hbox (2.01477pt too wide) in paragraph at lines 271--272
 \T1/lmr/bx/it/10.95 MainWindowController, Run-ningTask-Con-t-roller, Hel-pWin-d
 ow-Con-t-roller a Im-port-
  []
 
-[34]
-<Figures/coneditor.png, id=456, 895.09406pt x 621.82312pt>
+[36]
+<Figures/coneditor.png, id=499, 895.09406pt x 621.82312pt>
 File: Figures/coneditor.png Graphic file (type png)
 <use Figures/coneditor.png>
-Package pdftex.def Info: Figures/coneditor.png  used on input line 271.
+Package pdftex.def Info: Figures/coneditor.png  used on input line 284.
 (pdftex.def)             Requested size: 455.24411pt x 316.26216pt.
 LaTeX Font Info:    Font shape `OMS/lmr/bx/n' in size <10.95> not available
-(Font)              Font shape `OMS/lmsy/b/n' tried instead on input line 273.
- [35 <./Figures/coneditor.png>]
-<Figures/sqleditor.png, id=464, 895.09406pt x 621.82312pt>
+(Font)              Font shape `OMS/lmsy/b/n' tried instead on input line 286.
+ [37 <./Figures/coneditor.png>]
+<Figures/sqleditor.png, id=508, 895.09406pt x 621.82312pt>
 File: Figures/sqleditor.png Graphic file (type png)
 <use Figures/sqleditor.png>
-Package pdftex.def Info: Figures/sqleditor.png  used on input line 278.
+Package pdftex.def Info: Figures/sqleditor.png  used on input line 291.
 (pdftex.def)             Requested size: 455.24411pt x 316.26216pt.
- [36 <./Figures/sqleditor.png>]
-<Figures/taskeditor.png, id=473, 895.09406pt x 621.82312pt>
+ [38 <./Figures/sqleditor.png>]
+<Figures/taskeditor.png, id=517, 895.09406pt x 621.82312pt>
 File: Figures/taskeditor.png Graphic file (type png)
 <use Figures/taskeditor.png>
-Package pdftex.def Info: Figures/taskeditor.png  used on input line 285.
+Package pdftex.def Info: Figures/taskeditor.png  used on input line 298.
 (pdftex.def)             Requested size: 455.24411pt x 316.26216pt.
- [37 <./Figures/taskeditor.png>]
-<Figures/taskmongui.png, id=482, 892.83563pt x 615.80063pt>
+ [39 <./Figures/taskeditor.png>]
+<Figures/taskmongui.png, id=525, 892.83563pt x 615.80063pt>
 File: Figures/taskmongui.png Graphic file (type png)
 <use Figures/taskmongui.png>
-Package pdftex.def Info: Figures/taskmongui.png  used on input line 294.
+Package pdftex.def Info: Figures/taskmongui.png  used on input line 307.
 (pdftex.def)             Requested size: 455.24411pt x 313.98839pt.
- [38 <./Figures/taskmongui.png>] [39] [40
+ [40 <./Figures/taskmongui.png>] [41] [42
 
 ]
-<Figures/rtprocess.png, id=498, 974.64125pt x 693.59125pt>
+<Figures/rtprocess.png, id=542, 974.64125pt x 693.59125pt>
 File: Figures/rtprocess.png Graphic file (type png)
 <use Figures/rtprocess.png>
-Package pdftex.def Info: Figures/rtprocess.png  used on input line 320.
+Package pdftex.def Info: Figures/rtprocess.png  used on input line 333.
 (pdftex.def)             Requested size: 455.24411pt x 323.9665pt.
- [41 <./Figures/rtprocess.png>]
-<Figures/var.png, id=507, 663.47874pt x 502.87875pt>
+ [43 <./Figures/rtprocess.png>]
+<Figures/var.png, id=552, 663.47874pt x 502.87875pt>
 File: Figures/var.png Graphic file (type png)
 <use Figures/var.png>
-Package pdftex.def Info: Figures/var.png  used on input line 332.
-(pdftex.def)             Requested size: 455.24411pt x 345.05304pt.
- [42 <./Figures/var.png>]
-<Figures/runtask.png, id=513, 719.68875pt x 423.08063pt>
+Package pdftex.def Info: Figures/var.png  used on input line 345.
+(pdftex.def)             Requested size: 364.19667pt x 276.03935pt.
+ [44 <./Figures/var.png>]
+<Figures/runtask.png, id=558, 719.68875pt x 423.08063pt>
 File: Figures/runtask.png Graphic file (type png)
 <use Figures/runtask.png>
-Package pdftex.def Info: Figures/runtask.png  used on input line 340.
+Package pdftex.def Info: Figures/runtask.png  used on input line 353.
 (pdftex.def)             Requested size: 455.24411pt x 267.63321pt.
- [43 <./Figures/runtask.png>]
-<Figures/getvalues.png, id=524, 635.37375pt x 583.17876pt>
+ [45 <./Figures/runtask.png>]
+<Figures/getvalues.png, id=568, 635.37375pt x 583.17876pt>
 File: Figures/getvalues.png Graphic file (type png)
 <use Figures/getvalues.png>
-Package pdftex.def Info: Figures/getvalues.png  used on input line 355.
-(pdftex.def)             Requested size: 455.24411pt x 417.85951pt.
- [44 <./Figures/getvalues.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 370--373
+Package pdftex.def Info: Figures/getvalues.png  used on input line 368.
+(pdftex.def)             Requested size: 341.43307pt x 313.39018pt.
+ [46 <./Figures/getvalues.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 383--386
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 374--376
+Underfull \hbox (badness 10000) in paragraph at lines 387--389
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 386--388
+Underfull \hbox (badness 10000) in paragraph at lines 399--401
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 389--392
+Underfull \hbox (badness 10000) in paragraph at lines 402--405
 
  []
 
-[45] [46]
-Underfull \hbox (badness 10000) in paragraph at lines 450--451
-
- []
-
-[47
-
-] [48] [49] [50] [51] [52
-
-] [53] [54
+[47] [48]
+<Figures/plugins.png, id=589, 673.51625pt x 537.00626pt>
+File: Figures/plugins.png Graphic file (type png)
+<use Figures/plugins.png>
+Package pdftex.def Info: Figures/plugins.png  used on input line 427.
+(pdftex.def)             Requested size: 455.24411pt x 362.97981pt.
+ [49 <./Figures/plugins.png>] [50
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 658--659
+Underfull \hbox (badness 10000) in paragraph at lines 471--472
+
+ []
+
+[51] [52] [53] [54] [55] [56
+
+] [57] [58
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 686--687
 []\T1/lmr/m/n/10.95 ANTRL Docs [on-line]. [cit. 2019-03-06]. Do-stupné z:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 659--660
+Underfull \hbox (badness 10000) in paragraph at lines 687--688
 []\T1/lmr/m/n/10.95 ANTRL p°e-hled do-stup-ných gra-ma-tik [on-line]. [cit. 201
 9-03-02]. Do-stupné z:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 661--662
+Underfull \hbox (badness 10000) in paragraph at lines 689--690
 []\T1/lmr/m/n/10.95 JSql par-ser do-ku-men-tace [on-line]. [cit. 2019-03-10]. D
 o-stupné z:
  []
 
 
-Underfull \hbox (badness 3019) in paragraph at lines 662--663
+Underfull \hbox (badness 3019) in paragraph at lines 690--691
 []\T1/lmr/m/n/10.95 Cindy Cas-tillo. JSBGS.BOOK: Ja-vaFX Scene Bu-il-der Get-ti
 ng Star-ted with Ja-
  []
 
 
-Underfull \hbox (badness 5711) in paragraph at lines 662--663
+Underfull \hbox (badness 5711) in paragraph at lines 690--691
 \T1/lmr/m/n/10.95 vaFX Scene Bu-il-der Re-le-ase 2.0 2014 [on-line]. [cit. 2019
 -03-10]. Do-stupné z:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 663--664
+Underfull \hbox (badness 10000) in paragraph at lines 691--692
 []\T1/lmr/m/n/10.95 A Brief His-tory of Net-Be-ans [on-line]. [cit. 2019-03-12]
 . Do-stupné z:
  []
 
-[55] [56
 
-] [57] [58
+Underfull \hbox (badness 10000) in paragraph at lines 693--694
+[]\T1/lmr/m/n/10.95 Java 8 SE do-ku-men-tace [on-line]. [cit. 2019-04-18]. Do-s
+tupné z:
+ []
 
-] [59] [60
+
+Underfull \hbox (badness 10000) in paragraph at lines 694--695
+[]\T1/lmr/m/n/10.95 JDBC do-ku-men-tace [on-line]. [cit. 2019-04-18]. Do-stupné
+ z:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 695--696
+[]\T1/lmr/m/n/10.95 JavaFX do-ku-men-tace [on-line]. [cit. 2019-04-18]. Do-stup
+né z:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 696--697
+[]\T1/lmr/m/n/10.95 JAXB do-ku-men-tace [on-line]. [cit. 2019-04-18]. Do-stupné
+ z:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 697--698
+[]\T1/lmr/m/n/10.95 JavaFX Scene Bu-il-der do-ku-men-tace [on-line]. [cit. 2019
+-04-18]. Do-stupné z:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 697--698
+\T1/lmr/m/n/10.95 https://www.oracle.com/technetwork/java/javase/downloads/java
+fxscenebuilder-info-
+ []
+
+[59] [60
 
 ] [61] [62
 
-] [63]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 784.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 784.
+] [63] [64
+
+] [65] [66
+
+] [67]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 826.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 826.
  (main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 784.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 784.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 826.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 826.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 9A9AF70F7D82F03EB648B8AD0340B413;4007.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 784.
+(rerunfilecheck)             Checksum: 71FADE18A28FF992C3F6BCDFC95FF708;4067.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 826.
  ) 
 Here is how much of TeX's memory you used:
- 27512 strings out of 492946
- 460844 string characters out of 3137289
- 776656 words of memory out of 3000000
- 30662 multiletter control sequences out of 15000+200000
+ 27537 strings out of 492946
+ 461144 string characters out of 3137289
+ 776944 words of memory out of 3000000
+ 30675 multiletter control sequences out of 15000+200000
  53974 words of font info for 40 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,8n,51p,1350b,2325s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1291,9 +1331,9 @@ lmr10.pfb><E:/Program Files/MikTex/fonts/type1/public/lm/lmri10.pfb><E:/Program
  Files/MikTex/fonts/type1/public/lm/lmss12.pfb><E:/Program Files/MikTex/fonts/t
 ype1/public/lm/lmssbx10.pfb><E:/Program Files/MikTex/fonts/type1/public/lm/lmsy
 10.pfb><E:/Program Files/MikTex/fonts/type1/public/lm/lmtt10.pfb>
-Output written on main.pdf (63 pages, 1316356 bytes).
+Output written on main.pdf (67 pages, 1353577 bytes).
 PDF statistics:
- 843 PDF objects out of 1000 (max. 8388607)
- 265 named destinations out of 1000 (max. 500000)
- 418 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 899 PDF objects out of 1000 (max. 8388607)
+ 276 named destinations out of 1000 (max. 500000)
+ 431 words of extra memory for PDF output out of 10000 (max. 10000000)
 
