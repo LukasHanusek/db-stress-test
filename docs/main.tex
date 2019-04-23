@@ -134,18 +134,18 @@ JavaFX Scene Builder je nástroj pro vytváření uživatelských grafických ro
 \end{figure}
 
 \section{Specifikace aplikace}
-Aplikace umožňuje definovat seznam \textbf{údajů k připojení k databázovým serverům} a otestovat jejich dostupnost. Dále umožňuje definovat \textbf{SQL dotazy a ty parametrizovat} staticky nebo dynamicky pomocí uživatelem definovaných funkcí (viz sekce \ref{functions}) a zkontrolovat správnost syntaxe těchto SQL dotazů (více v sekci \ref{parsers}).
+Aplikace umožňuje definovat seznam \textbf{údajů k připojení k databázovým serverům} a otestovat jejich dostupnost. Dále umožňuje definovat \textbf{SQL dotazy s parametry}, ty mohou být definovány staticky nebo dynamicky pomocí uživatelem definovaných funkcí (viz sekce \ref{functions}) a ověřit správnost syntaxe těchto SQL dotazů (více v sekci \ref{parsers}).
 
 Pokud máme definovány alespoň jedny údaje k připojení k databázovému serveru a alespoň jeden SQL dotaz můžeme vytvořit \textbf{spustitelnou úlohu}, ta obsahuje seznam údajů k připojení k jednomu nebo více databázovým serverům a seznam SQL dotazů s parametry, dále definuje počet opakování, interval opakování a počet paralelních spojení (detaily popsány v bodě 3. v sekci \ref{datastruct}). 
 
-Aplikace je rozdělena do 2 hlavních oken. První je okno editoru, kde je možné editovat \textbf{datové struktury} (viz sekce \ref{datastruct}), okno je dále rozděleno do tří záložek (obrázky \ref{coneditor}, \ref{sqleditor} a \ref{taskeditor}). Okno editoru se otevírá při spuštění aplikace. Z poslední záložky (obrázek \ref{taskeditor}) je možno spustit druhé hlavní okno, které umožňuje spustit a sledovat průběh spustitelné úlohy (viz sekce \ref{taskmonitor}).
+Grafické rozhraní aplikace je rozděleno do 2 hlavních oken. První je okno editoru, kde je možné editovat a přidávat \textbf{datové struktury} (viz sekce \ref{datastruct}), okno je dále rozděleno do tří záložek (obrázky \ref{coneditor}, \ref{sqleditor} a \ref{taskeditor}). Okno editoru se otevírá při spuštění aplikace. Z poslední záložky (obrázek \ref{taskeditor}) je možno otevřít druhé hlavní okno, které umožňuje spustit a sledovat průběh spustitelné úlohy (viz sekce \ref{taskmonitor}).
 
 Podpora jednotlivých DBMS je zajištěna pomocí modulů, aby bylo možné jednoduše do aplikace přidat podporu pro další DBMS, bez nutnosti zasahovat do jádra aplikace. Detaily implementace modulů jsou popsány v sekci \ref{plugins}.
 
 Pro zajištění co největší přehlednosti zdrojového kódu je implementace aplikace je rozdělena do tří vrstev:
 \begin{itemize}
   	\item \textbf{Datová vrstva} se stará o ukládání, načítání a editování perzistentních dat v aplikaci. Datová vrstva je umístěna v balíku (Java package) \textit{dbstresstest.data}. Sekce \ref{datalayer} popisuje detaily této vrstvy.
-  	\item \textbf{Prezentační vrstva} poskytuje uživatelské rozhraní aplikace, ve kterém je možno vytvářet, editovat a mazat data aplikace. Dále pak spouštět a monitorovat úlohy. Prezentační vrstva je umístěna v balíku \textit{dbstresstest.gui}. Sekce \ref{presentlayer} popisuje detaily této vrstvy.
+  	\item \textbf{Prezentační vrstva} poskytuje grafické uživatelské rozhraní aplikace, ve kterém je možno vytvářet, editovat a mazat data aplikace. Dále pak spouštět a monitorovat úlohy. Prezentační vrstva je umístěna v balíku \textit{dbstresstest.gui}. Sekce \ref{presentlayer} popisuje detaily této vrstvy.
   	\item \textbf{Logická vrstva} zajišťuje vykonávání uživatelem spuštěných úloh, kontrolu uživatelského vstupu a komunikaci mezi datovou a prezentační vrstvou aplikace. Logická vrstva je umístěna v balíku \textit{dbstresstest.logic}. Sekce \ref{logiclayer} popisuje detaily této vrstvy.
 \end{itemize} 
 
@@ -409,18 +409,15 @@ FunctionEvaluationException - se vyvolá v případě, že předaná posloupnost
 \end{itemize}
 
 \subsection{Znakové posloupnosti} \label{charenums}
-Znakové posloupnosti se používají pro generování náhodných posloupností znaků v uživatelsky definovaných funkcích (viz sekce \ref{functions}). V hlavním menu aplikace (\textit{CharEnums -> Edit}) je možné pomocí systémového výchozího editoru pro textové soubory s příponou \textit{.txt} editovat soubor, ve kterém jsou definovány tyto posloupnosti. Po editaci souboru je nutné pomocí hlavního menu tyto posloupnosti znovu načíst do paměti aplikace (\textit{CharEnums -> Reload}).
+Znakové posloupnosti se používají pro generování náhodných posloupností znaků v uživatelsky definovaných funkcích (viz sekce \ref{functions}). V hlavním menu aplikace (\textit{CharEnums -> Edit}) je možné pomocí systémového výchozího editoru pro textové soubory (s příponou \textit{.txt}) editovat soubor, ve kterém jsou definovány tyto posloupnosti. Po editaci souboru je nutné pomocí hlavního menu tyto posloupnosti znovu načíst do paměti aplikace (\textit{CharEnums -> Reload}).
 
 \subsection{Rozšíření aplikace} \label{plugins}
 Aby bylo možné zajistit kompatibilitu s více DBMS bez nutnosti zasahovat do zdrojového kódu aplikace je tato funkcionalita zajištěna pomocí rozšíření hlavní aplikace. Jedná se o samostatný .JAR soubor, který aplikace načítá. Všechny rozšíření jsou umístěny v adresáři \textit{/plugins}, ten se nachází v domovském adresáři aplikace. Každé rozšíření aplikace obsahuje následující komponenty:
 \begin{itemize}
-\item \textbf{JDBC řadič} - implementace JDBC pro daný DBMS, jedná se o externí knihovnu přibalenou uvnitř JAR souboru rozšíření
-\item \textbf{Connection pool} - umožňuje předpřipravit posloupnost spojení s databázovým serverem
-\item \textbf{SQL Parser} - každý DBMS může vyžadovat jiný SQL Parser, proto je umístěn v rozšíření, nikoliv v hlavní aplikaci. Více v sekci \ref{parsers}. 
+\item \textbf{JDBC řadič} - implementace JDBC pro daný DBMS, jedná se o externí knihovnu přibalenou uvnitř JAR souboru rozšíření. Tuto knihovnu poskytuje většina DBMS na svých oficiálních webových stránkách ke stažení.
+\item \textbf{Connection pool} - umožňuje předpřipravit posloupnost spojení s databázovým serverem. Samotná implementace může být v každém rozšíření jiná, každé rozšíření ale musí implementovat rozhraní hlavní aplikace - \textbf{\emph{DbPool}} (viz diagram na obrázku \ref{pluginsdiag}).
+\item \textbf{SQL Parser} - každý DBMS může vyžadovat jiný SQL Parser, proto je umístěn v rozšíření, nikoliv v hlavní aplikaci, více v sekci \ref{parsers}. 
 \end{itemize}
-
-
-Rozšíření se načítají při spuštění hlavní aplikace, pro přidání nového rozšíření je potřeba aplikaci restartovat. Odebrání nebo přejmenování rozšíření způsobí nefunkčnost všech \textbf{\emph{spustitelných úloh}}, které dané rozšíření používaly.
 
 
 \newpage
@@ -428,7 +425,9 @@ Rozšíření se načítají při spuštění hlavní aplikace, pro přidání n
 \label{pluginsdiag}
 \end{figure}
 
-V balíku aplikace \textit{dbstresstest.plugins} se nachází třída \textbf{\emph{DatabasePlugin}}, která představuje rozšíření aplikace. Každé rozšíření aplikace musí rozšiřovat tuto třídu a implementovat všechny její metody. Při načítání rozšíření aplikace prochází všechny .jar soubory umístěné v adresáři \textit{/plugins} a pokud tento soubor obsahuje třídu, která rozšiřuje třídu \textbf{\emph{DatabasePlugin}}, pak dojde k načtení třídy rozšíření. Rozšíření je poté dostupné v aplikaci pod jménem získaného z metody \textit{getName()}. O načítání a později i k přistupování k rozhraním načtených rozšíření se stará třída \textbf{\emph{PluginLoader}}, ta uchovává seznam načtených pluginů, které jsou poté k dispozici v aplikaci.
+V balíku aplikace \textit{dbstresstest.plugins} se nachází třída \textbf{\emph{DatabasePlugin}}, kterou musí každé rozšíření rozšířit a implementovat (přepsat pomocí @Override anotace) všechny její metody. Jméno .JAR souboru rozšíření musí odpovídat cestě ke hlavní třídě rozšíření, která rozšiřuje třídu \textbf{\emph{DatabasePlugin}}. Při načítání rozšíření aplikace prochází všechny .jar soubory umístěné v adresáři \textit{/plugins} a pokud tento soubor obsahuje třídu, která rozšiřuje třídu \textbf{\emph{DatabasePlugin}}, pak dojde k načtení třídy rozšíření. Rozšíření je poté dostupné v aplikaci pod jménem získaného z metody \textit{getName()}. O načítání a později i k přistupování k rozhraním načtených rozšíření se stará třída \textbf{\emph{PluginLoader}}, ta uchovává seznam načtených pluginů, které jsou poté k dispozici v aplikaci.
+
+Rozšíření se načítají při spuštění hlavní aplikace, pro přidání nového rozšíření je potřeba aplikaci restartovat. Odebrání nebo přejmenování (změna metody \textit{getName()} v hlavní třídě rozšíření) rozšíření způsobí nefunkčnost všech \textbf{\emph{spustitelných úloh}}, které dané rozšíření používaly.
 
 
 

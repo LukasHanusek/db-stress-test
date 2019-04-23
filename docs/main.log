@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.6960 64-bit) (preloaded format=pdflatex 2019.3.1)  18 APR 2019 20:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.6960 64-bit) (preloaded format=pdflatex 2019.3.1)  23 APR 2019 14:34
 entering extended mode
 **./main.tex
 (main.tex
@@ -1209,15 +1209,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 402--405
  []
 
 [47] [48]
-<Figures/plugins.png, id=589, 673.51625pt x 537.00626pt>
+<Figures/plugins.png, id=590, 673.51625pt x 537.00626pt>
 File: Figures/plugins.png Graphic file (type png)
 <use Figures/plugins.png>
-Package pdftex.def Info: Figures/plugins.png  used on input line 427.
+Package pdftex.def Info: Figures/plugins.png  used on input line 424.
 (pdftex.def)             Requested size: 455.24411pt x 362.97981pt.
  [49 <./Figures/plugins.png>] [50
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 471--472
+Underfull \hbox (badness 10000) in paragraph at lines 470--471
 
  []
 
@@ -1226,72 +1226,72 @@ Underfull \hbox (badness 10000) in paragraph at lines 471--472
 ] [57] [58
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 686--687
+Underfull \hbox (badness 10000) in paragraph at lines 685--686
 []\T1/lmr/m/n/10.95 ANTRL Docs [on-line]. [cit. 2019-03-06]. Do-stupné z:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 687--688
+Underfull \hbox (badness 10000) in paragraph at lines 686--687
 []\T1/lmr/m/n/10.95 ANTRL p°e-hled do-stup-ných gra-ma-tik [on-line]. [cit. 201
 9-03-02]. Do-stupné z:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 689--690
+Underfull \hbox (badness 10000) in paragraph at lines 688--689
 []\T1/lmr/m/n/10.95 JSql par-ser do-ku-men-tace [on-line]. [cit. 2019-03-10]. D
 o-stupné z:
  []
 
 
-Underfull \hbox (badness 3019) in paragraph at lines 690--691
+Underfull \hbox (badness 3019) in paragraph at lines 689--690
 []\T1/lmr/m/n/10.95 Cindy Cas-tillo. JSBGS.BOOK: Ja-vaFX Scene Bu-il-der Get-ti
 ng Star-ted with Ja-
  []
 
 
-Underfull \hbox (badness 5711) in paragraph at lines 690--691
+Underfull \hbox (badness 5711) in paragraph at lines 689--690
 \T1/lmr/m/n/10.95 vaFX Scene Bu-il-der Re-le-ase 2.0 2014 [on-line]. [cit. 2019
 -03-10]. Do-stupné z:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 691--692
+Underfull \hbox (badness 10000) in paragraph at lines 690--691
 []\T1/lmr/m/n/10.95 A Brief His-tory of Net-Be-ans [on-line]. [cit. 2019-03-12]
 . Do-stupné z:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 693--694
+Underfull \hbox (badness 10000) in paragraph at lines 692--693
 []\T1/lmr/m/n/10.95 Java 8 SE do-ku-men-tace [on-line]. [cit. 2019-04-18]. Do-s
 tupné z:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 694--695
+Underfull \hbox (badness 10000) in paragraph at lines 693--694
 []\T1/lmr/m/n/10.95 JDBC do-ku-men-tace [on-line]. [cit. 2019-04-18]. Do-stupné
  z:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 695--696
+Underfull \hbox (badness 10000) in paragraph at lines 694--695
 []\T1/lmr/m/n/10.95 JavaFX do-ku-men-tace [on-line]. [cit. 2019-04-18]. Do-stup
 né z:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 696--697
+Underfull \hbox (badness 10000) in paragraph at lines 695--696
 []\T1/lmr/m/n/10.95 JAXB do-ku-men-tace [on-line]. [cit. 2019-04-18]. Do-stupné
  z:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 697--698
+Underfull \hbox (badness 10000) in paragraph at lines 696--697
 []\T1/lmr/m/n/10.95 JavaFX Scene Bu-il-der do-ku-men-tace [on-line]. [cit. 2019
 -04-18]. Do-stupné z:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 697--698
+Underfull \hbox (badness 10000) in paragraph at lines 696--697
 \T1/lmr/m/n/10.95 https://www.oracle.com/technetwork/java/javase/downloads/java
 fxscenebuilder-info-
  []
@@ -1305,14 +1305,14 @@ fxscenebuilder-info-
 ] [65] [66
 
 ] [67]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 826.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 826.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 825.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 825.
  (main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 826.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 826.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 825.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 825.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 71FADE18A28FF992C3F6BCDFC95FF708;4067.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 826.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 825.
  ) 
 Here is how much of TeX's memory you used:
  27537 strings out of 492946
@@ -1331,9 +1331,9 @@ lmr10.pfb><E:/Program Files/MikTex/fonts/type1/public/lm/lmri10.pfb><E:/Program
  Files/MikTex/fonts/type1/public/lm/lmss12.pfb><E:/Program Files/MikTex/fonts/t
 ype1/public/lm/lmssbx10.pfb><E:/Program Files/MikTex/fonts/type1/public/lm/lmsy
 10.pfb><E:/Program Files/MikTex/fonts/type1/public/lm/lmtt10.pfb>
-Output written on main.pdf (67 pages, 1353577 bytes).
+Output written on main.pdf (67 pages, 1354644 bytes).
 PDF statistics:
- 899 PDF objects out of 1000 (max. 8388607)
+ 900 PDF objects out of 1000 (max. 8388607)
  276 named destinations out of 1000 (max. 500000)
  431 words of extra memory for PDF output out of 10000 (max. 10000000)
 
