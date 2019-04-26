@@ -11,12 +11,9 @@
 
 \EnglishThesisTitle{Application for Simulation of Database Problems}
 
-\SubmissionDate{1. dubna 2019}
+\SubmissionDate{24. dubna 2019}
 
 \Thanks{Rád bych zde poděkoval vedoucímu této bakalářské práce doc. Ing. Radimovi Bačovi  Ph.D. za jeho cenné rady a konzultace během tvorby práce.}
-
-% Pokud nechceme nikomu dekovat makro zapoznamkujeme.
-%\Thanks{Rád bych na tomto místě poděkoval všem, kteří mi s prací pomohli, protože bez nich by tato práce nevznikla.}
 
 % Zadame cestu a jmeno souboru ci nekolika souboru s digitalizovanou podobou zadani prace.
 % Pokud toto makro zapoznamkujeme sazi se stranka s upozornenim.
@@ -24,12 +21,12 @@
 
 % Zadame soubor s digitalizovanou podobou prohlaseni autora zaverecne prace.
 % Pokud toto makro zapoznamkujeme sazi se cisty text prohlaseni.
-%\AuthorDeclarationImageFile{Figures/AuthorDeclaration.jpg}
+\AuthorDeclarationImageFile{Figures/prohlaseni.jpg}
 
 
 % Zadame soubor s digitalizovanou podobou souhlasu spolupracujici prav. nebo fyz. osoby.
 % Pokud toto makro zapoznamkujeme sazi se cisty text souhlasu.
-%\CooperatingPersonsDeclarationImageFile{Figures/CoopPersonDeclaration.jpg}
+\CooperatingPersonsDeclarationImageFile{Figures/zverejneni.jpg}
 
 
 % řazeno podle abecedy nikoliv podle výskytů v textu
@@ -52,11 +49,11 @@
 
 \CzechAbstract{Tato bakalářská práce se zabývá simulováním problémů, které mohou nastat na databázovém serveru. Cílem práce je vytvořit aplikaci, která umožní definovat způsob vytížení databáze a simulovat reálný provoz. Správce databázového serveru tak má možnost vyzkoušet a odladit problémy, ještě před tím, než se databázový server uvede do reálného provozu.}
 
-\CzechKeywords{SQL, databáze, simulace vytížení, validace SQL}
+\CzechKeywords{SQL, databáze, SŘBD, simulace vytížení, validace SQL, Java, JavaFX, JDBC}
 
 \EnglishAbstract{The purpose of this bachelor thesis is to simulate problems that could take place on a production database server. The objective is to create an application that will allow database administrators to specify the type of workload and simulate real database traffic. This way database administrators can find and solve performance problems that might come up during the test before using the database in a production environment.}
 
-\EnglishKeywords{SQL, database, workload simulation, SQL validation}
+\EnglishKeywords{SQL, database, DBMS, workload simulation, SQL validation, Java, JavaFX, JDBC}
 
 % Zacatek dokumentu
 \begin{document}
@@ -115,20 +112,20 @@ JDBC je API pro programovací jazyk Java, které definuje způsob, jak přistupo
 
 
 \subsection{Knihovna JavaFX pro grafické rozhraní}
-JavaFX je platforma pro tvorbu grafických uživatelských rozhraní aplikací v programovacím jazyce Java. JavaFX se liší od ostatních grafických platforem, dostupných v základní instalaci Java Standard Edition, především tím, že grafické komponenty, jejich rozmístění a chování se definuje v odděleném souboru s příponou .FXML, tento soubor má formát XML. Každý FXML soubor definuje jedno grafické rozhraní (okno / scénu) a každý FXML soubor má přidruženou jednu nebo více tříd, které se označují jako "Controller". Tyto třídy pak zajišťují propojení grafických komponent se zbytkem aplikace. JavaFX se tak blíží návrhovému vzoru MVC (Model-View-Controller), ten je rozšířený zejména v oblasti web technologií \cite{javafx}.
+JavaFX je platforma pro tvorbu grafických uživatelských rozhraní aplikací v programovacím jazyce Java. JavaFX se liší od ostatních grafických platforem, dostupných v základní instalaci Java Standard Edition, především tím, že grafické komponenty, jejich rozmístění, a chování se definuje v odděleném souboru s příponou .FXML, tento soubor má formát XML. Každý FXML soubor definuje jedno grafické rozhraní (okno / scénu) a každý FXML soubor má přidruženou jednu nebo více tříd, které se označují jako "Controller". Tyto třídy pak zajišťují propojení grafických komponent se zbytkem aplikace. JavaFX se tak blíží návrhovému vzoru MVC (Model-View-Controller), ten je rozšířený zejména v oblasti web technologií \cite{javafx}.
 
 \subsection{JAXB} \label{jabx}
 Java Architecture for XML Binding (JAXB) je obsaženo v balíku \textit{javax.xml.bind}. JABX umožňuje serializovat Java objekty do formátu XML a uložit je na disk. Aby bylo možné objekt pomocí JABX serializovat, všechny datové typy, které objekt obsahuje musí implementovat rozhraní \textit{java.io.Serializable}. Chování serializace a de-serializace konkrétního objektu můžeme ovlivnit přidáním anotací do třídy, která objekt definuje. Anotace pro JAXB najdeme v balíku \textit{javax.xml.bind.annotation} \cite{jaxb}. V aplikaci jsou použity tyto anotace:
 \begin{itemize}
   	\item \textbf{@XmlRootElement} umožňuje pojmenovat kořenový element XML pomocí argumentu \textit{name}.
-  	\item \textbf{@XmlElement} označuje XML Element, pomocí nepovinného argumentu \textit{name} je možno element pojmenovat ve formátu XML. Bez použití této anotace budou všechny XML Elementy pojmenovány podle názvu třídních proměnných.
+  	\item \textbf{@XmlElement} označuje XML Element, pomocí nepovinného argumentu \textit{name} je možno element pojmenovat v XML odlišně. Bez použití této anotace budou všechny XML Elementy pojmenovány podle názvu třídních proměnných.
   	\item \textbf{@XmlElementWrapper} obalí XML Element dalším XML Elementem, v aplikaci použito především pro obalení seznamu elementů.
   	\item Proměnná označená anotací \textbf{@XmlTransient} se do XML formátu nebude serializovat.
   	\item \textbf{@XmlAttribute} umožňuje serializovat danou třídní proměnnou jako XML atribut.
 \end{itemize}
 
 \subsection{SceneBuilder}
-JavaFX Scene Builder je nástroj pro vytváření uživatelských grafických rozhraní pro JavaFX. Jedná se o nástroj typu "WYSIWYG", což je zkratka pro "What You See Is What You Get", přeloženo "Co vidíte, to dostanete" \cite{sceneb}. Nástroj SceneBuilder umožňuje grafické komponenty "přetahovat", editovat jejich parametry jako odsazení od krajů, minimální, maximální a preferovanou velikost v interaktivním grafickém rozhraní. V prostředí SceneBuilder lze rovněž propojit grafické prvky s událostmi, jako například kliknutí na tlačítko, a nastavit odchycení této události v přidružené Controller třídě. Výstupem z tohoto programu je soubor formátu FXML, který je načten JavaFX aplikací \cite{scenebuilder}.
+JavaFX Scene Builder je nástroj pro vytváření uživatelských grafických rozhraní pro JavaFX. Jedná se o nástroj typu "WYSIWYG", což je zkratka pro "What You See Is What You Get", přeloženo "Co vidíte, to dostanete"  \cite{sceneb}. Nástroj SceneBuilder umožňuje grafické komponenty "přetahovat", editovat jejich parametry jako odsazení od krajů, minimální, maximální a preferovanou velikost v interaktivním grafickém rozhraní. V prostředí SceneBuilder lze rovněž propojit grafické prvky s událostmi, jako například kliknutí na tlačítko, a nastavit odchycení této události v přidružené Controller třídě. Výstupem z tohoto programu je soubor formátu FXML, který je načten JavaFX aplikací \cite{scenebuilder}.
 
 \begin{figure}[!h]\centering\includegraphics[width=1.0\textwidth]{Figures/SceneBuilder.png}\caption{Rozhraní nástroje SceneBuilder}
 \end{figure}
@@ -200,7 +197,7 @@ Aplikace perzistentně ukládá následující datové struktury, v rámci aplik
     \end{itemize}
 \end{enumerate}
 
-Všechny Singleton Manager třídy (popsané na začátku této sekce) mají možnost zaregistrovat posluchače událostí pomocí generické třídy \textbf{\emph{ManagerListener}}  pomocí volání metody \textit{addListener(listener)}, která je součástí každé Manager třídy, jako argument je předaná vytvořená instance generického posluchače. Třída posluchače je generická, aby mohla být použitá pro všechny Manager třídy (\textbf\emph{{ConManager, SetManager, TaskManager}}). Tyto posluchače jsou v aplikaci využity v Prezentační vrstvě pro aktualizaci seznamů vytvořených entit, zachycuje se událost \textit{onListChanged(List<T> objects)} vyvolávaná Manager třídami při editaci uložených datových struktur aplikace.
+Všechny Singleton Manager třídy (popsané na začátku této sekce) mají možnost zaregistrovat posluchače událostí pomocí generické třídy \textbf{\emph{ManagerListener}} a voláním metody \newline \textit{addListener(listener)}, která je součástí každé Manager třídy, jako argument je předaná vytvořená instance generického posluchače. Třída posluchače je generická, aby mohla být použitá pro všechny Manager třídy (\textbf\emph{{ConManager, SetManager, TaskManager}}). Tyto posluchače jsou v aplikaci využity v Prezentační vrstvě pro aktualizaci seznamů vytvořených entit, zachycuje se událost \textit{onListChanged(List<T> objects)} vyvolávaná Manager třídami při editaci uložených datových struktur aplikace.
 
 \newpage
 \subsection{XML datové soubory} \label{xml}
@@ -231,7 +228,7 @@ Všechny \textbf{údaje k připojení k databázovému serveru} (bod 1. v sekci 
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <sql call="false" type="MSSQL" id="1549662678705" lineDelimiter="59" name="MujSelect" paramDelimiter="44" parametrized="true" query="true" text="select * from test;" timeout="100" update="false"/>
 \end{lstlisting}
-Sady \textbf{SQL dotazů s parametry} (bod 2. v sekci \ref{datastruct}) jsou uloženy ve více XML souborech, umístěných v adresáři \textit{data/sql/}, adresář \textit{data} je umístěn v pracovním adresáři aplikace. Každý soubor reprezentuje jeden uložený SQL dotaz, případně jeho parametry, pokud se jedná o parametrizovaný dotaz. Jméno souboru se shoduje s parametrem ID (Identity), které slouží jako unikátní identifikátor daného uloženého SQL dotazu. Aplikace generuje tyto ID na základě aktuálního času v milisekundách od 1.1.1970 v době vytváření SQL dotazu v rozhraní aplikace.
+Sady \textbf{SQL dotazů s parametry} (bod 2. v sekci \ref{datastruct}) jsou uloženy ve více XML souborech, umístěných v adresáři \textit{data/sql/}, adresář \textit{data} je umístěn v pracovním adresáři aplikace. Každý soubor reprezentuje jeden uložený SQL dotaz, případně také jeho parametry, pokud se jedná o parametrizovaný dotaz. Jméno souboru se shoduje s hodnotou ID (Identity), které slouží jako unikátní identifikátor daného uloženého SQL dotazu. Aplikace generuje tyto ID na základě aktuálního času v milisekundách od 1.1.1970 v době vytváření SQL dotazu v rozhraní aplikace.
 \end{minipage}
 
 \lstset{aboveskip=30pt}
@@ -248,11 +245,11 @@ Sady \textbf{SQL dotazů s parametry} (bod 2. v sekci \ref{datastruct}) jsou ulo
     <sql>1550513479135</sql>
 </workload>
 \end{lstlisting}
-Každá \textbf{spustitelná úloha} (bod 3. v sekci \ref{datastruct}) je uložená v samostatném XML souboru v adresáři \textit{data/tasks/}, adresář \textit{data} je umístěn v pracovním adresáři aplikace. Soubor obsahuje reference pomocí ID.
+Každá \textbf{spustitelná úloha} (bod 3. v sekci \ref{datastruct}) je uložená v samostatném XML souboru v adresáři \textit{data/tasks/}, adresář \textit{data} je umístěn v pracovním adresáři aplikace. Soubor obsahuje reference na objekty typu \textbf{Task} a \textbf{DbCon} pomocí jejich argumentu ID.
 \end{minipage}
 
 \subsection{Log a CSV soubory} \label{logs}
-Během spouštění úloh v aplikaci jsou generovány log soubory, obsahují informace a všech chybách, které nastaly za běhu dané úlohy. Log soubory jsou umístěny v adresáři \textit{/logs}, ten je umístěn v pracovním adresáři aplikace. Log soubory jsou rozděleny podle jména uložených údajů k připojení k databázovému serveru a dále pak podle data spuštění úlohy, aby bylo možné dobře v log souborech vyhledávat a případně mazat nepotřebné adresáře s log soubory.
+Během spouštění úloh v aplikaci jsou generovány log soubory, obsahují informace o všech chybách, které nastaly za běhu dané úlohy. Log soubory jsou umístěny v adresáři \textit{/logs}, ten je umístěn v pracovním adresáři aplikace. Log soubory jsou rozděleny podle jména uložených údajů k připojení k databázovému serveru a dále pak podle data spuštění úlohy, aby bylo možné dobře v log souborech vyhledávat a případně mazat nepotřebné adresáře s log soubory.
 
 Pokud úloha skončí nebo je zastavená uživatelem, aplikace nabídne možnost výsledky testu exportovat do CSV souboru. Do souboru jsou exportovány časy vykonávání jednotlivých SQL dotazů. Díky CSV formátu je možno s daty dále pracovat v jiném externím nástroji a vygenerovat z dat grafy.
 
@@ -268,7 +265,7 @@ Uživatelské rozhraní aplikace je definováno v FXML souborech. Tyto soubory j
 
 Controller třída obsahuje referenci na všechny prvky uživatelského rozhraní, pomocí které lze k prvkům přistupovat a měnit jejich vlastnosti za běhu aplikace. Reference se předává do třídních proměnných jejichž název se musí shodovat s \textit{fx:id} prvku definovaného v FXML souboru. Reference na aktuální instanci prvku rozhraní JavaFX předává během inicializace controller třídy, aby předávání fungovalo, controller třída musí implementovat rozhraní \textit{javafx.fxml.Initializable}.
 
-Aplikace celkem obsahuje 4 hlavní okna a k nim jsou přiřazeny 4 Controller třídy \newline \textbf{\emph{MainWindowController, RunningTaskController, HelpWindowController a ImportConController}}. Všechny Controller třídy mají vazby (zobrazeno třídním diagramem na obrázku \ref{presentdiagram}) na Singleton třídu GUI, tato třída obsahuje pomocné funkce pro vyvolávání dodatečných dialogových oken. 
+Aplikace celkem obsahuje 4 okna (scény) a k nim jsou přiřazeny 4 Controller třídy \newline \textbf{\emph{MainWindowController, RunningTaskController, HelpWindowController a ImportConController}}. Všechny Controller třídy mají vazby (zobrazeno třídním diagramem na obrázku \ref{presentdiagram}) na Singleton třídu GUI, tato třída obsahuje pomocné funkce pro vyvolávání dodatečných dialogových oken. 
 
 Třída \textbf{\emph{MainWindowController}} dále využívá pomocné třídy pro ovládání některých složitějších komponent. Třídy \textbf{\emph{DragDropDB}} a \textbf{\emph{DragDropSQL}} zajišťují funkcionalitu přetahování prvků sql a údajů k připojení k databázi v editoru úloh. Třída \textbf{\emph{ContextMenus}} vytváří kontextové nabídky v hlavním okně. V diagramu tříd prezentační vrstvy aplikace se dále nachází statické výčtové třídy \textbf{\emph{KeyShortcuts}} (obsahuje výčet klávesových zkratek) a \textbf{\emph{Tabs}} (obsahuje výčet záložek hlavního okna aplikace, jejich pořadí a jména).
 
@@ -283,7 +280,7 @@ Po spuštění aplikace je spuštěno hlavní grafické uživatelské rozhraní,
 
 \begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/coneditor.png}\caption{Okno editoru údajů k připojení k databázovému serveru}\label{coneditor}
 \end{figure}
-Záložka editoru (obrázek \ref{coneditor}) pro správu \textbf{\emph{údajů k připojení k databázovému serveru}} umožňuje přidávat nové položky pomocí tlačítka umístěného pod seznamem položek, nebo přes hlavní kontextovou nabídku aplikace. Existující položky lze editovat po kliknutí na jejich jméno v seznamu umístěného na levé straně okna. Pravým kliknutím na jméno položky, lze položku trvale odstranit. Samotný formulář odpovídá datové struktuře třídy \textbf{\emph{DbCon}} (viz sekce \ref{datadiagram}). Heslo databázového uživatele se zadává do vstupního pole typu \textit{javafx.scene.control.PasswordField}, díky tomu se na monitor renderují pouze zástupné znaky \textbf{'•'}, místo skutečných znaků hesla.
+Záložka editoru (obrázek \ref{coneditor}) pro správu \textbf{\emph{údajů k připojení k databázovému serveru}} umožňuje přidávat nové položky pomocí tlačítka umístěného pod seznamem položek, nebo přes hlavní kontextovou nabídku aplikace. Existující položky lze editovat po kliknutí na jejich jméno v seznamu umístěného na levé straně okna. Pravým kliknutím na jméno položky, lze položku po dodatečném potvrzení trvale odstranit. Samotný formulář odpovídá datové struktuře třídy \textbf{\emph{DbCon}} (viz sekce \ref{datadiagram}). Heslo databázového uživatele se zadává do vstupního pole typu \textit{javafx.scene.control.PasswordField}, díky tomu se na monitor renderují pouze zástupné znaky \textbf{'•'}, místo skutečných znaků hesla.
 
 Nad uloženými údaji lze provést test, tento test ověří, zda se k danému databázovému serveru lze připojit.
 
@@ -291,7 +288,7 @@ Nad uloženými údaji lze provést test, tento test ověří, zda se k danému 
 \begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/sqleditor.png}\caption{Okno editoru SQL dotazů s parametry}
 \label{sqleditor}
 \end{figure}
-Okno editoru \textbf{\emph{SQL dotazů s parametry}} (obrázek \ref{sqleditor}) obsahuje formulář odpovídající datové struktuře třídy \textbf{\emph{SQLSet}} (viz sekce \ref{datadiagram}). Ve formuláři funguje také kontrola syntaxe SQL, aby kontrola fungovala, je potřeba nejdříve vybrat typ databáze, pro kterou je SQL určeno (na výběr jsou opět všechny aktuálně načtené rozšíření aplikace, které obsahují implementaci SQL praseru, více o rozšířeních aplikace v sekci \ref{plugins}). Pro definování parametrizovaných příkazů používáme symbol \textbf{\emph{ '?' }} jako zástupný znak parametru v SQL a jeho hodnotu vyplňujeme v textové oblasti níže. Každý parametr musí být oddělen ve výchozím nastavení znakem \textbf{\emph{ ',' }}, tento znak je možno ve formuláři změnit. Pokud chceme tento příkaz během jeho spuštění provést více krát po sobě, můžeme definovat několik sad parametrů tím, že je oddělíme ve výchozím nastavení znakem \textbf{\emph{ ';' }}, pro přehlednost zápisu můžeme oddělit i novým řádkem, to ale není povinné. Oddělovač sady parametrů lze v rámci formuláře změnit na jiný znak. Místo staticky definovaných parametrů můžeme použít zabudované funkce aplikace (viz sekce \ref{functions}).
+Okno editoru \textbf{\emph{SQL dotazů s parametry}} (obrázek \ref{sqleditor}) obsahuje formulář odpovídající datové struktuře třídy \textbf{\emph{SQLSet}} (viz sekce \ref{datadiagram}). Ve formuláři funguje také kontrola syntaxe SQL, aby kontrola fungovala, je potřeba nejdříve vybrat typ databáze, pro kterou je SQL určeno (na výběr jsou opět všechny aktuálně načtené rozšíření aplikace, které obsahují implementaci SQL praseru, více o rozšířeních aplikace v sekci \ref{plugins}). Pro definování parametrizovaných příkazů používáme symbol \textbf{\emph{?}} (otazník) jako zástupný znak parametru v SQL a jeho hodnotu vyplňujeme v textové oblasti níže. Každý parametr musí být oddělen, ve výchozím nastavení, znakem \textbf{\emph{,}} (čárka), tento znak je možno ve formuláři změnit. Pokud chceme tento příkaz během jeho spuštění provést více krát po sobě, můžeme definovat několik sad parametrů tím, že je oddělíme, ve výchozím nastavení, znakem \textbf{\emph{;}} (středník), pro přehlednost zápisu můžeme oddělit i novým řádkem, to ale není povinné. Oddělovač sady parametrů lze v rámci formuláře změnit na jiný znak. Místo staticky definovaných parametrů můžeme použít zabudované funkce aplikace (viz sekce \ref{functions}).
 
 
 \newpage
@@ -311,7 +308,7 @@ Okno monitoru úlohy (obrázek \ref{taskmonitor}) je samostatné okno aplikace z
 
 V prostředním panelu se zobrazuje konzole úlohy, zde jsou vidět prováděné příkazy a také případné chyby a jejich popis. Konzole je limitovaná na posledních 200 událostí. Konzole se v průběhu automaticky posouvá směrem dolů. Důležité události, především chyby a varování jsou ukládány také do log souboru na disku (log soubory popsány v sekci \ref{logs}). V pravém panelu se zobrazují statistiky úlohy:
 \begin{itemize}
-\item \textbf{loops} - aktuální počet provedených opakování úlohy
+\item \textbf{loops} - aktuální počet provedených opakování (cyklů) úlohy
 \item \textbf{queries} - celkový počet provedených SQL dotazů
 \item \textbf{total time} - celková doba běhu úlohy 
 \item \textbf{total query time} - celkový čas strávený dotazováním databázového serveru (nezahrnuje žádné jiné operace související s konstrukcí příkazů nebo výpočty hodnot funkcí)
@@ -339,7 +336,7 @@ Následující sekvenční diagram demonstruje proces přípravy \textbf{spustit
 Objekty typu \textbf{\emph{RunnableTask}} vytváří v konstruktoru sadu objektů, které implementují rozhraní \textbf{\emph{ExecutableQuery}} (implementace rozhraní se liší podle typu dotazu), pro každý samostatný SQL dotaz v dané úloze, je vytvořen právě jeden objekt. Pokud se jedná o parametrizovaný SQL příkaz, pak se pro každou sadu parametrů, se kterou se má dotaz spouštět, vytvoří pole objektů typu \textbf{\emph{Var}}. Tyto objekty zapouzdřují veškeré chování proměnných, rozpoznávají datové typy a vyhodnocují hodnoty funkcí. Během vytváření objektů typu \textbf{\emph{Var}} je určen datový typ parametru, který objekt uchovává, pokud se jedná o funkci, dochází k rozpoznání funkce a argumentů, tento proces je popsán diagramem \ref{seqvar} (propojení diagramů je označeno znakem modré hvězdy).
 
 
-Na konci diagramu je vytvořené pole objektů RunnableTask předáno v konstruktoru třídy  \textbf{\emph{RunnableTaskController}} (v diagramu zkráceno na \textit{RTController}). Daná úloha je v tuto chvíli připravena ke spuštění. Průběh úlohy je dále znázorněn diagramem \ref{seqruntask}.
+Na konci diagramu je vytvořené pole objektů RunnableTask předáno v konstruktoru třídy  \textbf{\emph{RunnableTaskController}} (v diagramu zkráceno na \textit{RTController}). Daná úloha je v tuto chvíli připravena ke spuštění. Průběh úlohy je dále znázorněn diagramem na obrázku \ref{seqruntask}.
 
 
 \begin{figure}[!htbp]\centering\includegraphics[width=0.8\textwidth]{Figures/var.png}\caption{Sekvenční diagram vytvoření objektu typu Var}
@@ -353,16 +350,15 @@ Na konci diagramu je vytvořené pole objektů RunnableTask předáno v konstruk
 \begin{figure}[!htbp]\centering\includegraphics[width=1.0\textwidth]{Figures/runtask.png}\caption{Sekvenční diagram průběhu úlohy}
 \label{seqruntask}
 
-\textit{ThreadPool a RunnableTaskThread (označeny šedým pozadím) nejsou samostatné třídy, jsou součástí třídy \textbf{\emph{RunnableTask}}, v diagramu jsou zobrazeny na samostatných osách, aby bylo možné lépe popsat, operace prováděné na jednotlivých vláknech aplikace. }
+\textit{ThreadPool a RunnableTaskThread (označeny šedým pozadím) nejsou samostatné třídy, jedná se o samostatné vlákna vytvářené v rámci třídy \textbf{\emph{RunnableTask}}, v diagramu jsou zobrazeny na samostatných osách, aby bylo možné lépe popsat, operace prováděné na jednotlivých vláknech. }
 \end{figure}
 
 
-Diagram \ref{seqruntask} popisuje průběh spuštění úlohy od chvíle, kdy uživatel klikne na tlačítko start, tuto akci zachytí posluchač ve třídě \textbf{\emph{RunnableTaskController}} (v diagramu zkráceno na~\textit{RTController})~a~v~cyklu spustí úlohu pro všechny definované databáze v úloze metodou \textit{start()} volanou na objekty \textbf{\emph{RunnableTask}}, jejich vytvoření popisuje předchozí diagram \ref{seq1}. Dále je v rámci objektu \textbf{\emph{RunnableTask}} vytvořen objekt typu \textit{DbPool} pomocí statické třídy \textbf{\emph{RunnableTaskCreator}}, \textit{DbPool} je rozhraní, které definuje operace pro \textit{Connection Pool} (posloupnost předem vytvořených spojení s databázovým serverem). Implementace třídy \textit{DbPool} se liší v závislosti na typu databáze. Jednotlivé DBMS spravují samostatné rozšíření hlavní aplikace (viz sekce \ref{plugins}).
+Diagram \ref{seqruntask} popisuje průběh spuštění úlohy od chvíle, kdy uživatel klikne na tlačítko start, tuto akci zachytí posluchač ve třídě \textbf{\emph{RunnableTaskController}} (v diagramu zkráceno na~\textit{RTController})~a~v~cyklu spustí úlohu pro všechny definované databáze v úloze metodou \textit{start()} volanou na objekty \textbf{\emph{RunnableTask}}, jejich vytvoření popisuje předchozí diagram \ref{seq1}. Dále je v rámci objektu \textbf{\emph{RunnableTask}} vytvořen objekt typu \textbf{\emph{DbPool}} pomocí statické třídy \textbf{\emph{RunnableTaskCreator}}. \textbf{\emph{DbPool}} je rozhraní, které definuje operace pro \textit{Connection Pool} (posloupnost předem vytvořených spojení s databázovým serverem). Implementace třídy \textbf{\emph{DbPool}} se liší v závislosti na typu databáze, implementace tohoto rozhraní a podpora pro jednotlivé DBMS je zajištěna samostatnými rozšířeními hlavní aplikace (viz sekce \ref{plugins}).
 
+Před samostatným spuštěním je ještě potřeba vytvořit Thread pool (posloupnost předem vytvořených vláken, v diagramu označeno jako \textit{ThreadPool}, pro implementaci je použit \newline \textit{java.util.concurrent.ExecutorService}), velikost je shodná s velikostí Connection poolu. Aby bylo možné zajistit funkcionalitu neomezeného počtu spuštění, které je ukončeno až akcí uživatele, je potřeba vytvořit další vlákno (v diagramu označeno jako \textit{RunnableTaskThread} (zelené ohraničení v diagramu), které bude časovat a odesílat jednotlivé SQL dotazy k vykonání do \textit{Thread Pool} pomocí metody \textit{submit(RunnableTask)}. Třída \textbf{\emph{RunnableTask}} rozšiřuje rozhraní java.lang.Runnable a proto může být předána do \textit{ThreadPoolu}.
 
-Před samostatným spuštěním je ještě potřeba vytvořit Thread pool (posloupnost předem vytvořených vláken, v diagramu označeno jako \textit{ThreadPool}, pro implementaci je použit \newline \textit{java.util.concurrent.ExecutorService}), velikost je shodná s velikostí Connection poolu. Aby bylo možné zajistit funkcionalitu neomezeného počtu spuštění, které je ukončeno až akcí uživatele, je potřeba vytvořit další vlákno (v diagramu označeno jako \textit{RunnableTaskThread} (zelené ohraničení v diagramu), které bude časovat a odesílat jednotlivé SQL dotazy k vykonání do \textit{Thread Poolu} pomocí metody \textit{submit(RunnableTask)} (třída rozšiřuje rozhraní java.lang.Runnable a proto může být předána do \textit{ThreadPoolu}).
-
-V jednotlivých vláknech \textit{Thread Poolu} (označeno červenou barvou v diagramu) je spouštěna metoda \textit{execute(task, pool)}. Tato požádá o volné připojení k databázovému serveru pomocí \textit{getConnection()}. Následuje vytvoření samotného SQL příkazu, který se bude zasílat na databázový server. Z důvodu rozsáhlosti diagramu je tato operace znázorněna v samostatném diagramu \ref{getvalues} Jako poslední operace ve vlákně \textit{thread poolu} se vyvolají události a uloží se informace o vykonaném SQL dotazu.
+V jednotlivých vláknech \textit{Thread Poolu} (označeno červenou barvou v diagramu) je spouštěna metoda \textit{execute(task, pool)}. Tato metoda požádá \textit{Connection Pool} o volné připojení k databázovému serveru pomocí \textit{getConnection()}. Následuje vytvoření samotného SQL příkazu, který se bude zasílat na databázový server. Z důvodu rozsáhlosti diagramu je tato operace znázorněna v samostatném diagramu \ref{getvalues} Jako poslední operace ve vlákně \textit{thread poolu} se vyvolají události pro posluchače a uloží se informace o vykonaném SQL dotazu.
 
 
 \begin{figure}[!htbp]\centering\includegraphics[width=0.75\textwidth]{Figures/getvalues.png}\caption{Sekvenční diagram sestavení Statement objektu a jeho parametrů}
@@ -412,7 +408,7 @@ FunctionEvaluationException - se vyvolá v případě, že předaná posloupnost
 Znakové posloupnosti se používají pro generování náhodných posloupností znaků v uživatelsky definovaných funkcích (viz sekce \ref{functions}). V hlavním menu aplikace (\textit{CharEnums -> Edit}) je možné pomocí systémového výchozího editoru pro textové soubory (s příponou \textit{.txt}) editovat soubor, ve kterém jsou definovány tyto posloupnosti. Po editaci souboru je nutné pomocí hlavního menu tyto posloupnosti znovu načíst do paměti aplikace (\textit{CharEnums -> Reload}).
 
 \subsection{Rozšíření aplikace} \label{plugins}
-Aby bylo možné zajistit kompatibilitu s více DBMS bez nutnosti zasahovat do zdrojového kódu aplikace je tato funkcionalita zajištěna pomocí rozšíření hlavní aplikace. Jedná se o samostatný .JAR soubor, který aplikace načítá. Všechny rozšíření jsou umístěny v adresáři \textit{/plugins}, ten se nachází v domovském adresáři aplikace. Každé rozšíření aplikace obsahuje následující komponenty:
+Aby bylo možné zajistit kompatibilitu s více DBMS bez nutnosti zasahovat do zdrojového kódu aplikace je tato funkcionalita zajištěna pomocí rozšíření hlavní aplikace. Jedná se o samostatný .JAR soubor, který aplikace načítá. Všechny rozšíření jsou umístěny v adresáři \textit{/plugins}, ten se nachází v domovském (pracovním) adresáři aplikace. Každé rozšíření aplikace obsahuje následující komponenty:
 \begin{itemize}
 \item \textbf{JDBC řadič} - implementace JDBC pro daný DBMS, jedná se o externí knihovnu přibalenou uvnitř JAR souboru rozšíření. Tuto knihovnu poskytuje většina DBMS na svých oficiálních webových stránkách ke stažení.
 \item \textbf{Connection pool} - umožňuje předpřipravit posloupnost spojení s databázovým serverem. Samotná implementace může být v každém rozšíření jiná, každé rozšíření ale musí implementovat rozhraní hlavní aplikace - \textbf{\emph{DbPool}} (viz diagram na obrázku \ref{pluginsdiag}).
@@ -425,7 +421,7 @@ Aby bylo možné zajistit kompatibilitu s více DBMS bez nutnosti zasahovat do z
 \label{pluginsdiag}
 \end{figure}
 
-V balíku aplikace \textit{dbstresstest.plugins} se nachází třída \textbf{\emph{DatabasePlugin}}, kterou musí každé rozšíření rozšířit a implementovat (přepsat pomocí @Override anotace) všechny její metody. Jméno .JAR souboru rozšíření musí odpovídat cestě ke hlavní třídě rozšíření, která rozšiřuje třídu \textbf{\emph{DatabasePlugin}}. Při načítání rozšíření aplikace prochází všechny .jar soubory umístěné v adresáři \textit{/plugins} a pokud tento soubor obsahuje třídu, která rozšiřuje třídu \textbf{\emph{DatabasePlugin}}, pak dojde k načtení třídy rozšíření. Rozšíření je poté dostupné v aplikaci pod jménem získaného z metody \textit{getName()}. O načítání a později i k přistupování k rozhraním načtených rozšíření se stará třída \textbf{\emph{PluginLoader}}, ta uchovává seznam načtených pluginů, které jsou poté k dispozici v aplikaci.
+V balíku aplikace \textit{dbstresstest.plugins} se nachází třída \textbf{\emph{DatabasePlugin}}, kterou musí každé rozšíření aplikace rozšířit a implementovat (přepsat pomocí @Override anotace) všechny její metody. Jméno .JAR souboru rozšíření musí odpovídat cestě ke hlavní třídě (třída, která rozšiřuje \textbf{\emph{DatabasePlugin}}) rozšíření. Při načítání rozšíření aplikace prochází všechny .jar soubory umístěné v adresáři \textit{/plugins} a pokud tento soubor obsahuje třídu, která rozšiřuje třídu \textbf{\emph{DatabasePlugin}}, pak dojde k načtení třídy rozšíření. Rozšíření je poté dostupné v aplikaci pod jménem získaného z metody \textit{getName()} volané na hlavní třídu rozšíření. O načítání a později i k přistupování k rozhraním načtených rozšíření se stará třída \textbf{\emph{PluginLoader}}, ta uchovává seznam načtených rozšíření, které jsou poté k dispozici v aplikaci.
 
 Rozšíření se načítají při spuštění hlavní aplikace, pro přidání nového rozšíření je potřeba aplikaci restartovat. Odebrání nebo přejmenování (změna metody \textit{getName()} v hlavní třídě rozšíření) rozšíření způsobí nefunkčnost všech \textbf{\emph{spustitelných úloh}}, které dané rozšíření používaly.
 
@@ -433,11 +429,11 @@ Rozšíření se načítají při spuštění hlavní aplikace, pro přidání n
 
 \newpage
 \section{Validace SQL dotazů - SQL Lexer / Parser} \label{parsers}
-Jeden z cílů této práce je validovat SQL zadané uživatelem. Aby bylo možné zkontrolovat správnost zadaného SQL dotazu, potřebujeme znát kompletní gramatiku jazyka SQL a nad touto gramatikou postavit validátor (parser). Protože tohle téma je tak rozsáhlé, že by mohlo pokrýt celou samostatnou práci, použijeme na validaci SQL příkazů již existující knihovny. Před samotným výběrem knihovny, jsem prováděl testy volně dostupných knihoven pro zpracovávání SQL. Pro jazyk Java, co se volně dostupných knihoven týká, máme pouze 2 projekty, které jsou aktuální a stále se rozvíjí, projekt ANTRL a projekt jsqlparser.
+Jeden z cílů této práce je validovat SQL zadané uživatelem. Aby bylo možné zkontrolovat správnost zadaného SQL dotazu, potřebujeme znát kompletní gramatiku jazyka SQL a nad touto gramatikou postavit validátor (parser). Protože tohle téma je tak rozsáhlé, že by mohlo pokrýt celou samostatnou práci, použijeme na validaci SQL příkazů již existující nástroje. Před samotným výběrem konkrétního nástroje (knihovny funkcí), jsem prováděl testy volně dostupných knihoven pro zpracovávání SQL. Pro jazyk Java existují pouze 2 projekty, které jsou aktuální a stále se rozvíjí, projekt ANTRL a projekt jsqlparser.
 
 
-\subsection{Projekt ANTLR (ANother Tool for Language Recognition)}
-Projekt ANTRL je nástroj na čtení, zpracovávání, vykonávání nebo překládání strukturovaného textu nebo binárních souborů. Je velmi rozšířený pro budování jazyků, nástrojů a knihoven. ANTRL vygeneruje ze zadané gramatiky parser, který umožňuje sestavovat a procházet sestavené stromy ze zadané posloupnosti výrazů. \cite{antrl}
+\subsection{Projekt ANTLR (ANother Tool for Language Recognition)} \label{antrlproject}
+Projekt ANTRL je nástroj na čtení, zpracovávání, vykonávání nebo překládání strukturovaného textu nebo binárních souborů. Je velmi rozšířený pro budování jazyků, nástrojů a dalších knihoven. ANTRL vygeneruje ze zadané gramatiky parser, který umožňuje sestavovat a procházet sestavené stromy ze zadané posloupnosti výrazů. \cite{antrl}
 
 
 
@@ -467,7 +463,7 @@ Největším problémem ANTRL je samotná práce programátora s vygenerovanými
 \end{table}
 
 
-Problémem existujících gramatik na oficiální github.com stránce projektu ANTRL je to, že k nim existuje pouze minimální nebo žádná dokumentace a tím, že každá gramatiku byla psána jinými lidmi, vznikají poté ve vygenerovaných zdrojových kódech odlišnosti. Například pokud chceme zobrazit stromovou strukturu SQL DML (Data Manipulation Language) dotazu, v každé gramatice je vygenerovaná metoda s odlišným názvem, kde \textit{parser} je reference na instanci parser třídy (tabulka \ref{tab:parsers}) vygenerované z dané gramatiky:\newline
+Problémem existujících gramatik na oficiální github.com stránce projektu ANTRL, je to, že k nim existuje pouze minimální nebo žádná dokumentace a tím, že každá gramatika byla psána jinými lidmi, vznikají poté ve vygenerovaných zdrojových kódech odlišnosti. Například pokud chceme zobrazit stromovou strukturu SQL DML (Data Manipulation Language) dotazu, v každé gramatice je vygenerovaná metoda s odlišným názvem, kde \textit{parser} je reference na instanci parser třídy (tabulka \ref{tab:parsers}) vygenerované z dané gramatiky:\newline
 
 \begin{lstlisting}[caption=T-SQL Parser]
 
@@ -486,8 +482,8 @@ parser.dmlStatement().toStringTree();
 
 \newpage
 
-\subsection{Testy ANTRL}
-Právě díky tomu, že automaticky vygenerované třídy pomocí ANTRL jsou tak rozsáhlé, první vytvoření instance tříd v JVM je velmi pomalé, protože dochází k překladu Java kódu (bytecode). Opakované spouštění, nad již vytvořenými instancemi parser tříd, je již podstatně rychlejší, protože kód je již uložen v paměti JVM (v části paměti pojmenované jako \textit{Code Cache}), kde je uložen již přeložený Java kód (bytecode) na nativní strojový kód.
+\subsection{Testy ANTRL} \label{antrltest}
+Právě kvůli tomu, že automaticky vygenerované třídy pomocí ANTRL jsou tak rozsáhlé, jak je zmíněno v předchozí sekci \ref{antrlproject}, první vytvoření instance tříd je velmi pomalé. Důvodem je, že JVM dynamicky za běhu překládá bytecode třídy na nativní strojový kód. Opakované spouštění, nad již vytvořenými instancemi parser tříd, je již podstatně rychlejší. Cílem tohoto experimentu je změřit dobu, kterou parser potřebuje na zpracování konkrétního SQL dotazu a také zda korektně vyhodnotí zda má SQL správnou syntaxi.
 
 \begin{table}[!htbp]
 	\centering
@@ -557,11 +553,10 @@ Právě díky tomu, že automaticky vygenerované třídy pomocí ANTRL jsou tak
 	\end{tabular}
 \end{table}
 
-
 Z testů je vidět, že T-SQL a MySQL ANTRL parser nedokázal odhalit chybu ve špatné syntaxi dotazu \textit{SELECT ** FROM TEST} (viz tabulka \ref{tab:antrl2}). T-SQL parser poté opakovaně selhal (viz~tabulka~\ref{tab:antrl4}).
 
 
-
+\newpage
 \subsection{Projekt Jsqlparser}
 Projekt jsqlparser je postavený na knihovně JavaCC, která je vyvíjena samotnou společností Oracle. JavaCC je nástroj, který ze specifikace gramatiky dokáže vygenerovat zdrojové kódy v programovacím jazyce Java, umožňuje také sestavování stromové struktury jazyka pomocí nástroje JJTree, který je součástí JavaCC knihovny \cite{jsql}.
 
@@ -570,7 +565,7 @@ Nástroj Jsqlparser překládá dotaz jazyka SQL na ekvivalentní hierarchii Jav
 
 
 \subsection{Testy Jsqlparser}
-Pro možnost testy porovnat, jsou v testu použity stejné SQL dotazy, jako v předchozím testu ANTRL. Díky tomu, že Jsqlparser je univerzální a nemá gramatiky pro různé variace jazyka SQL nijak odděleny, nemůžeme porovnat rychlost zpracovávání dotazů pro PL-SQL, T-SQL a MySQL odděleně, jako v předchozím ANTRL testu. Pro měření opakovaného spouštění pro stejný dotaz bylo nutné použít v tomto testu měření v nanosekundách.
+Pro možnost testy porovnat, jsou v testu použity stejné SQL dotazy, jako v předchozím testu ANTRL (viz sekce \ref{antrltest}). Díky tomu, že Jsqlparser je univerzální a nemá odlišné verze pro různé variace jazyka SQL nijak odděleny, nemůžeme porovnat rychlost zpracovávání dotazů pro PL-SQL, T-SQL a MySQL odděleně, jako v předchozím ANTRL testu. Pro měření opakovaného spouštění pro stejný dotaz bylo nutné použít v tomto testu měření v nanosekundách.
 
 \begin{table}[!htbp]
 	\centering
@@ -634,13 +629,14 @@ Pro možnost testy porovnat, jsou v testu použity stejné SQL dotazy, jako v p�
 
 
 \subsection{Srovnání parser knihoven}
-Výsledky testování prokázaly, že JSqlparser bude pro naše účely vhodnější. Hlavním důvodem proč jsem pro jsem se rozhodl v aplikaci použít JSqlparser je fakt, že ANTRL parser vyhodnocuje dotaz při prvním spuštění více než vteřinu a v případě delších SQL dotazů až více než 2 vteřiny, jak ukazují předchozí testy. Taková doba je nepřijatelná, pokud chceme SQL validovat v reálném čase během doby, kdy uživatel SQL zadává do aplikace. Doba, kterou ANTRL parser vyžaduje, by způsobila pozastavení reakcí celé aplikace na akce uživatele během zadávání SQL dotazu, pokud by měla aplikace validovat SQL a v reálném čase zobrazovat výsledek. Díky rychlým odpovědím z JSqlParser je možné implementovat tento parser synchronně, ANTRL parser by vyžadoval asynchronní implementaci a výsledky by se zobrazovaly s prodlevou, výsledek validace by tak nemusel vždy odpovídat momentálnímu vstupu od uživatele.
+Výsledky testování prokázaly, že JSqlparser bude pro naše účely vhodnější. Hlavním důvodem proč jsem se rozhodl v aplikaci použít JSqlparser je fakt, že ANTRL parser vyhodnocuje dotaz při prvním spuštění více než vteřinu a v případě delších SQL dotazů až více než 2 vteřiny, jak ukazují předchozí testy. Taková doba je nepřijatelná, pokud chceme SQL validovat v reálném čase během doby, kdy uživatel SQL zadává do aplikace. Doba, kterou ANTRL parser vyžaduje, by způsobila pozastavení reakcí celé aplikace na akce uživatele během zadávání SQL dotazu, pokud by měla aplikace validovat SQL a v reálném čase zobrazovat výsledek. Díky rychlým odpovědím z JSqlParser je možné implementovat tento parser synchronně, ANTRL parser by vyžadoval asynchronní implementaci a výsledky by se zobrazovaly s prodlevou, výsledek validace by tak nemusel vždy odpovídat momentálnímu vstupu od uživatele. Dalším faktorem při rozhodování mezi ANTRL a JSqlparser knihovnami byl fakt, že JSqlparser vyhodnotil všechny testované SQL správně a vždy přesně rozpoznal chybu v záměrně chybném testovaném dotazu (tabulky \ref{tab:jsql2} a \ref{tab:jsql4}).
 
 
+Zdrojové kódy použity pro testování ANTRL a Jsqlparser jsou přibaleny v příloze.
 
 
 \section{Závěr}
-Cílem práce bylo vytvořit aplikaci s grafickým rozhraním pro zasílání posloupností SQL dotazů na vybrané DBMS pro podporu výuky předmětu \textit{Administrace databázových systémů}. Díky technologii programovacího jazyka Java je možné aplikaci spouštět na všech operačních systémech, které jí podporují. Aplikaci není nutné instalovat, jedná se o jediný spustitelný .JAR soubor, který nepotřebuje žádné argumenty. Dále je potřeba adresář s rozšířeními (\textbf{/plugins}), ten obsahuje rozšíření pro MS SQL Server, Oracle, MySQL a H2 databázové systémy, všechny jsou vyučovány v rámci předmětu \textit{Administrace databázových systémů}. Rozšíření pro H2 bylo do práce přidáno v rámci projektu "Zprovoznění vybraného DBMS", který byl součástí výuky předmětu \textit{Administrace databázových systémů}.
+Cílem práce bylo vytvořit aplikaci s grafickým rozhraním pro zasílání posloupností SQL dotazů na vybrané DBMS pro podporu výuky předmětu \textit{Administrace databázových systémů}. Díky technologii programovacího jazyka Java je možné aplikaci spouštět na všech operačních systémech, které jí podporují. Aplikaci není nutné instalovat, jedná se o jediný spustitelný .JAR soubor, který nepotřebuje žádné argumenty. Aplikace vyžaduje pouze  adresář s rozšířeními (\textbf{/plugins}) ve svém pracovním adresáři, tento adresář obsahuje připravené rozšíření pro MS SQL Server, Oracle, MySQL a H2 databázové systémy, všechny jsou vyučovány v rámci předmětu \textit{Administrace databázových systémů}. Rozšíření pro H2 bylo do práce přidáno v rámci projektu "Zprovoznění vybraného DBMS", který byl součástí výuky předmětu \textit{Administrace databázových systémů}.
 
 Aplikaci je dobře optimalizovaná, takže i při testování několika (10 až 20) databázových systémů paralelně po dobu několika hodin si aplikace drží využití operační paměti v rozmezí 300 - 500 MB. Využití paměti záleží však na parametrech \textbf{-Xms} (počáteční paměť JVM) a \textbf{-Xmx} (maximální paměť JVM).
 
@@ -710,116 +706,10 @@ Podle zadání, aplikace využívá pro perzistentní data formát XML, který u
 	
 \end{thebibliography}
 
-
 \appendix % prilohy
-\section{Zdrojový kód pro testování ANTRL - MySQL}
-\begin{lstlisting}[caption=ANTRL MySQL]
 
-	import antrl.mysql.MySqlParser;
-	import antrl.mysql.MySqlLexer;
-	import org.antlr.v4.runtime.*;
+\section{Zdrojové kódy aplikace}
+Příloha v IS EDISON. Obsahuje veškeré zdrojové kódy aplikace a rozšíření pro SQL Server, OracleDB, MySQL a H2 databáze. Dále obsahuje zdrojové kódy pro testování ANTRL a Jsqlparser knihoven.
 
-    static boolean mysqlresult = true;
-
-    public static boolean mysql(String args) {
-        mysqlresult = true;
-        long start = System.currentTimeMillis();
-        System.out.println("MySQL Check: " + args);
-        CharStream stream = new ANTLRInputStream(args);
-        MySqlLexer lexer = new MySqlLexer(stream);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-
-        MySqlParser parser = new MySqlParser(tokens);
-
-        parser.addErrorListener(new BaseErrorListener() {
-            @Override
-            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int pos, String msg, RecognitionException e) {
-                System.out.println("Failed to parse at " + line + "," + pos + ":  " + msg);
-                mysqlresult = false;
-            }
-        });
-        parser.dmlStatement().toStringTree(parser);
-        System.out.println("MySQL Result: " + mysqlresult + ", took: " + (System.currentTimeMillis()-start) + "ms");
-        return mysqlresult;
-    }
-\end{lstlisting}
-\section{Zdrojový kód pro testování ANTRL - T-SQL}
-\begin{lstlisting}[caption=ANTRL T-SQL]
-
-	import antrl.tsql.TSqlLexer;
-	import antrl.tsql.TSqlParser;
-	import org.antlr.v4.runtime.*;
-
-  	static boolean tsqlresult = true;
-
-    public static boolean tsql(String args) {
-        tsqlresult = true;
-        long start = System.currentTimeMillis();
-        System.out.println("TSQL Check: " + args);
-        CharStream stream = new ANTLRInputStream(args);
-        TSqlLexer lexer = new TSqlLexer(stream);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        
-        TSqlParser parser = new TSqlParser(tokens);
-
-        parser.addErrorListener(new BaseErrorListener() {
-            @Override
-            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int pos, String msg, RecognitionException e) {
-                System.out.println("Failed to parse at " + line + "," + pos + ":  " + msg);
-                tsqlresult = false;
-            }
-        });
-        parser.dml_clause().toStringTree(parser);
-        System.out.println("TSQL Result: " + tsqlresult + ", took: " + (System.currentTimeMillis()-start) + "ms");
-        return tsqlresult;
-    }
-\end{lstlisting}
-\section{Zdrojový kód pro testování ANTRL - PL-SQL}
-\begin{lstlisting}[caption=ANTRL PL-SQL]
-
-	import antrl.plsql.PlSqlLexer;
-	import antrl.plsql.PlSqlParser;
-	import org.antlr.v4.runtime.*;
-
-    static boolean plsqlresult = true;
-
-    public static boolean plsql(String args) {
-        plsqlresult = true;
-        long start = System.currentTimeMillis();
-        System.out.println("PLSQL Check: " + args);
-        CharStream stream = new ANTLRInputStream(args);
-        PlSqlLexer lexer = new PlSqlLexer(stream);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-
-        PlSqlParser parser = new PlSqlParser(tokens);
-
-        parser.addErrorListener(new BaseErrorListener() {
-            @Override
-            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int pos, String msg, RecognitionException e) {
-                System.out.println("Failed to parse at " + line + "," + pos + ":  " + msg);
-                plsqlresult = false;
-            }
-        });
-        parser.data_manipulation_language_statements().toStringTree();
-        System.out.println("PLSQL Result: " + plsqlresult + ", took: " + (System.currentTimeMillis()-start) + "ms");
-        return plsqlresult;
-    }
-}
-\end{lstlisting}
-
-
-\section{Zdrojový kód pro testování JsqlParser}
-\begin{lstlisting}[caption=ANTRL JSQL]
-    public static boolean parse(String sql) {
-        try {
-            Statements st = CCJSqlParserUtil.parseStatements(sql);
-            st.getStatements().get(0);
-            return true;
-        } catch (Exception ex) {
-            System.out.println(ex.getCause().getMessage());
-            return false;
-        }
-    }
-\end{lstlisting}
 
 \end{document}
