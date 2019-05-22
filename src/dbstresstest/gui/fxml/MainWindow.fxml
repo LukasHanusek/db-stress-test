@@ -84,9 +84,6 @@
                                                 <Label text="Database name: " GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                 <Label text="Address and port:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                 <Label text="User and password:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                <TextField fx:id="dbAddress" onKeyReleased="#conEdited" text="mssql.myserver.cz\\Instance" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                                <TextField fx:id="port" onKeyReleased="#conEdited" text="0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                                                <TextField fx:id="user" onKeyReleased="#conEdited" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                                 <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="12">
                                                    <center>
                                                       <Button fx:id="saveConnection" disable="true" mnemonicParsing="false" onAction="#saveConnectionToMemory" prefHeight="40.0" text="Add connection" BorderPane.alignment="CENTER" />
@@ -99,9 +96,12 @@
                                                 </BorderPane>
                                                 <Label text="Custom name: " GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                 <TextField fx:id="customName" onKeyReleased="#conEdited" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                                <ComboBox fx:id="databaseType" onMouseClicked="#conEdited" prefWidth="150.0" promptText="Select a type..." GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                                <PasswordField fx:id="password" onKeyReleased="#conEdited" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                                                 <TextField fx:id="databaseName" onKeyReleased="#conEdited" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                                <ComboBox fx:id="databaseType" onMouseClicked="#conEdited" prefWidth="150.0" promptText="Select a type..." GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                                <TextField fx:id="dbAddress" onKeyReleased="#conEdited" text="mssql.myserver.cz\\Instance" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                                <TextField fx:id="port" onKeyReleased="#conEdited" text="0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                                <TextField fx:id="user" onKeyReleased="#conEdited" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                                <PasswordField fx:id="password" onKeyReleased="#conEdited" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                                                 <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
                                                    <center>
                                                       <Button fx:id="testConnection" mnemonicParsing="false" onAction="#testConnection" prefHeight="40.0" text="Test Connection" BorderPane.alignment="CENTER" />
@@ -547,6 +547,7 @@
                                                       <Label text="Pool size:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                       <Label text=" (connections)" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                                       <TextField fx:id="poolSize" onAction="#taskEdited" onKeyReleased="#taskEdited" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                                      <TextField fx:id="repeatCount" onAction="#taskEdited" onKeyReleased="#taskEdited" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                                       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                                                       <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
                                                          <center>
@@ -559,7 +560,6 @@
                                                          </center>
                                                       </BorderPane>
                                                       <Label text="Repeat count:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                      <TextField fx:id="repeatCount" onAction="#taskEdited" onKeyReleased="#taskEdited" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                                       <Label text=" (-1 = infinite)" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                                                       <BorderPane GridPane.columnIndex="4" GridPane.rowIndex="7">
                                                          <center>
